@@ -1,4 +1,5 @@
 Hue-Emulator
 ============
 
-A Bridge API Emulator for the Philips Hue (Personal Wireless System)
+The Hue Emulator is a Bridge Emulator for the Philips Hue - Personal Wireless System.  
+It allows developers who don't have access to a Philips Hue system (i.e.  A Bridge + Hue Light Bulbs) to write hue apps.

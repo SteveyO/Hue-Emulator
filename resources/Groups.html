@@ -1,0 +1,234 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>2. Groups API - Philips hue API</title>    
+    <meta name="author" content="Philips hue">
+    <style>
+     	code {  color: RED; }    
+  	</style>	
+  </head>
+
+  <body>
+		
+		<div class="page">
+		
+	    <div class="container content-container">
+	      <div class="row">
+	        <div class="span3 hue-navigation well" data-role="hue-navigation">
+	          <ul class="nav nav-list">   	          	
+
+	            <li class="divider"></li>
+						</ul>
+						<ul class="nav nav-list"  data-role="api-nav">
+	            <li class="nav-header">API</li>
+                    <li class="active">
+                      <a  href="Lights.html">
+                        1. Lights API
+                      </a>
+                    </li>
+                    <li >
+                      <a  href="Groups.html">
+                        2. Groups API
+                      </a>
+                    </li>
+                    <li >
+                      <a  href="Schedules.html">
+                        3. Schedules API
+                      </a>
+                    </li>
+                    <li >
+                      <a  href="Configuration.html">
+                        4. Configuration API
+                      </a>
+                    </li>
+                    <li >
+                      <a  href="Portal.html">
+                        5. Portal API
+                      </a>
+                    </li>
+              
+
+	        </div>
+	        
+	        <div class="span9 hue-main-content" data-role="main-content">
+	          <!--Body content-->          
+	        	
+<h1>2. Groups API </h1>
+
+<h2 id='21_get_all_groups'>2.1. Get all groups</h2>
+<table><thead><tr><th>URL</th><th><code>/api/&lt;username&gt;/groups</code></th></tr></thead><tbody><tr><td style='text-align: left;'>Method</td><td style='text-align: left;'><code>GET</code></td>
+</tr><tr><td style='text-align: left;'>Version</td><td style='text-align: left;'>1.0</td>
+</tr><tr><td style='text-align: left;'>Permission</td><td style='text-align: left;'>Whitelist</td>
+</tr></tbody></table>
+<h3 id='211_description'>2.1.1. Description</h3>
+
+<p>Gets a list of all groups that have been added to the bridge. A group is a list of lights that can be created, <a href='#24_set_group_attributes'>modified</a> and deleted by a user. The maximum numbers of groups is 16. N.B. For the first bridge firmware release, bridge software version 01003542 only, a limited number of these APIs are supported in the firmware so only control of groups/0 is supported.</p>
+
+<h3 id='212_response'>2.1.2. Response</h3>
+
+<p>Returns a list of all groups in the system, each group has a name and unique identification number.</p>
+
+<p>If there are no groups then the bridge will return an empty object, <code>{}</code>.</p>
+
+<h3 id='213_response_example'>2.1.3. Response example</h3>
+<div class='highlight'><pre><code class='json'><span class='p'>{</span>
+	<span class='nt'>&quot;1&quot;</span><span class='p'>:</span> <span class='p'>{</span>
+		<span class='nt'>&quot;name&quot;</span><span class='p'>:</span> <span class='s2'>&quot;Group 1&quot;</span>
+	<span class='p'>},</span>
+	<span class='nt'>&quot;2&quot;</span><span class='p'>:</span> <span class='p'>{</span>
+		<span class='nt'>&quot;name&quot;</span><span class='p'>:</span> <span class='s2'>&quot;VRC 2&quot;</span>
+	<span class='p'>}</span>
+<span class='p'>}</span>
+</code></pre></div>
+<h3 id='214_notes'>2.1.4. Notes</h3>
+
+<p>Group 0 is a special group containing all lights in the system, and is not returned by the &#8216;get all groups&#8217; command.</p>
+
+<h2 id='22_create_group'>2.2. Create group</h2>
+
+<p>This method is not supported in the 1.0 version of the API. It is scheduled for release in the next version of the API.</p>
+
+<h2 id='23_get_group_attributes'>2.3. Get group attributes</h2>
+<table><thead><tr><th>URL</th><th><code>/api/&lt;username&gt;/groups/&lt;id&gt;</code></th></tr></thead><tbody><tr><td style='text-align: left;'>Method</td><td style='text-align: left;'><code>GET</code></td>
+</tr><tr><td style='text-align: left;'>Version</td><td style='text-align: left;'>1.0</td>
+</tr><tr><td style='text-align: left;'>Permission</td><td style='text-align: left;'>Whitelist</td>
+</tr></tbody></table>
+<h3 id='231_description'>2.3.1. Description</h3>
+
+<p>Gets the name, light membership and last command for a given group.</p>
+
+<h3 id='232_response'>2.3.2. Response</h3>
+<table><thead><tr><th>Name</th><th><strong>Type</strong></th><th><strong>Description</strong></th></tr></thead><tbody><tr><td style='text-align: left;'>action</td><td style='text-align: left;'>object</td><td style='text-align: left;'>The last command that was sent to the whole group.<br /><br />Note this is not necessarily the current state of the group.</td>
+</tr><tr><td style='text-align: left;'>lights</td><td style='text-align: left;'>array of light IDs</td><td style='text-align: left;'>The IDs of the lights that are in the group.</td>
+</tr><tr><td style='text-align: left;'>name</td><td style='text-align: left;'>string 0, 32</td><td style='text-align: left;'>A unique, editable name given to the group.</td>
+</tr></tbody></table>
+<h3 id='233_response'>2.3.3. Response</h3>
+<div class='highlight'><pre><code class='json'><span class='p'>{</span>
+	<span class='nt'>&quot;action&quot;</span><span class='p'>:</span> <span class='p'>{</span>
+		<span class='nt'>&quot;on&quot;</span><span class='p'>:</span> <span class='kc'>true</span><span class='p'>,</span>
+		<span class='nt'>&quot;hue&quot;</span><span class='p'>:</span> <span class='mi'>0</span><span class='p'>,</span>
+		<span class='nt'>&quot;effect&quot;</span><span class='p'>:</span> <span class='s2'>&quot;none&quot;</span><span class='p'>,</span>
+		<span class='nt'>&quot;bri&quot;</span><span class='p'>:</span> <span class='mi'>100</span><span class='p'>,</span>
+		<span class='nt'>&quot;sat&quot;</span><span class='p'>:</span> <span class='mi'>100</span><span class='p'>,</span>
+		<span class='nt'>&quot;ct&quot;</span><span class='p'>:</span> <span class='mi'>500</span><span class='p'>,</span>
+		<span class='nt'>&quot;xy&quot;</span><span class='p'>:</span> <span class='p'>[</span><span class='mf'>0.5</span><span class='p'>,</span> <span class='mf'>0.5</span><span class='p'>]</span>
+	<span class='p'>},</span>
+	<span class='nt'>&quot;lights&quot;</span><span class='p'>:</span> <span class='p'>[</span>
+		<span class='s2'>&quot;1&quot;</span><span class='p'>,</span>
+		<span class='s2'>&quot;2&quot;</span>
+	<span class='p'>],</span>
+	<span class='nt'>&quot;name&quot;</span><span class='p'>:</span> <span class='s2'>&quot;bedroom&quot;</span><span class='p'>,</span>
+	<span class='nt'>&quot;scenes&quot;</span><span class='p'>:</span> <span class='p'>{</span>
+	<span class='p'>}</span>
+<span class='p'>}</span>
+</code></pre></div>
+<h3 id='234_notes'>2.3.4. Notes</h3>
+
+<p>Scenes are not used in the version of the API</p>
+
+<h2 id='24_set_group_attributes'>2.4. Set group attributes</h2>
+<table><thead><tr><th>URL</th><th><code>/api/&lt;username&gt;/groups/&lt;id&gt;</code></th></tr></thead><tbody><tr><td style='text-align: left;'>Method</td><td style='text-align: left;'><code>PUT</code></td>
+</tr><tr><td style='text-align: left;'>Version</td><td style='text-align: left;'>1.0</td>
+</tr><tr><td style='text-align: left;'>Permission</td><td style='text-align: left;'>Whitelist</td>
+</tr></tbody></table>
+<h3 id='241_description'>2.4.1. Description</h3>
+
+<p>Allows the user to modify the name and light membership of a group.</p>
+
+<h3 id='242_body_arguments'>2.4.2. Body arguments</h3>
+<table><thead><tr><th>Name</th><th><strong>Type</strong></th><th><strong>Description</strong></th><th><strong>Required</strong></th></tr></thead><tbody><tr><td style='text-align: left;'>name</td><td style='text-align: left;'>string 0..32</td><td style='text-align: left;'>The new name for the group. If the name is already taken a space and number will be appended by the bridge e.g. &#8220;Custom Group 1&#8221;.</td><td style='text-align: left;'>Optional</td>
+</tr><tr><td style='text-align: left;'>lights</td><td style='text-align: left;'>array of light IDs</td><td style='text-align: left;'>The IDs of the lights that should be in the group. This resource must contain an array of at least one element.<br /><br />If an invalid light ID is given, error 7 will be returned and the group not created.</td><td style='text-align: left;'>Optional</td>
+</tr></tbody></table>
+<h3 id='243_body_example'>2.4.3. Body example</h3>
+<div class='highlight'><pre><code class='json'><span class='p'>{</span><span class='nt'>&quot;name&quot;</span><span class='p'>:</span><span class='s2'>&quot;Bedroom&quot;</span><span class='p'>,</span><span class='nt'>&quot;lights&quot;</span><span class='p'>:[</span><span class='s2'>&quot;1&quot;</span><span class='p'>]}</span>
+</code></pre></div>
+<h3 id='244_response'>2.4.4. Response</h3>
+
+<p>A response to a successful <code>PUT</code> request contains confirmation of the arguments passed in. <strong>Note</strong>: If the new value is too large to return in the response due to internal memory constraints then a value of &#8220;Updated.&#8221; is returned.</p>
+
+<h3 id='245_response_example'>2.4.5. Response example</h3>
+<div class='highlight'><pre><code class='json'><span class='p'>[</span>
+	<span class='p'>{</span><span class='nt'>&quot;success&quot;</span><span class='p'>:{</span><span class='nt'>&quot;/groups/1/lights&quot;</span><span class='p'>:[</span><span class='s2'>&quot;1&quot;</span><span class='p'>]}},</span>
+	<span class='p'>{</span><span class='nt'>&quot;success&quot;</span><span class='p'>:{</span><span class='nt'>&quot;/groups/1/name&quot;</span><span class='p'>:</span><span class='s2'>&quot;Bedroom&quot;</span><span class='p'>}}</span>
+<span class='p'>]</span>
+</code></pre></div>
+<h3 id='246_notes'>2.4.6. Notes</h3>
+<div class='highlight'><pre><code class='json'><span class='p'>{</span>
+	<span class='nt'>&quot;error&quot;</span><span class='p'>:</span> <span class='p'>{</span>
+		<span class='nt'>&quot;type&quot;</span><span class='p'>:</span> <span class='mi'>302</span><span class='p'>,</span>
+		<span class='nt'>&quot;address&quot;</span><span class='p'>:</span> <span class='s2'>&quot;/groups/&lt;id&gt;/lights&quot;</span><span class='p'>,</span>
+		<span class='nt'>&quot;description&quot;</span><span class='p'>:</span> <span class='s2'>&quot; device, &lt;id&gt;, could not be added to group. Device&#39;s group table is full.&quot;</span>
+	<span class='p'>}</span>
+<span class='p'>}</span>
+</code></pre></div>
+<p>This will be returned if the device cannot accept any new groups in its internal table. Maximum is 16.</p>
+
+<h2 id='25_set_group_state'>2.5. Set group state</h2>
+<table><thead><tr><th>URL</th><th><code>/api/&lt;username&gt;/groups/&lt;id&gt;/action</code></th></tr></thead><tbody><tr><td style='text-align: left;'>Method</td><td style='text-align: left;'><code>PUT</code></td>
+</tr><tr><td style='text-align: left;'>Version</td><td style='text-align: left;'>1.0</td>
+</tr><tr><td style='text-align: left;'>Permission</td><td style='text-align: left;'>Whitelist</td>
+</tr></tbody></table>
+<h3 id='251_description'>2.5.1. Description</h3>
+
+<p>Modifies the state of all lights in a group.</p>
+
+<p>User created groups will have an ID of 1 or higher; however a special group with an ID of 0 also exists containing all the lamps known by the bridge.</p>
+
+<h3 id='252_body_arguments'>2.5.2. Body arguments</h3>
+<table><thead><tr><th>Name</th><th><strong>Type</strong></th><th><strong>Description</strong></th><th><strong>Required</strong></th></tr></thead><tbody><tr><td style='text-align: left;'>on</td><td style='text-align: left;'>bool</td><td style='text-align: left;'>On/Off state of the light. On=true, Off=false</td><td style='text-align: left;'>Optional</td>
+</tr><tr><td style='text-align: left;'>bri</td><td style='text-align: left;'>uint8</td><td style='text-align: left;'>The brightness value to set the light to.<br /><br />Brightness is a scale from 0 (the minimum the light is capable of) to 255 (the maximum). Note: a brightness of 0 is not off.<br /><br />e.g. &#8220;brightness&#8221;: 60 will set the light to a specific brightness.</td><td style='text-align: left;'>Optional</td>
+</tr><tr><td style='text-align: left;'>hue</td><td style='text-align: left;'>uint16w</td><td style='text-align: left;'>The hue value to set light to.<br /><br />The hue value is a wrapping value between 0 and 65535. Both 0 and 65535 are red, 25500 is green and 46920 is blue.<br /><br />e.g. &#8220;hue&#8221;: 50000 will set the light to a specific hue.</td><td style='text-align: left;'>Optional</td>
+</tr><tr><td style='text-align: left;'>sat</td><td style='text-align: left;'>uint8</td><td style='text-align: left;'>Saturation of the light. 255 is the most saturated (colored) and 0 is the least saturated (white).</td><td style='text-align: left;'>Optional</td>
+</tr><tr><td style='text-align: left;'>xy</td><td style='text-align: left;'>list 2..2 of float 4</td><td style='text-align: left;'>The x and y coordinates of a color in <a href='/coreconcepts.html#color_gets_more_complicated'>CIE color space</a>.<br /><br />The first entry is the x coordinate and the second entry is the y coordinate. Both x and y must be between 0 and 1.<br />If the specified coordinates are not in the <a href='/coreconcepts.html#color_gets_more_complicated'>CIE color space</a>, the closest color to the coordinates will be chosen.</td><td style='text-align: left;'>Optional</td>
+</tr><tr><td style='text-align: left;'>ct</td><td style='text-align: left;'>uint16</td><td style='text-align: left;'><a href='http://en.wikipedia.org/wiki/Mired'>The Mired Color temperature</a> of the light. 2012 connected lights are capable of 153 (6500K) to 500 (2000K).</td><td style='text-align: left;'>Optional</td>
+</tr><tr><td style='text-align: left;'>alert</td><td style='text-align: left;'>string</td><td style='text-align: left;'><a href='/coreconcepts.html#some_extra_fun_stuff'>The alert effect</a>, which is a temporary change to the bulb’s state, and has one of the following values:<br /><strong>&#8220;none&#8221;</strong> – The light is not performing an alert effect.<br /><strong>&#8220;select&#8221;</strong> – The light is performing one <a href='/6_glossaryterms.html'>breathe cycle</a>.<br /><strong>&#8220;lselect&#8221;</strong> – The light is performing breathe cycles for 30 seconds or until an <code>&quot;alert&quot;: &quot;none&quot;</code> command is received.</td><td style='text-align: left;'>Optional</td>
+</tr><tr><td style='text-align: left;'>effect</td><td style='text-align: left;'>string</td><td style='text-align: left;'>The dynamic effect of the light, currently &#8220;none&#8221; and &#8220;colorloop&#8221; are supported. Other values will generate an error of type 7.<br /><br />Setting the effect to colorloop will cycle through all hues using the current brightness and saturation settings.</td><td style='text-align: left;'>Optional</td>
+</tr><tr><td style='text-align: left;'>transitiontime</td><td style='text-align: left;'>uint16</td><td style='text-align: left;'>The duration of the transition from the light&#8217;s current state to the new state. This is given as a multiple of 100ms and defaults to 4 (400ms). For example, setting transistiontime:10 will make the transition last 1 second.</td><td style='text-align: left;'>Optional</td>
+</tr></tbody></table>
+<h3 id='253_body_example'>2.5.3. Body example</h3>
+<div class='highlight'><pre><code class='json'><span class='p'>{</span>
+	<span class='nt'>&quot;on&quot;</span><span class='p'>:</span> <span class='kc'>true</span><span class='p'>,</span>
+	<span class='nt'>&quot;hue&quot;</span><span class='p'>:</span> <span class='mi'>2000</span><span class='p'>,</span>
+	<span class='nt'>&quot;effect&quot;</span><span class='p'>:</span> <span class='s2'>&quot;colorloop&quot;</span>
+<span class='p'>}</span>
+</code></pre></div>
+<h3 id='254_response'>2.5.4. Response</h3>
+
+<p>A response to a successful <code>PUT</code> request contains confirmation of the arguments passed in. Note: If the new value is too large to return in the response due to internal memory constraints then a value of &#8220;Updated.&#8221; is returned.</p>
+
+<h3 id='255_response_example'>2.5.5. Response example</h3>
+
+<p>The response details the success of sending each state parameter to the group. Note that the success is not reported for each light bulb and a &#8220;success&#8221; for the group does not guarantee that the lights actually changed as they may be unreachable or not capable of the requested change.</p>
+<div class='highlight'><pre><code class='json'><span class='p'>[</span>
+	<span class='p'>{</span><span class='nt'>&quot;success&quot;</span><span class='p'>:{</span><span class='nt'>&quot;/groups/1/action/on&quot;</span><span class='p'>:</span> <span class='kc'>true</span><span class='p'>}},</span>
+	<span class='p'>{</span><span class='nt'>&quot;success&quot;</span><span class='p'>:{</span><span class='nt'>&quot;/groups/1/action/effect&quot;</span><span class='p'>:</span><span class='s2'>&quot;colorloop&quot;</span><span class='p'>}},</span>
+	<span class='p'>{</span><span class='nt'>&quot;success&quot;</span><span class='p'>:{</span><span class='nt'>&quot;/groups/1/action/hue&quot;</span><span class='p'>:</span><span class='mi'>6000</span><span class='p'>}}</span>
+<span class='p'>]</span>
+</code></pre></div>
+<h3 id='256_notes'>2.5.6. Notes</h3>
+
+<p>A light cannot have its hue, saturation, brightness, effect, ct or xy modified when it is turned off. Doing so will return error 201.</p>
+
+<p>There are 3 methods available to set the color of the light – hue and saturation (hs), xy or color temperature (ct). If multiple methods are used then a priority is used: xy &gt; ct &gt; hs. All included parameters will be updated but the &#8216;colormode&#8217; will be set using the priority system.</p>
+
+<h2 id='26_delete_group'>2.6. Delete group</h2>
+
+<p>This method is not supported in the 1.0 version of the API. It is scheduled for release in the next version of the API.</p>
+
+
+
+	          
+	        </div>
+	        
+	      </div>
+	
+	
+	    </div> <!-- /container -->
+    
+    </div>    
+
+  </body>
+</html>
+

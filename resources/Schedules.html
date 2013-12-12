@@ -1,0 +1,212 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>3. Schedules API - Philips hue API</title>   
+    <meta name="author" content="Philips hue">
+    <style>
+     	code {  color: RED; }    
+  	</style>	
+  </head>
+
+  <body>
+		
+		<div class="page">
+	
+	    <div class="container content-container">
+	      <div class="row">
+	        <div class="span3 hue-navigation well" data-role="hue-navigation">
+	          <ul class="nav nav-list">   	          	
+    
+	            <li class="divider"></li>
+						</ul>
+						<ul class="nav nav-list"  data-role="api-nav">
+	            <li class="nav-header">API</li>
+                    <li class="active">
+                      <a  href="Lights.html">
+                        1. Lights API
+                      </a>
+                    </li>
+                    <li >
+                      <a  href="Groups.html">
+                        2. Groups API
+                      </a>
+                    </li>
+                    <li >
+                      <a  href="Schedules.html">
+                        3. Schedules API
+                      </a>
+                    </li>
+                    <li >
+                      <a  href="Configuration.html">
+                        4. Configuration API
+                      </a>
+                    </li>
+                    <li >
+                      <a  href="Portal.html">
+                        5. Portal API
+                      </a>
+                    </li>  
+
+	        </div>
+	        
+	        <div class="span9 hue-main-content" data-role="main-content">
+	          <!--Body content-->          
+	        	
+<h1>3. Schedules API </h1>
+
+<h2 id='31_get_all_schedules'>3.1. Get all schedules</h2>
+<table><thead><tr><th>URL</th><th><code>/api/&lt;username&gt;/schedules</code></th></tr></thead><tbody><tr><td style='text-align: left;'>Method</td><td style='text-align: left;'><code>GET</code></td>
+</tr><tr><td style='text-align: left;'>Version</td><td style='text-align: left;'>1.0</td>
+</tr><tr><td style='text-align: left;'>Permission</td><td style='text-align: left;'>Whitelist</td>
+</tr></tbody></table>
+<h3 id='311_description'>3.1.1. Description</h3>
+
+<p>Gets a list of all schedules that have been added to the bridge.</p>
+
+<h3 id='312_response'>3.1.2. Response</h3>
+
+<p>Returns a list of all schedules in the system. Each group has a name and unique identification number.</p>
+
+<p>If there are no schedules then the bridge will return an empty object, <code>{}</code>.</p>
+
+<h3 id='313_response_example'>3.1.3. Response example</h3>
+<div class='highlight'><pre><code class='json'><span class='p'>{</span>
+  <span class='nt'>&quot;1&quot;</span><span class='p'>:{</span>
+  	<span class='nt'>&quot;name&quot;</span><span class='p'>:</span><span class='s2'>&quot;Wake up&quot;</span>
+  <span class='p'>},</span>
+  <span class='nt'>&quot;2&quot;</span><span class='p'>:{</span>
+  	<span class='nt'>&quot;name&quot;</span><span class='p'>:</span><span class='s2'>&quot;Sleep down&quot;</span>
+  <span class='p'>}</span>
+<span class='p'>}</span>	
+</code></pre></div>
+<h2 id='32_create_schedule'>3.2. Create schedule</h2>
+<table><thead><tr><th>URL</th><th><code>/api/&lt;username&gt;/schedules</code></th></tr></thead><tbody><tr><td style='text-align: left;'>Method</td><td style='text-align: left;'><code>POST</code></td>
+</tr><tr><td style='text-align: left;'>Version</td><td style='text-align: left;'>1.0</td>
+</tr><tr><td style='text-align: left;'>Permission</td><td style='text-align: left;'>Whitelist</td>
+</tr></tbody></table>
+<h3 id='321_description'>3.2.1. Description</h3>
+
+<p>Allows the user to create new schedules. The bridge can store up to 100 schedules.</p>
+
+<h3 id='322_body_arguments'>3.2.2. Body arguments</h3>
+<table><thead><tr><th>Name</th><th><strong>Type</strong></th><th><strong>Description</strong></th><th><strong>Required</strong></th></tr></thead><tbody><tr><td style='text-align: left;'>name</td><td style='text-align: left;'>string 0..32</td><td style='text-align: left;'>Name for the new schedule. If a name is not specified then the default name, &#8220;schedule&#8221;, is used.<br /><br />If the name is already taken a space and number will be appended by the bridge, e.g. &#8220;schedule 1&#8221;.</td><td style='text-align: left;'>Optional</td>
+</tr><tr><td style='text-align: left;'>description</td><td style='text-align: left;'>string 0..64</td><td style='text-align: left;'>Description of the new schedule. If the description is not specified it will be empty.</td><td style='text-align: left;'>Optional</td>
+</tr><tr><td style='text-align: left;'>command</td><td style='text-align: left;'>object 0..90</td><td style='text-align: left;'>Command to execute when the scheduled event occurs. If the command is not valid then an error of type 7 will be raised.<br /><strong>Tip</strong>: Stripping unnecessary whitespace can help to keep commands within the 90 character limit.</td><td style='text-align: left;'>Required</td>
+</tr><tr><td style='text-align: left;'>time</td><td style='text-align: left;'>string</td><td style='text-align: left;'>Time when the scheduled event will occur in <a href='/6_glossaryterms.html'>ISO 8601:2004</a> format.<br /><br />The bridge measures time in UTC and only accepts extended format, non-recurring, local time (YYYY-MM-DDThh:mm:ss). <br /><br />Incorrectly formatted dates will raise an error of type 7. If the time is in the past an error 7 will also be raised.</td><td style='text-align: left;'>Required</td>
+</tr></tbody></table>
+<h3 id='323_body_example'>3.2.3. Body example</h3>
+<div class='highlight'><pre><code class='json'><span class='p'>{</span>
+	<span class='nt'>&quot;name&quot;</span><span class='p'>:</span> <span class='s2'>&quot;Wake up&quot;</span><span class='p'>,</span>
+	<span class='nt'>&quot;description&quot;</span><span class='p'>:</span> <span class='s2'>&quot;My wake up alarm&quot;</span><span class='p'>,</span>
+	<span class='nt'>&quot;command&quot;</span><span class='p'>:</span> <span class='p'>{</span>
+		<span class='nt'>&quot;address&quot;</span><span class='p'>:</span> <span class='s2'>&quot;/api/0/groups/1/action&quot;</span><span class='p'>,</span>
+		<span class='nt'>&quot;method&quot;</span><span class='p'>:</span> <span class='s2'>&quot;PUT&quot;</span><span class='p'>,</span>
+		<span class='nt'>&quot;body&quot;</span><span class='p'>:</span> <span class='p'>{</span>
+			<span class='nt'>&quot;on&quot;</span><span class='p'>:</span> <span class='kc'>true</span>
+		<span class='p'>}</span>
+	<span class='p'>},</span>
+	<span class='nt'>&quot;time&quot;</span><span class='p'>:</span> <span class='s2'>&quot;2011-03-30T14:24:40&quot;</span>
+<span class='p'>}</span>
+</code></pre></div>
+<h3 id='324_response'>3.2.4. Response</h3>
+
+<p>Contains a list with a single item that details whether the schedule was added successfully.</p>
+
+<h3 id='325_response_example'>3.2.5. Response example</h3>
+<div class='highlight'><pre><code class='json'><span class='p'>[{</span>
+	<span class='nt'>&quot;success&quot;</span><span class='p'>:{</span><span class='nt'>&quot;id&quot;</span><span class='p'>:</span> <span class='s2'>&quot;2&quot;</span><span class='p'>}</span>
+<span class='p'>}]</span>
+</code></pre></div>
+<h2 id='33_get_schedule_attributes'>3.3. Get schedule attributes</h2>
+<table><thead><tr><th>URL</th><th><code>/api/&lt;username&gt;/schedules/&lt;id&gt;</code></th></tr></thead><tbody><tr><td style='text-align: left;'>Method</td><td style='text-align: left;'><code>GET</code></td>
+</tr><tr><td style='text-align: left;'>Version</td><td style='text-align: left;'>1.0</td>
+</tr><tr><td style='text-align: left;'>Permission</td><td style='text-align: left;'>Whitelist</td>
+</tr></tbody></table>
+<h3 id='331_description'>3.3.1. Description</h3>
+
+<p>Gets all attributes for a schedule.</p>
+
+<h3 id='332_response'>3.3.2. Response</h3>
+<table><thead><tr><th>Name</th><th><strong>Type</strong></th><th><strong>Description</strong></th></tr></thead><tbody><tr><td style='text-align: left;'>name</td><td style='text-align: left;'>string 0..32</td><td style='text-align: left;'>The name of the schedule.</td>
+</tr><tr><td style='text-align: left;'>description</td><td style='text-align: left;'>string 0..64</td><td style='text-align: left;'>Description of the schedule.</td>
+</tr><tr><td style='text-align: left;'>command</td><td style='text-align: left;'>object 0..90</td><td style='text-align: left;'>Command to execute when the scheduled event occurs.</td>
+</tr><tr><td style='text-align: left;'>time</td><td style='text-align: left;'>string</td><td style='text-align: left;'>Time when the scheduled event will occur in <a href='/6_glossaryterms.html'>ISO 8601:2004</a> format. <br /><br />The bridge measures time in UTC and encodes time as a string in extended format, non-recurring, local time (YYYY-MM-DDThh:mm:ss).</td>
+</tr></tbody></table>
+<h3 id='333_response_example'>3.3.3. Response example</h3>
+<div class='highlight'><pre><code class='json'><span class='p'>{</span>
+	<span class='nt'>&quot;name&quot;</span><span class='p'>:</span> <span class='s2'>&quot;Wake up&quot;</span><span class='p'>,</span>
+	<span class='nt'>&quot;description&quot;</span><span class='p'>:</span> <span class='s2'>&quot;My wake up alarm&quot;</span><span class='p'>,</span>
+	<span class='nt'>&quot;command&quot;</span><span class='p'>:</span> <span class='p'>{</span>
+		<span class='nt'>&quot;address&quot;</span><span class='p'>:</span> <span class='s2'>&quot;/api/0/groups/1/action&quot;</span><span class='p'>,</span>
+		<span class='nt'>&quot;method&quot;</span><span class='p'>:</span> <span class='s2'>&quot;PUT&quot;</span><span class='p'>,</span>
+		<span class='nt'>&quot;body&quot;</span><span class='p'>:</span> <span class='p'>{</span>
+			<span class='nt'>&quot;on&quot;</span><span class='p'>:</span> <span class='kc'>true</span>
+		<span class='p'>}</span>
+	<span class='p'>},</span>
+	<span class='nt'>&quot;time&quot;</span><span class='p'>:</span> <span class='s2'>&quot;2011-03-30T14:24:40&quot;</span>
+<span class='p'>}</span>
+</code></pre></div>
+<h2 id='34_set_schedule_attributes'>3.4. Set schedule attributes</h2>
+<table><thead><tr><th>URL</th><th><code>/api/&lt;username&gt;/schedules/&lt;id&gt;</code></th></tr></thead><tbody><tr><td style='text-align: left;'>Method</td><td style='text-align: left;'><code>PUT</code></td>
+</tr><tr><td style='text-align: left;'>Version</td><td style='text-align: left;'>1.0</td>
+</tr><tr><td style='text-align: left;'>Permission</td><td style='text-align: left;'>Whitelist</td>
+</tr></tbody></table>
+<h3 id='341_description'>3.4.1. Description</h3>
+
+<p>Allows the user to change attributes of a schedule.</p>
+
+<h3 id='342_body_arguments'>3.4.2. Body arguments</h3>
+<table><thead><tr><th>Name</th><th><strong>Type</strong></th><th><strong>Description</strong></th><th><strong>Required</strong></th></tr></thead><tbody><tr><td style='text-align: left;'>name</td><td style='text-align: left;'>string 0..32</td><td style='text-align: left;'>Name for the schedule.<br /><br />If the name is already taken a space and number will be appended by the bridge, e.g. &#8220;schedule 1&#8221;.</td><td style='text-align: left;'>Optional</td>
+</tr><tr><td style='text-align: left;'>description</td><td style='text-align: left;'>string 0..64</td><td style='text-align: left;'>Description of the schedule.</td><td style='text-align: left;'>Optional</td>
+</tr><tr><td style='text-align: left;'>command</td><td style='text-align: left;'>object 0..90</td><td style='text-align: left;'>Command to execute when the scheduled event occurs. If the command is not valid then an error of type 7 will be raised.<br /><br /><strong>Tip</strong>: Stripping unnecessary whitespace can help to keep commands within the 90 character limit.</td><td style='text-align: left;'>Optional</td>
+</tr><tr><td style='text-align: left;'>time</td><td style='text-align: left;'>string</td><td style='text-align: left;'>Time when the scheduled event will occur in <a href='/6_glossaryterms.html'>ISO 8601:2004</a> format.<br /><br />The bridge measures time in UTC and only accepts extended format, non-recurring, local time (YYYY-MM-DDThh:mm:ss). <br /><br />Incorrectly formatted dates will raise an error of type 7. If the time is in the past an error 7 will also be raised.</td><td style='text-align: left;'>Optional</td>
+</tr></tbody></table>
+<h3 id='343_body_example'>3.4.3. Body example</h3>
+<div class='highlight'><pre><code class='json'><span class='p'>{</span>
+	<span class='nt'>&quot;name&quot;</span><span class='p'>:</span> <span class='s2'>&quot;Wake up&quot;</span>
+<span class='p'>}</span>
+</code></pre></div>
+<h3 id='344_response'>3.4.4. Response</h3>
+
+<p>A response to a successful <code>PUT</code> request contains confirmation of the arguments passed in. Note: If the new value is too large to return in the response due to internal memory constraints then a value of &#8220;Updated.&#8221; is returned.</p>
+
+<h3 id='345_response_example'>3.4.5. Response example</h3>
+<div class='highlight'><pre><code class='json'><span class='p'>[</span>
+	<span class='p'>{</span> <span class='nt'>&quot;success&quot;</span><span class='p'>:</span> <span class='p'>{</span><span class='nt'>&quot;/schedules/1/name&quot;</span><span class='p'>:</span> <span class='s2'>&quot;Wake up&quot;</span><span class='p'>}}</span>
+<span class='p'>]</span>
+</code></pre></div>
+<h2 id='35_delete_schedule'>3.5. Delete schedule</h2>
+<table><thead><tr><th>URL</th><th><code>/api/&lt;username&gt;/schedules/&lt;id&gt;</code></th></tr></thead><tbody><tr><td style='text-align: left;'>Method</td><td style='text-align: left;'><code>DELETE</code></td>
+</tr><tr><td style='text-align: left;'>Version</td><td style='text-align: left;'>1.0</td>
+</tr><tr><td style='text-align: left;'>Permission</td><td style='text-align: left;'>Whitelist</td>
+</tr></tbody></table>
+<h3 id='351_description'>3.5.1. Description</h3>
+
+<p>Deletes a schedule from the bridge.</p>
+
+<h3 id='352_response'>3.5.2. Response</h3>
+
+<p>The response details whether the schedule was successfully deleted.</p>
+
+<h3 id='353_response_example'>3.5.3. Response example</h3>
+<div class='highlight'><pre><code class='json'><span class='p'>[</span>
+	<span class='p'>{</span><span class='nt'>&quot;success&quot;</span><span class='p'>:</span> <span class='s2'>&quot;/schedules/1 deleted.&quot;</span><span class='p'>}</span>
+<span class='p'>]</span>
+</code></pre></div>
+
+	          
+	        </div>
+	        
+	      </div>
+	
+	
+	    </div> <!-- /container -->
+
+    
+    </div>    
+
+  </body>
+</html>
+

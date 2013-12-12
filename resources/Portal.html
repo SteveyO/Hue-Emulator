@@ -1,0 +1,101 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>5. Portal API - Philips hue API</title>    
+    <meta name="author" content="Philips hue">
+    <style>
+     	code {  color: RED; }    
+  	</style>	
+  </head>
+
+  <body>
+		
+		<div class="page">
+		
+	
+	    <div class="container content-container">
+	      <div class="row">
+	        <div class="span3 hue-navigation well" data-role="hue-navigation">
+	          <ul class="nav nav-list">   	          	
+	            <li class="divider"></li>
+						</ul>
+						<ul class="nav nav-list"  data-role="api-nav">
+	            <li class="nav-header">API</li>
+                    <li class="active">
+                      <a  href="Lights.html">
+                        1. Lights API
+                      </a>
+                    </li>
+                    <li >
+                      <a  href="Groups.html">
+                        2. Groups API
+                      </a>
+                    </li>
+                    <li >
+                      <a  href="Schedules.html">
+                        3. Schedules API
+                      </a>
+                    </li>
+                    <li >
+                      <a  href="Configuration.html">
+                        4. Configuration API
+                      </a>
+                    </li>
+                    <li >
+                      <a  href="Portal.html">
+                        5. Portal API
+                      </a>
+                    </li>
+	        </div>
+	        
+	        <div class="span9 hue-main-content" data-role="main-content">
+	          <!--Body content-->          
+	        	
+<h1>5. Portal API </h1>
+
+<p>This part of the hue developer program is still under development.</p>
+
+<p>Currently available methods:</p>
+
+<h2 id='51_discover_local_bridges'>5.1 Discover local bridges</h2>
+<table><thead><tr><th>URL</th><th><a href='http://www.meethue.com/api/nupnp'>www.meethue.com/api/nupnp</a></th></tr></thead><tbody><tr><td style='text-align: left;'>Method</td><td style='text-align: left;'><code>GET</code></td>
+</tr><tr><td style='text-align: left;'>Version</td><td style='text-align: left;'>1.0</td>
+</tr><tr><td style='text-align: left;'>Permission</td><td style='text-align: left;'>Open</td>
+</tr></tbody></table>
+<h3 id='511_description'>5.1.1 Description</h3>
+
+<p>This will enable you to discover the local IP your bridge has been assigned on your network.</p>
+
+<h3 id='512_response'>5.1.2 Response</h3>
+
+<p>Returns a list of all bridges on the local network and their internal IP addresses.</p>
+
+<p>If there are no bridges on your external IP then the system will return an empty list, <code>[]</code>.</p>
+
+<h3 id='513_response_example'>5.1.3 Response example</h3>
+<div class='highlight'><pre><code class='json'><span class='p'>[</span>
+	<span class='p'>{</span>
+		<span class='nt'>&quot;id&quot;</span><span class='p'>:</span><span class='s2'>&quot;001788fffe0923cb&quot;</span><span class='p'>,</span>
+		<span class='nt'>&quot;internalipaddress&quot;</span><span class='p'>:</span><span class='s2'>&quot;192.168.1.37&quot;</span><span class='p'>,</span>
+		<span class='nt'>&quot;macaddress&quot;</span><span class='p'>:</span><span class='s2'>&quot;00:17:88:09:23:cb&quot;</span>
+	<span class='p'>}</span>
+<span class='p'>]</span>
+</code></pre></div>
+
+
+
+	          
+	        </div>
+	        
+	      </div>
+	
+	
+	    </div> <!-- /container -->
+    
+    </div>    
+
+  </body>
+</html>
+

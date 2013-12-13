@@ -110,7 +110,7 @@
         "gateway": "192.168.2.1",
         "proxyaddress": "",
         "proxyport": 0,
-        "UTC": "2012-10-29T12:00:00",
+        "UTC": "2012-10-29T12:05:00",
         "whitelist": {
             "newdeveloper": {
                 "last use date": "2012-10-29T12:00:00",
@@ -118,7 +118,7 @@
                 "name": "test user"
             }
         },
-        "swversion": "01003372",
+        "swversion": "01005215",
         "swupdate": {
             "updatestate": 0,
             "url": "",

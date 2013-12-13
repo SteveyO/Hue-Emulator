@@ -330,9 +330,7 @@ public class PHUtilitiesHelper {
         livingColors.add("LLC005"); /* Bloom (gen II) */
         livingColors.add("LLC006"); /* Iris (gen III) */
         livingColors.add("LLC007"); /* Bloom, Aura (gen III) */
-        livingColors.add("LLC010"); /* Hue Iris */
         livingColors.add("LLC011"); /* Hue Bloom */
-        livingColors.add("LLC012"); /* Hue Aura */
         livingColors.add("LLC013"); /* Disney Story Teller */
         livingColors.add("LST001"); /* Light Strips */
 

@@ -163,7 +163,7 @@ public class PHConfig
 
  public void setUTC(String uTC)
  {
-  UTC = uTC;
+  this.UTC = uTC;
  }
 
  public String getProxyaddress()

@@ -9,3 +9,5 @@ It allows developers who don't have access to a Philips Hue system (i.e.  A Brid
 For more information visit the main project page:
 
 http://steveyo.github.io/Hue-Emulator
+
+<img src="screenshot.png" />

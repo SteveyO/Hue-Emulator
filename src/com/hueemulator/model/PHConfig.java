@@ -1,5 +1,7 @@
 package com.hueemulator.model;
 
+import java.util.Map;
+
 import org.codehaus.jackson.annotate.JsonProperty;
 
 public class PHConfig
@@ -44,9 +46,11 @@ public class PHConfig
  private String  proxyaddress;
  
  @JsonProperty("whitelist")
- private PHWhitelist whitelist;
+ private Map<String, PHWhitelistEntry> whitelist;
 
- public Boolean getPortalservices()
+
+
+public Boolean getPortalservices()
  {
   return portalservices;
  }
@@ -176,14 +180,11 @@ public class PHConfig
   this.proxyaddress = proxyaddress;
  }
 
- public PHWhitelist getWhitelist()
- {
-  return whitelist;
+ public Map<String, PHWhitelistEntry> getWhitelist() {
+	 return whitelist;
  }
 
- public void setWhitelist(PHWhitelist whitelist)
- {
-  this.whitelist = whitelist;
+ public void setWhitelist(Map<String, PHWhitelistEntry> whitelist) {
+	 this.whitelist = whitelist;
  }
-
 }

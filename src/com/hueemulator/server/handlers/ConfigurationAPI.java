@@ -14,7 +14,6 @@ import org.json.JSONObject;
 import com.hueemulator.emulator.Controller;
 import com.hueemulator.model.PHBridgeConfiguration;
 import com.hueemulator.model.PHConfig;
-import com.hueemulator.model.PHWhitelist;
 import com.hueemulator.model.PHWhitelistEntry;
 
 public class ConfigurationAPI {
@@ -56,9 +55,7 @@ public class ConfigurationAPI {
         }
 
         String username = urlElements[2];
-        PHWhitelist whitelist = bridgeConfiguration.getConfig().getWhitelist();
-
-        Map<String, PHWhitelistEntry> whiteListMap = whitelist.getWhitelist();
+        Map<String, PHWhitelistEntry> whiteListMap = bridgeConfiguration.getConfig().getWhitelist();
 
         Iterator it = whiteListMap.entrySet().iterator();
 

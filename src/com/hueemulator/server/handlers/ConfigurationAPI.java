@@ -15,6 +15,7 @@ import com.hueemulator.emulator.Controller;
 import com.hueemulator.model.PHBridgeConfiguration;
 import com.hueemulator.model.PHConfig;
 import com.hueemulator.model.PHWhitelistEntry;
+import com.hueemulator.utils.Utils;
 
 public class ConfigurationAPI {
 
@@ -64,6 +65,7 @@ public class ConfigurationAPI {
             String whiteListUsername = (String)entry.getKey();
 
             if (whiteListUsername.equals(username)) {
+            	whiteListMap.get(username).setLastUseDate(Utils.getCurrentDate());  // Set the last use date.
                 return true;
             }
         }

@@ -104,4 +104,12 @@ public class Utils {
         con.getResponseCode();
  }
  
+ /** 
+  * Returns the current date in the Date Format used by the Bridge.
+  * @return
+  */
+ public static String getCurrentDate() {
+	 return dateFormat.format(new Date());
+ }
+ 
 }

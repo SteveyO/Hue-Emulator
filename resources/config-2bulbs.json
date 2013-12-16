@@ -133,7 +133,7 @@
             "name": "schedule",
             "description": "",
             "command": {
-                "address": "/api/0/groups/0/action",
+                "address": "/api/newdeveloper/groups/0/action",
                 "body": {
                     "on": true
                 },

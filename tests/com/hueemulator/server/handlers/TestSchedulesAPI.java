@@ -99,7 +99,7 @@ public class TestSchedulesAPI extends TestCase {
         System.out.println("Testing Schedules API: 3.3. Get schedules attributes   (http://developers.meethue.com/3_schedulesapi.html)" );
         String url = baseURL + "newdeveloper/schedules/1";
         String response="";
-        String expected="{\"time\":\"2012-10-29T12:00:00\",\"description\":\"\",\"name\":\"schedule\",\"command\":{\"body\":{\"bri\":null,\"transitiontime\":null,\"on\":true,\"xy\":null},\"address\":\"/api/0/groups/0/action\",\"method\":\"PUT\"}}";
+        String expected="{\"time\":\"2012-10-29T12:00:00\",\"description\":\"\",\"name\":\"schedule\",\"command\":{\"body\":{\"bri\":null,\"transitiontime\":null,\"on\":true,\"xy\":null},\"address\":\"/api/newdeveloper/groups/0/action\",\"method\":\"PUT\"}}";
 
         response = httpTester.doGet(url);        
         assertTrue(TestUtils.jsonsEqual(response, expected));       

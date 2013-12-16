@@ -40,7 +40,7 @@ public class PHConfig
  private Boolean  dhcp;
  
  @JsonProperty("UTC")
- private String  UTC;
+ private String  utc;
  
  @JsonProperty("proxyaddress")
  private String  proxyaddress;
@@ -160,14 +160,14 @@ public Boolean getPortalservices()
   this.dhcp = dhcp;
  }
 
- public String getUTC()
+ public String getUtc()
  {
-  return UTC;
+  return utc;
  }
 
- public void setUTC(String uTC)
+ public void setUtc(String utc)
  {
-  this.UTC = uTC;
+  this.utc = utc;
  }
 
  public String getProxyaddress()

@@ -183,7 +183,7 @@ public class GraphicsPanel extends JPanel implements MouseListener {
         g2.drawString(config.getIpaddress(),100,    50);  
         
         g2.drawString("UTC:",                30,    70);
-        g2.drawString(config.getUTC(),      100,    70); 
+        g2.drawString(config.getUtc(),      100,    70); 
         
         g2.drawString("SW Version:",                30,   90);
         g2.drawString("" + config.getSwversion(),   100,  90); 

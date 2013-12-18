@@ -3,6 +3,7 @@ package com.hueemulator.server.handlers;
 import java.awt.Color;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -23,6 +24,8 @@ import com.hueemulator.utils.Utils;
 
 public class LightsAPI {
 
+    DecimalFormat fourDP = new DecimalFormat("#.####");
+    
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=
     //  1.1  GET ALL LIGHTS
  //  http://developers.meethue.com/1_lightsapi.html   1.1. Get all lights
@@ -256,8 +259,11 @@ public class LightsAPI {
                         // Recalculate Hue
                         ls.setHue((int) (hsv[0] * 65535));
                         List<Double> xyList = new ArrayList();
-                        xyList.add((double) xy.x); 
-                        xyList.add((double) xy.y);
+                        String xStr = fourDP.format(xy.x);
+                        String yStr = fourDP.format(xy.y);
+                        xyList.add(Double.valueOf(xStr)); 
+                        xyList.add(Double.valueOf(yStr));
+                        
                         ls.setXy(xyList);
                     }
                 }

@@ -8,6 +8,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Utils {
@@ -110,6 +111,24 @@ public class Utils {
   */
  public static String getCurrentDate() {
 	 return dateFormat.format(new Date());
+ }
+ 
+ /**
+  * Method checks if valid json (as name suggests).  This is called before every http call to check the user has passed valid json. 
+  * @param test
+  * @return
+  */
+ public static boolean isJSONValid(String test)
+ {
+     boolean valid = false;
+     try {
+         new JSONObject(test);
+         valid = true;
+     }
+     catch(JSONException ex) { 
+         valid = false;
+     }
+     return valid;
  }
  
 }

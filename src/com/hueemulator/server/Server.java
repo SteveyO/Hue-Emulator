@@ -17,6 +17,7 @@ import com.hueemulator.server.handlers.ConfigurationAPI;
 import com.hueemulator.server.handlers.GroupsAPI;
 import com.hueemulator.server.handlers.LightsAPI;
 import com.hueemulator.server.handlers.SchedulesAPI;
+import com.hueemulator.utils.Utils;
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -100,7 +101,7 @@ class MyHandler implements HttpHandler {
         }
         // Check if username is on the whitelsit.  If not a JSON "Unauthoized User" response is sent back.
         else if (!configurationAPIhandler.isValidUserName(bridgeConfiguration, responseBody, urlElements)) {
-            configurationAPIhandler.returnErrorResponse("1", "unauthorized user", responseBody);
+            configurationAPIhandler.returnErrorResponse("1", "unauthorized user", "/", responseBody);
             return;
         }
 
@@ -124,6 +125,14 @@ class MyHandler implements HttpHandler {
                 jSONString += line;
             }
 
+            // Check the json is valid, if not return the same response as the bridge.
+            boolean isValidJSON = Utils.isJSONValid(jSONString);
+            
+            if (!isValidJSON) {     
+                configurationAPIhandler.returnErrorResponse("2", "body contains invalid json", url, responseBody);
+            }
+            
+            
             if (requestMethod.equalsIgnoreCase("PUT")) {
                 handlePut(mapper, url, responseBody, jSONString, urlElements);
             }

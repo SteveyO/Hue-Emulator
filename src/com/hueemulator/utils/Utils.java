@@ -1,7 +1,10 @@
 package com.hueemulator.utils;
 
+import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.ParseException;
@@ -129,6 +132,30 @@ public class Utils {
          valid = false;
      }
      return valid;
+ }
+ 
+ public static String loadDescriptionFile(String fileName) throws IOException {
+     InputStream is = Utils.class.getResourceAsStream(fileName);
+     if (is==null) {
+         System.out.println("Is is null: " + fileName);
+     }
+     BufferedReader br =new BufferedReader(new InputStreamReader(is));
+      StringBuilder sb = new StringBuilder();
+      
+      try {
+          String line = br.readLine();
+
+          while (line != null) {
+              sb.append(line);
+              sb.append('\n');
+              line = br.readLine();
+          }
+         
+      } finally {
+          br.close();
+      }
+      
+      return sb.toString();
  }
  
 }

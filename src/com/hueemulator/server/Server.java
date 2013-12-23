@@ -88,23 +88,31 @@ class MyHandler implements HttpHandler {
         responseHeaders.set("Access-Control-Allow-Credentials", "true");
         responseHeaders.set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE");
         responseHeaders.set("Access-Control-Allow-Headers", "Content-Type");
-        responseHeaders.set("Content-Type", "application/json; charset=utf-8");
+        if (url.contains("description.xml")) {
+            responseHeaders.set("Content-Type", "application/xml; charset=utf-8"); 
+        }
+        else {
+            responseHeaders.set("Content-Type", "application/json; charset=utf-8");
+        }
+        
         exchange.sendResponseHeaders(200, 0);
         ObjectMapper mapper = new ObjectMapper();
 
-
         String urlElements[] = url.split("/");   
 
-
-        if (url.equals("/api") || url.equals("/api/")) {
+        if (url.equals("/api/description.xml")) {  // TODO This URL is wrong (shouldn't be a /api). Create a new context?            
+            configurationAPIhandler.getBridgeDescription(responseBody);
+        }
+        else if (url.equals("/api") || url.equals("/api/")) {           
             configurationAPIhandler.createNewUsername(bridgeConfiguration, responseBody, requestMethod);
         }
-        // Check if username is on the whitelsit.  If not a JSON "Unauthoized User" response is sent back.
-        else if (!configurationAPIhandler.isValidUserName(bridgeConfiguration, responseBody, urlElements)) {
+        // Check if username is on the whitelist.  If not a JSON "Unauthorized User" response is sent back.
+        else if (!configurationAPIhandler.isValidUserName(bridgeConfiguration, responseBody, urlElements)) {            
             configurationAPIhandler.returnErrorResponse("1", "unauthorized user", "/", responseBody);
             return;
         }
-
+        
+        responseHeaders.set("Content-Type", "application/json; charset=utf-8");
 
         if (requestMethod.equalsIgnoreCase("GET")) {
             handleGet(mapper, url, responseBody, urlElements);

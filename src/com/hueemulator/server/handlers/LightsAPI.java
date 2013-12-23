@@ -258,6 +258,8 @@ public class LightsAPI {
     
                         // Recalculate Hue
                         ls.setHue((int) (hsv[0] * 65535));
+                        ls.setSat((int) (hsv[1] * 254));
+                        
                         List<Double> xyList = new ArrayList();
                         String xStr = fourDP.format(xy.x);
                         String yStr = fourDP.format(xy.y);

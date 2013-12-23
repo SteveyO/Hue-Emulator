@@ -2,6 +2,7 @@ package com.hueemulator.server.handlers;
 
 import java.awt.Color;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Iterator;
 import java.util.Map;
@@ -20,6 +21,24 @@ import com.hueemulator.utils.Utils;
 public class ConfigurationAPI {
 
 
+    public void getBridgeDescription(OutputStream responseBody) {
+        String descriptionFile = "";
+        try {
+           descriptionFile = Utils.loadDescriptionFile("/description.xml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        // TODO: Do Port/IP Replaces here.
+        
+        try {
+            responseBody.write(descriptionFile.getBytes());
+            responseBody.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
+        
+    }
 
 
     //  http://developers.meethue.com/4_configurationapi.html   4.2. Get configuration 

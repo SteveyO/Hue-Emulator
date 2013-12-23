@@ -38,6 +38,7 @@ public class GraphicsPanel extends JPanel implements MouseListener {
 
     private static final int VIEW_TYPE_LARGE=0;
     private static final int VIEW_TYPE_SMALL=1;
+    private static final int NO_BULBS_PER_ROW=5;
     private int viewType;
     private int lightXOffset;
     private int lightsGap;
@@ -45,7 +46,7 @@ public class GraphicsPanel extends JPanel implements MouseListener {
     private boolean drawBulbInfo=false;
     private boolean drawBridgeInfo=false;
    
-    private int numberOfBulbs=0;
+
     private int mouseOverBulb=-1;  // Used for Helper Message, to indicate for which bulb to display the help/info.
     
     public GraphicsPanel(String size) {
@@ -108,6 +109,7 @@ public class GraphicsPanel extends JPanel implements MouseListener {
          Iterator it = lightsMap.entrySet().iterator();
          
          int counter=0;
+         int bulbNumber=0;
          
          while (it.hasNext()) {
           Map.Entry entry = (Map.Entry) it.next();
@@ -121,7 +123,7 @@ public class GraphicsPanel extends JPanel implements MouseListener {
                     g2.setComposite(dimAlphaComposite);    
                 }
                 
-                if (viewType==VIEW_TYPE_LARGE && counter > 0 && counter % 5 == 0) {
+                if (viewType==VIEW_TYPE_LARGE && counter > 0 && counter % NO_BULBS_PER_ROW == 0) {
                  counter=0;
                  yPosition+=300;
                 }
@@ -150,12 +152,13 @@ public class GraphicsPanel extends JPanel implements MouseListener {
                 if (drawBridgeInfo && viewType == VIEW_TYPE_LARGE) {
                  showBridgeInfo(g2, model);                        
                 }
-                if (drawBulbInfo && viewType == VIEW_TYPE_LARGE && mouseOverBulb != -1 && (mouseOverBulb +1) ==  counter) {
-                 showBulbInfo(g2, light, state);                        
+                if (drawBulbInfo && viewType == VIEW_TYPE_LARGE && mouseOverBulb != -1 && (mouseOverBulb) ==  bulbNumber) {
+                 showBulbInfo(g2, light, state, bulbNumber);                        
                 }
+                bulbNumber++;
          }  // End of Lights loop   
          
-         numberOfBulbs=counter;
+
         }
         
         
@@ -190,46 +193,48 @@ public class GraphicsPanel extends JPanel implements MouseListener {
         
      }
     
-    public void showBulbInfo(Graphics2D g2, PHLight light, PHLightState state) {
-        int newXOffset = (1 + mouseOverBulb) * lightXOffset;
-        int offSet = 260;
+    public void showBulbInfo(Graphics2D g2, PHLight light, PHLightState state, int bulbClicked) {
+        int newXOffset = (1 + mouseOverBulb % NO_BULBS_PER_ROW) * lightXOffset;
+        int yOffset    = 25 + ((bulbClicked / NO_BULBS_PER_ROW) * 300);
+        
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
         g2.setColor(Color.BLACK);
         g2.setComposite(helpAlphaComposite);
-        g2.fillRect(newXOffset+15, 10, lightsGap-30, offSet);
+        g2.fillRect(newXOffset+15, yOffset-15, lightsGap-30, yOffset + 235);
         g2.setComposite(normalAlphaComposite);
         g2.setColor(Color.MAGENTA);  
         
-        g2.drawLine(newXOffset+30, 12,   newXOffset+200, 12);
-        g2.drawLine(newXOffset+30, 30, newXOffset+200, 30);
+        g2.drawLine(newXOffset+30, yOffset - 13, newXOffset+200, yOffset - 13);
+        g2.drawLine(newXOffset+30, yOffset + 5,  newXOffset+200, yOffset + 5);
         
         g2.setColor(Color.WHITE);
-        g2.drawString("Name:",           newXOffset+30,     25);
-        g2.drawString(light.getName(),   newXOffset+100,    25);
+        g2.drawString("Name:",           newXOffset+30,     yOffset);
+        g2.drawString(light.getName(),   newXOffset+100,    yOffset);
      
-        g2.drawString("Model:",          newXOffset+30,     50);
-        g2.drawString(light.getModelid(),newXOffset+100,    50);  
+        g2.drawString("Model:",          newXOffset+30,     yOffset + 25);
+        g2.drawString(light.getModelid(),newXOffset+100,    yOffset + 25);  
         
-        g2.drawString("Hue:",          newXOffset+30,       70);
-        g2.drawString("" + state.getHue(),  newXOffset+100, 70); 
+        g2.drawString("Hue:",          newXOffset+30,       yOffset + 45);
+        g2.drawString("" + state.getHue(),  newXOffset+100, yOffset + 45); 
         
-        g2.drawString("Sat:",          newXOffset+30,       90);
-        g2.drawString("" + state.getSat(),  newXOffset+100, 90); 
+        g2.drawString("Sat:",          newXOffset+30,       yOffset + 65);
+        g2.drawString("" + state.getSat(),  newXOffset+100, yOffset + 65); 
         
-        g2.drawString("Bri:",          newXOffset+30,      110);
-        g2.drawString("" + state.getBri(),  newXOffset+100,110); 
+        g2.drawString("Bri:",          newXOffset+30,       yOffset + 85);
+        g2.drawString("" + state.getBri(),  newXOffset+100, yOffset + 85); 
         
-        g2.drawString("x/y:",              newXOffset+30,  130);
-        g2.drawString("" + state.getXy(),  newXOffset+100, 130); 
+        g2.drawString("x/y:",              newXOffset+30,   yOffset + 105);
+        g2.drawString("" + state.getXy(),  newXOffset+100,  yOffset + 105); 
         
-        g2.drawString("Alert:",            newXOffset+30,  150);
-        g2.drawString(state.getAlert(),    newXOffset+100, 150);  
+        g2.drawString("Alert:",            newXOffset+30,   yOffset + 125);
+        g2.drawString(state.getAlert(),    newXOffset+100,  yOffset + 125);  
         
-        g2.drawString("Effect",            newXOffset+30,  170);
-        g2.drawString(state.getEffect(),   newXOffset+100, 170); 
+        g2.drawString("Effect",            newXOffset+30,   yOffset + 145);
+        g2.drawString(state.getEffect(),   newXOffset+100,  yOffset + 145); 
         
-        g2.drawString("On:",               newXOffset+30,  190);
-        g2.drawString("" + state.getOn(),  newXOffset+100, 190); 
+        g2.drawString("On:",               newXOffset+30,   yOffset + 165);
+        g2.drawString("" + state.getOn(),  newXOffset+100,  yOffset + 165); 
+        
     }
     
     public Model getModel() {
@@ -266,20 +271,20 @@ public class GraphicsPanel extends JPanel implements MouseListener {
  public void mousePressed(MouseEvent e) {
         if (viewType == VIEW_TYPE_LARGE) {
             int x= e.getX();
-//            int y=e.getY();
-            
+            int y= e.getY();
+                
             drawBulbInfo   = false;
             drawBridgeInfo = false;
             
-            for (int bulb=0; bulb<  numberOfBulbs; bulb++) {
-           
-             if (x < lightXOffset) {
-              drawBridgeInfo = true;
-             }
-             else if (x > lightXOffset + (bulb * lightsGap) && x < lightXOffset + (bulb * lightsGap) + lightsGap) {
-                    drawBulbInfo=true;
-                    mouseOverBulb = bulb;
-                }
+            int bulbClicked = -1;
+            
+            if (x > lightXOffset) {
+                bulbClicked =  ((x - lightXOffset) / lightsGap) +  (NO_BULBS_PER_ROW * (y/300));
+                drawBulbInfo=true;
+                mouseOverBulb = bulbClicked;
+            }
+            else {
+                drawBridgeInfo=true; 
             }
                
         }

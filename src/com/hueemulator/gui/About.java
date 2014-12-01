@@ -9,7 +9,7 @@ public class About extends JFrame{
 
     public About() {
 
-        String text = "<h2>Hue Emulator v0.1</h2>Programmed By:<br> Stevey O";
+        String text = "<h2>Hue Emulator v0.2</h2>Programmed By:<br> Stevey O";
 
         aboutPane = new JEditorPane();
         aboutPane.setContentType("text/html");

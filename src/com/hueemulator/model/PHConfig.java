@@ -16,7 +16,7 @@ public class PHConfig
  private String  mac;
  
  @JsonProperty("swversion")
- private Integer  swversion;
+ private String  swversion;
  
  @JsonProperty("linkbutton")
  private Boolean  linkbutton;
@@ -80,12 +80,12 @@ public Boolean getPortalservices()
   this.mac = mac;
  }
 
- public Integer getSwversion()
+ public String getSwversion()
  {
   return swversion;
  }
 
- public void setSwversion(Integer swversion)
+ public void setSwversion(String swversion)
  {
   this.swversion = swversion;
  }

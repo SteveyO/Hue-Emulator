@@ -17,23 +17,24 @@ import javax.swing.JTextField;
 import com.hueemulator.emulator.Controller;
 
 public class HueMenuBar extends JMenuBar {
- private JTextField port;
+    private JTextField port;
     private JMenuBar menuBar;
-    private JMenu fileMenu, viewsMenu, helpMenu;
+    private JMenu fileMenu, viewsMenu, debugMenu, helpMenu;
     private JMenuItem menuItem;
 
- private JButton startButton;
+    private JButton startButton;
     private JButton stopButton;
-    private JMenuItem clearConsoleMenuItem, helpMenuItem, aboutMenuItem, propertiesMenuItem, loadConfigMenuItem, newBulbMenuItem;
-    
- private JCheckBoxMenuItem viewGraphicsMenuItems;
- 
- private Controller controller;
- private  LightsFrame lightFrame;
+   private JMenuItem clearConsoleMenuItem, helpMenuItem, aboutMenuItem,loadConfigMenuItem, newBulbMenuItem;
+
+    // Debug Menus Items
+    private JMenuItem showResponseJsonMenuItem, showRequestJsonMenuItem, showFullConfigMenuItem, showTimeInJson;
+
+    private JCheckBoxMenuItem viewGraphicsMenuItems;
+
+    private Controller controller;
+    private LightsFrame lightFrame;
     
  public HueMenuBar() { 
-
-
                
         //Create the menu bar.
         menuBar = new JMenuBar();
@@ -60,10 +61,6 @@ public class HueMenuBar extends JMenuBar {
         clearConsoleMenuItem = new JMenuItem("Clear Console", KeyEvent.VK_L);           
         fileMenu.add(clearConsoleMenuItem);
       
-       
-       
-        propertiesMenuItem = new JMenuItem("Properties", KeyEvent.VK_P);
-        fileMenu.add(propertiesMenuItem);
 
         menuItem = new JMenuItem("Exit");
         menuItem.setMnemonic(KeyEvent.VK_B);
@@ -90,7 +87,7 @@ public class HueMenuBar extends JMenuBar {
             public void actionPerformed(ActionEvent e)
             {      
                    if (lightFrame == null) {
-                       lightFrame = new LightsFrame();
+                       lightFrame = new LightsFrame(controller);
                        lightFrame.setModel(controller.getModel());
                    }
                    lightFrame.setVisible(true);
@@ -99,6 +96,54 @@ public class HueMenuBar extends JMenuBar {
         });
         viewsMenu.add(graphicsLargeFrameMenuItems);
         
+        //Build the Debug Menu.
+        debugMenu = new JMenu("Debug");
+        debugMenu.setMnemonic(KeyEvent.VK_D);
+        menuBar.add(debugMenu);
+        showRequestJsonMenuItem = new JCheckBoxMenuItem("Show Request JSON");
+        showRequestJsonMenuItem.setSelected(true);
+        showRequestJsonMenuItem.addActionListener(new ActionListener() {             
+            public void actionPerformed(ActionEvent e)
+            {      
+                controller.setShowRequestJson(showRequestJsonMenuItem.isSelected());                   
+            }
+        });
+        debugMenu.add(showRequestJsonMenuItem);
+        
+        showResponseJsonMenuItem = new JCheckBoxMenuItem("Show Response JSON");
+        showResponseJsonMenuItem.setSelected(true);
+        showResponseJsonMenuItem.addActionListener(new ActionListener() {             
+            public void actionPerformed(ActionEvent e)
+            {      
+                controller.setShowResponseJson(showResponseJsonMenuItem.isSelected());  
+            }
+        });
+        debugMenu.add(showResponseJsonMenuItem); 
+
+        showFullConfigMenuItem = new JCheckBoxMenuItem("Show FullConfig JSON (Heartbeat)");
+        showFullConfigMenuItem.setSelected(true);
+        showFullConfigMenuItem.addActionListener(new ActionListener() {             
+            public void actionPerformed(ActionEvent e)
+            {      
+                controller.setShowFullConfigJson(showFullConfigMenuItem.isSelected());  
+            }
+        });
+        debugMenu.add(showFullConfigMenuItem); 
+        
+        debugMenu.addSeparator();
+        
+        showTimeInJson = new JCheckBoxMenuItem("Show Time");
+        showTimeInJson.setSelected(true);
+        showTimeInJson.addActionListener(new ActionListener() {             
+            public void actionPerformed(ActionEvent e)
+            {       
+                controller.getModel().setShowConsoleTime(showTimeInJson.isSelected());
+            }
+        });
+        debugMenu.add(showTimeInJson); 
+
+        // Debug Menus Items
+ //       private JMenuItem showResponseJsonMenuItem, showRequestJsonMenuItem, showFullConfigMenuItem;
         
 
         //Build the Help Menu.
@@ -232,16 +277,7 @@ public class HueMenuBar extends JMenuBar {
   this.aboutMenuItem = aboutMenuItem;
  }
  
- public JMenuItem getPropertiesMenuItem() {
-  return propertiesMenuItem;
- }
- 
- public void setPropertiesMenuItem(JMenuItem propertiesMenuItem) {
-  this.propertiesMenuItem = propertiesMenuItem;
- } 
- 
- 
-    public JCheckBoxMenuItem getViewGraphicsMenuItems() {
+ public JCheckBoxMenuItem getViewGraphicsMenuItems() {
   return viewGraphicsMenuItems;
  }
 

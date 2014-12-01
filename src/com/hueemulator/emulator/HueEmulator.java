@@ -17,6 +17,7 @@ public class HueEmulator{
         // Bind the Model and View
         Controller controller = new Controller(model,view);
         view.getMenuBar().setController(controller);
+        view.getGraphicsPanel().setController(controller);
         
         // Add all the Menu Listeners.
         controller.addMenuListeners();   

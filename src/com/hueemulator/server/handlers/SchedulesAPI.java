@@ -171,7 +171,7 @@ public class SchedulesAPI {
         responseBody.close();
 
 
-        controller.addTextToConsole(responseArray.toString(), Color.WHITE); 
+        controller.addTextToConsole(responseArray.toString(), Color.WHITE, controller.showResponseJson()); 
     } 
 
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=
@@ -185,7 +185,7 @@ public class SchedulesAPI {
         }
         else {
             mapper.writeValue(responseBody, bridgeConfiguration.getSchedules().get(scheduleIdentifier));   // Write to the response.
-            controller.addTextToConsole(mapper.writeValueAsString(bridgeConfiguration.getSchedules().get(scheduleIdentifier)), Color.WHITE); 
+            controller.addTextToConsole(mapper.writeValueAsString(bridgeConfiguration.getSchedules().get(scheduleIdentifier)), Color.WHITE, controller.showResponseJson()); 
         }
 
     }
@@ -304,7 +304,7 @@ public class SchedulesAPI {
         responseBody.write(responseArray.toString().getBytes());
         responseBody.close();
         bridgeConfiguration.getSchedules().put(scheduleIdentifier, scheduleObject);  
-        controller.addTextToConsole(responseArray.toString(), Color.WHITE); 
+        controller.addTextToConsole(responseArray.toString(), Color.WHITE, controller.showResponseJson()); 
     }
 
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=
@@ -329,7 +329,7 @@ public class SchedulesAPI {
             responseBody.close();
 
             // mapper.writeValue(responseBody, bridgeConfiguration.getSchedules().get(scheduleIdentifier));   // Write to the response.
-            controller.addTextToConsole(mapper.writeValueAsString(bridgeConfiguration.getSchedules().get(scheduleIdentifier)), Color.WHITE); 
+            controller.addTextToConsole(mapper.writeValueAsString(bridgeConfiguration.getSchedules().get(scheduleIdentifier)), Color.WHITE, controller.showResponseJson()); 
         }
 
     }

@@ -18,6 +18,7 @@ import java.util.Map;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
+import com.hueemulator.emulator.Controller;
 import com.hueemulator.emulator.Model;
 import com.hueemulator.model.PHConfig;
 import com.hueemulator.model.PHLight;
@@ -45,7 +46,7 @@ public class GraphicsPanel extends JPanel implements MouseListener {
     private int yPosition;
     private boolean drawBulbInfo=false;
     private boolean drawBridgeInfo=false;
-   
+    private Controller controller;
 
     private int mouseOverBulb=-1;  // Used for Helper Message, to indicate for which bulb to display the help/info.
     
@@ -84,6 +85,10 @@ public class GraphicsPanel extends JPanel implements MouseListener {
         helpAlphaComposite = AlphaComposite.getInstance(type, 0.8f);
         
         addMouseListener(this);
+    }
+    
+    public void setController(Controller controller) {
+        this.controller=controller;
     }
    
     public void paintComponent( Graphics g ) {
@@ -269,9 +274,13 @@ public class GraphicsPanel extends JPanel implements MouseListener {
 
  @Override
  public void mousePressed(MouseEvent e) {
+     int x= e.getX();
+     int y= e.getY();
+
+
+        boolean linkButtonPressed=false;  // i.e. The use has clicked near the bridge image.
         if (viewType == VIEW_TYPE_LARGE) {
-            int x= e.getX();
-            int y= e.getY();
+
                 
             drawBulbInfo   = false;
             drawBridgeInfo = false;
@@ -285,9 +294,18 @@ public class GraphicsPanel extends JPanel implements MouseListener {
             }
             else {
                 drawBridgeInfo=true; 
+                linkButtonPressed=true;
             }
                
         }
+        else if (x < 90) {
+            linkButtonPressed=true;
+        }
+        
+        if (linkButtonPressed) {
+            controller.setHasBridgeBeenPushLinked(true);
+            controller.addTextToConsole("Link button has been pressed", Color.GREEN, true);
+         }
 
         this.repaint(); 
  }

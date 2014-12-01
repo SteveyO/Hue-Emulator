@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -23,9 +24,10 @@ import com.hueemulator.utils.Utils;
 
 public class GroupsAPI {
 
-    // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=
+    
+     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=
     //  2.1  GET ALL GROUPS
-    //  http://developers.meethue.com/2_groupsapi.html   2.1. Get all groups
+    //  http://www.developers.meethue.com/documentation/groups-api#21_get_all_groups   2.1. Get all groups
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=    
 
     public void getAllGroups_2_1(ObjectMapper mapper, PHBridgeConfiguration bridgeConfiguration, OutputStream responseBody, Controller controller) throws JsonParseException, IOException {
@@ -52,7 +54,7 @@ public class GroupsAPI {
     
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=
     //  2.2  CREATE GROUP
-    //  http://developers.meethue.com/2_groupsapi.html   3.2. Create Group
+    //  http://www.developers.meethue.com/documentation/groups-api#22_create_group   3.2. Create Group
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= 
     public void createGroup_2_2(ObjectMapper mapper, String jSONString, PHBridgeConfiguration bridgeConfiguration, OutputStream responseBody, Controller controller) throws JsonParseException, IOException {
 
@@ -126,13 +128,13 @@ public class GroupsAPI {
             responseBody.write(responseArray.toString().getBytes());
             responseBody.close();
                        
-            controller.addTextToConsole(responseArray.toString(), Color.WHITE); 
+            controller.addTextToConsole(responseArray.toString(), Color.WHITE, controller.showResponseJson()); 
     }   
     
 
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=
     //  2.3  GET GROUP ATTRIBUTES
-    //  http://developers.meethue.com/2_groupsapi.html   2.3. Get group attributes
+    //  http://www.developers.meethue.com/documentation/groups-api#23_get_group_attributes   2.3. Get group attributes
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=
     public void getGroupAttributes_2_3(ObjectMapper mapper, PHBridgeConfiguration bridgeConfiguration, OutputStream responseBody, Controller controller, String groupIdentifier) throws JsonParseException, IOException {
 
@@ -141,14 +143,14 @@ public class GroupsAPI {
         }
         else {
             mapper.writeValue(responseBody, bridgeConfiguration.getGroups().get(groupIdentifier));   // Write to the response.
-            controller.addTextToConsole(mapper.writeValueAsString(bridgeConfiguration.getGroups().get(groupIdentifier)), Color.WHITE); 
+            controller.addTextToConsole(mapper.writeValueAsString(bridgeConfiguration.getGroups().get(groupIdentifier)), Color.WHITE, controller.showResponseJson()); 
         }
 
     } 
     
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=
     //  2.4  SET GROUP  ATTRIBUTES
-    //  http://developers.meethue.com/2_groupsapi.html   2.4. Set group attributes
+    //  http://www.developers.meethue.com/documentation/groups-api#24_set_group_attributes   2.4. Set group attributes
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= 
     public void setGroupAttributes_2_4(ObjectMapper mapper, String jSONString, PHBridgeConfiguration bridgeConfiguration, OutputStream responseBody, Controller controller, String groupIdentifier) throws JsonParseException, IOException {          
 
@@ -223,12 +225,12 @@ public class GroupsAPI {
             responseBody.write(responseArray.toString().getBytes());
             responseBody.close();
             bridgeConfiguration.getGroups().put(groupIdentifier, groupObject);  
-            controller.addTextToConsole(responseArray.toString(), Color.WHITE); 
+            controller.addTextToConsole(responseArray.toString(), Color.WHITE, controller.showResponseJson()); 
     }    
 
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=
     //  2.5  SET GROUP STATE
-    //  http://developers.meethue.com/2_groupsapi.html   2.5. Set Group State
+    //  http://www.developers.meethue.com/documentation/groups-api#25_set_group_state   2.5. Set Group State
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=    
 
     public void setGroupState_2_5(ObjectMapper mapper, String jSONString, PHBridgeConfiguration bridgeConfiguration, OutputStream responseBody, Controller controller, String groupIdentifier, LightsAPI lightsAPI) throws JsonParseException, IOException {
@@ -239,22 +241,64 @@ public class GroupsAPI {
             sendErrorResponse(groupIdentifier, "3", responseBody);
         }
 
-        // Temporary Code, until groups is implemented. i.e.  Only accept request for the default 0 group.
-        if (!groupIdentifier.equals("0")) {
-            return;
+        Map<String, PHLight> allLights;
+        
+        if (groupIdentifier.equals("0")) {   // 0 is the default 'all lights' group
+            allLights =  bridgeConfiguration.getLights();
+        }
+        else {
+            allLights = new HashMap<String, PHLight>();  
+            
+            Map <String, PHLight> lightsMap = bridgeConfiguration.getLights();
+            PHGroupsEntry group = bridgeConfiguration.getGroups().get(groupIdentifier);  // Get the selected group, so we can filter out the lights in this group.
+
+            Iterator it = lightsMap.entrySet().iterator();
+            
+            while (it.hasNext()) {
+                Map.Entry <String, PHLight> entry = (Map.Entry) it.next();
+                String identifier = (String)entry.getKey();
+                PHLight light = (PHLight) entry.getValue();
+
+                if (group.getLightIdentifiers().contains(identifier)) {
+                    allLights.put(identifier, light);
+                }
+            }
         }
 
-        Map<String, PHLight> allLights =  bridgeConfiguration.getLights();
-
         JSONArray responseArray = new JSONArray();
+        
+        if (jSONString.indexOf("\"scene\"") != -1) {   // Scene recall here (http://www.developers.meethue.com/documentation/scenes-api#44_recall_scene)
+            JSONObject jsonObject = new JSONObject(jSONString);                
+            String sceneId = jsonObject.optString("scene");
+            System.out.println("Recalling scene: " + sceneId);
+            if (ScenesAPI.emulatorScenes.containsKey(sceneId)) {  // i.e. This scene has been set
+                for (PHLight lightInScene: ScenesAPI.emulatorScenes.get(sceneId)) {
+                    lightInScene.setState(lightInScene.getState());
+                    
+                 // Clone the light state object here (using the copy constructor), so the stored scene lights do not get overwritten.
+                    PHLightState newState = new PHLightState(lightInScene.getState());
+                    
+                    System.out.println("REacll scene hue is: " + newState.getHue());
+                    JSONObject jsonLightStateObject = newState.serializeLightState(newState);
+                    
+                    System.out.println("    JSON STRING: "+ jsonLightStateObject.toString());
+                     // TODO Instead of the below Send the JSON String to the  lightsAPI.setLightState so we get the success response from the bridge.
+                    bridgeConfiguration.getLights().get(lightInScene.getIdentifier()).setState(newState);  
+                     
+                }                   
+            }
+        }
+        else {
 
-        Iterator it = allLights.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry entry = (Map.Entry) it.next();
-            PHLight light = (PHLight) entry.getValue();
-            PHLightState ls = light.getState();
-            lightsAPI.setLightState(resourceUrl, ls, responseArray, jSONString);
-            light.setState(ls);
+            Iterator it = allLights.entrySet().iterator();
+            while (it.hasNext()) {
+                Map.Entry entry = (Map.Entry) it.next();
+                PHLight light = (PHLight) entry.getValue();            
+                PHLightState ls = light.getState();
+
+                lightsAPI.setLightState(resourceUrl, ls, responseArray, jSONString);
+                light.setState(ls);
+            }
         }
         
         // Here the Response array has duplicates (i.e. commands for each bulb) so duplicates are filtered.  Also error messages are removed, as these are not caught by a group command.
@@ -262,13 +306,12 @@ public class GroupsAPI {
 
         responseBody.write(responseArray.toString().getBytes());
         responseBody.close();
-        controller.addTextToConsole(responseArray.toString(), Color.WHITE);     
-
+        controller.addTextToConsole(responseArray.toString(), Color.WHITE, controller.showResponseJson());     
 
     }
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=
     //  2.6  DELETE GROUP
-    //  http://developers.meethue.com/2_groupsapi.html   3.5. Delete group
+    //  http://www.developers.meethue.com/documentation/groups-api#26_delete_group   3.5. Delete group
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=
     public void deleteGroup_2_6(ObjectMapper mapper, PHBridgeConfiguration bridgeConfiguration, OutputStream responseBody, Controller controller, String groupIdentifier) throws JsonParseException, IOException {
 
@@ -287,7 +330,7 @@ public class GroupsAPI {
             responseBody.write(responseObject.toString().getBytes());
             responseBody.close();
 
-            controller.addTextToConsole(mapper.writeValueAsString(bridgeConfiguration.getGroups().get(groupIdentifier)), Color.WHITE); 
+            controller.addTextToConsole(mapper.writeValueAsString(bridgeConfiguration.getGroups().get(groupIdentifier)), Color.WHITE, controller.showResponseJson()); 
         }
 
     }
@@ -304,6 +347,15 @@ public class GroupsAPI {
         responseBody.write(responseArray.toString().getBytes());
         responseBody.close();
     }
-
+    
+    // Returns a list of PHLight objects from a list of Strings (Light Identifiers).
+    public List<PHLight> getLightObjectsFromLightIds(PHBridgeConfiguration bridgeConfiguration, List <String>lightIdentifiers) {
+        List <PHLight> phLightList = new ArrayList<PHLight>();
+        
+        for (String sceneLight: lightIdentifiers) {
+            phLightList.add(bridgeConfiguration.getLights().get(sceneLight));
+        }
+        return phLightList;
+    }
 
 }

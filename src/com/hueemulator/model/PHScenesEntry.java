@@ -6,11 +6,15 @@ import org.codehaus.jackson.annotate.JsonProperty;
 
 public class PHScenesEntry
 {
+    
  @JsonProperty("name")
  private String   name;
  
  @JsonProperty("lights")
- private List<Integer> lights;
+ private List<String> lights;
+ 
+ @JsonProperty("active")
+ private boolean active;
 
  public String getName()
  {
@@ -22,13 +26,22 @@ public class PHScenesEntry
   this.name = name;
  }
 
- public List<Integer> getLights()
+ public List<String> getLights()
  {
   return lights;
  }
 
- public void setLights(List<Integer> lights)
+ public void setLights(List<String> lights)
  {
   this.lights = lights;
  }
+
+ public boolean isActive() {
+     return active;
+ }
+
+ public void setActive(boolean active) {
+     this.active = active;
+ }
+
 }

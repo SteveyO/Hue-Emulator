@@ -6,25 +6,37 @@ import org.codehaus.jackson.annotate.JsonProperty;
 
 public class PHLight
 {
-
- @JsonProperty("name")
- private String name;
- 
+    
+ private String identifier;
+    
  @JsonProperty("state")
  private PHLightState state;
+    
+ @JsonProperty("type")
+ private String type;
+ 
+ @JsonProperty("name")
+ private String name; 
  
  @JsonProperty("modelid")
  private String modelid;
  
  @JsonProperty("swversion")
- private Integer  swversion;
- 
- @JsonProperty("type")
- private String type;
- 
+ private String  swversion;
+  
  @JsonProperty("pointsymbol")
  private Map<String, String> pointsymbol;
-
+ 
+ public PHLight() {}
+ 
+ public PHLight(PHLight light) {
+     this.name=light.name;
+     this.modelid = light.modelid;
+     this.state   = light.state;
+     this.swversion = light.swversion;
+     this.type =  light.type;
+ }
+ 
  public String getName()
  {
   return name;
@@ -55,12 +67,12 @@ public class PHLight
   this.modelid = modelid;
  }
 
- public Integer getSwversion()
+ public String getSwversion()
  {
   return swversion;
  }
 
- public void setSwversion(Integer swversion)
+ public void setSwversion(String swversion)
  {
   this.swversion = swversion;
  }
@@ -83,6 +95,14 @@ public class PHLight
  public void setPointsymbol(Map<String, String> pointsymbol)
  {
   this.pointsymbol = pointsymbol;
+ }
+
+ public String getIdentifier() {
+     return identifier;
+ }
+
+ public void setIdentifier(String identifier) {
+     this.identifier = identifier;
  }
 
 }

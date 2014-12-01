@@ -5,9 +5,11 @@ import java.io.IOException;
 import junit.framework.TestCase;
 
 import org.junit.Before;
+import org.junit.Test;
 
 import com.hueemulator.emulator.HttpTester;
 import com.hueemulator.emulator.TestEmulator;
+import com.hueemulator.lighting.utils.TestUtils;
 
 public class TestConfigurationAPI extends TestCase {
     TestEmulator testEmulator;
@@ -40,4 +42,18 @@ public class TestConfigurationAPI extends TestCase {
         
         assertEquals(response, expected);
     }
+    
+    @Test
+    public void testCreateUserAPI_4_1() throws Exception {
+        // 2.4  Set group attributes
+        System.out.println("Testing Create User 4.1.   (http://www.developers.meethue.com/documentation/configuration-api#71_create_user)" );
+        String url = baseURL;
+        String response="";
+        String jsonToPut = "{\"devicetype\":\"test user\",\"username\":\"newdeveloper2\"}";
+        String expected  = "[{\"error\":{\"address\":\"\",\"description\":\"link button not pressed\",\"type\":\"101\"}}]";
+        
+        response= httpTester.doPutOrPost(url, jsonToPut, "POST");
+        assertTrue(TestUtils.jsonsArrayEqual(response, expected));       
+    }
+    
 }

@@ -39,6 +39,7 @@ public class Controller {
     
     private MutableAttributeSet sas;
     private StyleContext context;
+    public boolean hasBridgeBeenPushLinked=false;
     
     public Controller(Model model, View view){
         this.model = model;
@@ -51,7 +52,7 @@ public class Controller {
         emulator = new Emulator(this);        
         
         String introText  = "Welcome to the Hue Emulator.  Choose a port and click the Start Button"; 
-        addTextToConsole(introText, Color.YELLOW);   
+        addTextToConsole(introText, Color.YELLOW, true);   
     }
     
     public void addPropertiesListeners() {
@@ -66,27 +67,27 @@ public class Controller {
     public void addMenuListeners(){
      // Add Listeners For Stop and Start Buttons.
      view.getMenuBar().getStartButton().addActionListener(new ActionListener() {             
-            public void actionPerformed(ActionEvent e)
-            {             
-               emulator.startServer();
+         public void actionPerformed(ActionEvent e)
+         {             
+             emulator.startServers();
              view.getMenuBar().getStartButton().setEnabled(false);
-                view.getMenuBar().getStopButton().setEnabled(true);             
-            }
+             view.getMenuBar().getStopButton().setEnabled(true);             
+         }
         });       
      
      view.getMenuBar().getStopButton().addActionListener(new ActionListener() {             
-            public void actionPerformed(ActionEvent e)
-            {
+         public void actionPerformed(ActionEvent e)
+         {
              emulator.stopServer();
              view.getMenuBar().getStartButton().setEnabled(true);
-                view.getMenuBar().getStopButton().setEnabled(false);
-            }
+             view.getMenuBar().getStopButton().setEnabled(false);
+         }
         });    
         view.getMenuBar().getClearConsoleMenuItem().addActionListener(new ActionListener() {             
             public void actionPerformed(ActionEvent e)
             {
-                    consoleText="";
-                    addTextToConsole("Clear Console", Color.WHITE);
+                clearConsole();
+                addTextToConsole("Console Cleared", Color.WHITE, true);
             }
         });        
      
@@ -94,12 +95,12 @@ public class Controller {
         view.getMenuBar().getViewGraphicsMenuItems().addActionListener(new ActionListener() {             
             public void actionPerformed(ActionEvent e)
             {
-                  if (view.getMenuBar().getViewGraphicsMenuItems().isSelected()) {                     
-                        view.getGraphicsPanel().setVisible(true);
-                     }
-                     else {
-                      view.getGraphicsPanel().setVisible(false);
-                     }
+                if (view.getMenuBar().getViewGraphicsMenuItems().isSelected()) {                     
+                    view.getGraphicsPanel().setVisible(true);
+                }
+                else {
+                    view.getGraphicsPanel().setVisible(false);
+                }
             }
         });
         view.getMenuBar().getLoadConfigMenuItem().addActionListener(new ActionListener() {             
@@ -109,14 +110,7 @@ public class Controller {
             }
         });         
         
-        view.getMenuBar().getPropertiesMenuItem().addActionListener(new ActionListener() {             
-            public void actionPerformed(ActionEvent e)
-            {
-
-       view.getPropertiesFrame().setLocation(300,300);               
-       view.getPropertiesFrame().setVisible(true);
-            }
-        });         
+      
         view.getMenuBar().getAboutMenuItem().addActionListener(new ActionListener() {             
             public void actionPerformed(ActionEvent e)
             {
@@ -144,7 +138,7 @@ public class Controller {
      }
      
      
-     public void addTextToConsole(String text, Color textColour) {   
+     public void addTextToConsole(String text, Color textColour, boolean appendText) {   
       
       if (view==null) {
           return; // No View for JUnit tests, so this is null.
@@ -157,7 +151,9 @@ public class Controller {
           dateString="";
          }
          
-         append(dateString, text, textColour, view.getConsole());
+         if (appendText) {   // Can now be disabled in menus
+             append(dateString, text, textColour, view.getConsole());
+         }
          
          // Repaint the Light Bulbs after Every Command.
          view.getGraphicsPanel().repaint(); 
@@ -218,17 +214,22 @@ public class Controller {
         lightState.setOn(true);
         lightState.setReachable(true);
         lightState.setEffect("none");
-        lightState.setAlert("none");
-
-        
+        lightState.setAlert("none");  
         light.setState(lightState);
         
         bridgeConfiguration.getLights().put(newLightId, light);
-        addTextToConsole("New Bulb Created: " + newLightId, Color.ORANGE); 
+        addTextToConsole("New Bulb Created: " + newLightId, Color.ORANGE, true); 
       }
 
     public String getIpAddress() {
         return ipAddress;
+    }
+    
+    public void clearConsole() {
+    //    System.out.println("Clear Console " +  int docLength = document.getLength(););
+        try {
+            view.getConsole().getDocument().remove(0,  view.getConsole().getDocument().getLength());
+        } catch (BadLocationException e) {}
     }
     
     public void append(final String dateString, final String s, final Color color,  final JEditorPane console) {
@@ -263,4 +264,31 @@ public class Controller {
         }
     }
 
+    public boolean isHasBridgeBeenPushLinked() {
+        return hasBridgeBeenPushLinked;
+    }
+
+    public void setHasBridgeBeenPushLinked(boolean hasBridgeBeenPushLinked) {
+        this.hasBridgeBeenPushLinked = hasBridgeBeenPushLinked;
+    }
+
+    public boolean showRequestJson() {
+        return model.isShowRequestJSON();
+    }
+    
+    public void setShowRequestJson(boolean showRequestJSON) {
+        model.setShowRequestJSON(showRequestJSON);
+    }
+    
+    public boolean showResponseJson() {
+        return model.isShowResponseJSON();
+    }
+    
+    public void setShowResponseJson(boolean showResponseJSON) {
+        model.setShowResponseJSON(showResponseJSON);
+    }
+    
+    public void setShowFullConfigJson(boolean showFullConfigJSON) {
+        model.setShowFullConfigJSON(showFullConfigJSON);
+    }
 }

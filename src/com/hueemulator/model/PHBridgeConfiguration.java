@@ -18,6 +18,9 @@ public class PHBridgeConfiguration
  @JsonProperty("groups")
  private Map<String, PHGroupsEntry> groups;
 
+ @JsonProperty("scenes")
+ private Map<String, PHScenesEntry> scenes;
+
 
  public Map<String, PHLight> getLights()
  {
@@ -54,9 +57,19 @@ public class PHBridgeConfiguration
   return groups;
  }
 
+ public Map<String, PHScenesEntry> getScenes()
+ {
+     return scenes;
+ }
+
  public void setGroups(Map<String, PHGroupsEntry> groups)
  {
   this.groups = groups;
+ }
+
+ public void setScenes(Map<String, PHScenesEntry> scenes)
+ {
+     this.scenes = scenes;
  }
 
 }

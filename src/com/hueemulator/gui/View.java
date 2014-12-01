@@ -23,7 +23,6 @@ public class View {
     private SimpleHelp    simpleHelp;
     private About         about; 
     private JScrollPane consoleScrollPane;
-    private Controller controller;
 
 
     public View(){
@@ -131,7 +130,4 @@ public class View {
         this.consoleScrollPane = consoleScrollPane;
     } 
 
-    public void setController(Controller controller) {
-        this.controller=controller;
-    }
 }

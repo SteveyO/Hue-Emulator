@@ -1,5 +1,6 @@
 package com.hueemulator.server;
 
+import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -16,6 +17,7 @@ import com.hueemulator.model.PHBridgeConfiguration;
 import com.hueemulator.server.handlers.ConfigurationAPI;
 import com.hueemulator.server.handlers.GroupsAPI;
 import com.hueemulator.server.handlers.LightsAPI;
+import com.hueemulator.server.handlers.ScenesAPI;
 import com.hueemulator.server.handlers.SchedulesAPI;
 import com.hueemulator.utils.Utils;
 import com.sun.net.httpserver.Headers;
@@ -27,8 +29,11 @@ import com.sun.net.httpserver.HttpServer;
 public class Server {
 
     private HttpServer httpServer;
+    private Controller controller;
 
     public Server(PHBridgeConfiguration bridgeConfiguration, Controller controller, String portNumber) throws IOException {
+        this.controller=controller;
+        
         InetSocketAddress addr = new InetSocketAddress(Integer.valueOf(portNumber));
 
         httpServer = HttpServer.create(addr, 0);
@@ -62,6 +67,7 @@ class MyHandler implements HttpHandler {
     private ConfigurationAPI configurationAPIhandler;
     private GroupsAPI groupsAPIhandler;
     private SchedulesAPI schedulesAPIhandler;
+    private ScenesAPI    scenesAPIhandler;
 
     public MyHandler(PHBridgeConfiguration bridgeConfiguration, Controller controller) {
         this.bridgeConfiguration = bridgeConfiguration;
@@ -70,6 +76,7 @@ class MyHandler implements HttpHandler {
         lightsAPIhandler = new LightsAPI();
         groupsAPIhandler = new GroupsAPI();
         schedulesAPIhandler = new SchedulesAPI();
+        scenesAPIhandler    = new ScenesAPI();
         configurationAPIhandler = new ConfigurationAPI();
     }
 
@@ -139,7 +146,9 @@ class MyHandler implements HttpHandler {
             if (!isValidJSON) {     
                 configurationAPIhandler.returnErrorResponse("2", "body contains invalid json", url, responseBody);
             }
-            
+
+            controller.addTextToConsole(jSONString, Color.gray, controller.showRequestJson());   // Show the JSON we are sending to the Bridge (i.e. Emulator) in the console.            
+
             
             if (requestMethod.equalsIgnoreCase("PUT")) {
                 handlePut(mapper, url, responseBody, jSONString, urlElements);
@@ -172,6 +181,10 @@ class MyHandler implements HttpHandler {
             String scheduleIdentifier=urlElements[noURLEelements-1];         
             schedulesAPIhandler.setScheduleAttributes_3_4(mapper, jSONString, bridgeConfiguration, responseBody, controller, scheduleIdentifier);
         } 
+        else if (urlElements[noURLEelements-2].equals("scenes")) {
+            String sceneIdentifier=urlElements[noURLEelements-1];         
+            scenesAPIhandler.createScene_4_2(mapper, jSONString, bridgeConfiguration, responseBody, controller, sceneIdentifier);
+        } 
     }
 
     public void handlePost(ObjectMapper mapper, String url, OutputStream responseBody, String jSONString, String[] urlElements) throws JsonParseException, IOException  {
@@ -183,6 +196,9 @@ class MyHandler implements HttpHandler {
         }
         else if (lastURLElement.equals("groups")) {
             groupsAPIhandler.createGroup_2_2(mapper, jSONString, bridgeConfiguration, responseBody, controller);
+        }
+        else if (lastURLElement.equals("api")) {
+            configurationAPIhandler.createUser_7_1(mapper, jSONString, bridgeConfiguration, responseBody, controller);
         }
 
     }
@@ -203,11 +219,14 @@ class MyHandler implements HttpHandler {
         else if (lastURLElement.equals("groups")) {
             groupsAPIhandler.getAllGroups_2_1(mapper, bridgeConfiguration, responseBody, controller);
         }
-        else if (lastURLElement.equals("config")) {  
-            configurationAPIhandler.getConfig_4_2(mapper, bridgeConfiguration, responseBody, controller);
-        }
         else if (lastURLElement.equals("schedules")) {  
             schedulesAPIhandler.getAllSchedules_3_1(bridgeConfiguration, responseBody, controller);
+        }
+        else if (lastURLElement.equals("scenes")) {  
+            scenesAPIhandler.getAllScenes_4_1(mapper, bridgeConfiguration, responseBody, controller);
+        }
+        else if (lastURLElement.equals("config")) {  
+            configurationAPIhandler.getConfig_7_2(mapper, bridgeConfiguration, responseBody, controller);
         }
         else if (urlElements[noURLEelements-2].equals("schedules")) {
             String scheduleId=urlElements[noURLEelements-1];
@@ -218,7 +237,7 @@ class MyHandler implements HttpHandler {
             groupsAPIhandler.getGroupAttributes_2_3(mapper, bridgeConfiguration, responseBody, controller, groupId);
         }
         else {
-            configurationAPIhandler.getFullState_4_5(mapper, bridgeConfiguration, responseBody, controller);       
+            configurationAPIhandler.getFullState_7_5(mapper, bridgeConfiguration, responseBody, controller);       
         }
     }
 

@@ -5,9 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
 
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -21,7 +21,7 @@
       <div class="inner">
         <h1>Hue-emulator</h1>
         <h2>A Bridge API Emulator for the Philips Hue (Personal Wireless System)</h2>
-        <a href="https://github.com/SteveyO/Hue-Emulator" class="button"><small>View project on</small>GitHub</a>
+        <a href="https://github.com/SteveyO/Hue-Emulator" class="button"><small>View project on</small> GitHub</a>
       </div>
     </header>
 
@@ -29,7 +29,7 @@
       <div class="inner clearfix">
         <section id="main-content">
           <h3>
-<a name="hue-emulator" class="anchor" href="#hue-emulator"><span class="octicon octicon-link"></span></a>Hue Emulator.</h3>
+<a id="hue-emulator" class="anchor" href="#hue-emulator" aria-hidden="true"><span class="octicon octicon-link"></span></a>Hue Emulator.</h3>
 
 <p>The Hue Emulator is a Bridge Emulator for the Philips Hue - Personal Wireless System.<br>
 It allows developers who don't have access to a Philips Hue system (i.e.  A Bridge + Hue Light Bulbs) to write hue apps.</p>
@@ -40,35 +40,35 @@ It allows developers who don't have access to a Philips Hue system (i.e.  A Brid
 For a true test a Hue Bridge should be used.</p>
 
 <h3>
-<a name="how-to-use" class="anchor" href="#how-to-use"><span class="octicon octicon-link"></span></a>How to use</h3>
+<a id="how-to-use" class="anchor" href="#how-to-use" aria-hidden="true"><span class="octicon octicon-link"></span></a>How to use</h3>
 
 <p>The emulator is written in Java so a Java Runtime environment is required.</p>
 
 <p>The emulator is an executable .jar file, so can either double click or from the command line:-</p>
 
-<pre><code>java -jar HueEmulator.jar
+<pre><code>java -jar HueEmulator-v0.2.jar
 </code></pre>
 
-<p>Enter the port you want your emulator to run on and click the Start button (this starts the Emulator/HTTP Server).
+<p>Enter the port you want your emulator to run on and click the Start button (this starts the Emulator/HTTP and UPnP Server).
 To check the Emulator is running use the below URL. The full bridge config should be returned, in JSON format:</p>
 
 <pre><code>http://localhost:8000/api/newdeveloper
 </code></pre>
 
-<p>The root of the github project contains the <strong>HueEmulator.jar</strong> executable, so building the source is not required. </p>
+<p>The root of the github project contains the <strong>HueEmulator-v0.2.jar</strong> executable, so building the source is not required. </p>
 
 <p>You can use the emulator a variety of ways:</p>
 
 <h4>
-<a name="hue-api" class="anchor" href="#hue-api"><span class="octicon octicon-link"></span></a>Hue API</h4>
+<a id="hue-api" class="anchor" href="#hue-api" aria-hidden="true"><span class="octicon octicon-link"></span></a>Hue API</h4>
 
 <p>The emulator accepts RESTful web service calls (in JSON format) just as the Hue bridge obviously.</p>
 
 <p>For more details on the valid Hue API calls consult the documentation at:
-<a href="http://developers.meethue.com/">http://developers.meethue.com/</a></p>
+<a href="http://www.developers.meethue.com/">http://www.developers.meethue.com/</a></p>
 
 <h4>
-<a name="javaandroid-sdk" class="anchor" href="#javaandroid-sdk"><span class="octicon octicon-link"></span></a>Java/Android SDK</h4>
+<a id="javaandroid-sdk" class="anchor" href="#javaandroid-sdk" aria-hidden="true"><span class="octicon octicon-link"></span></a>Java/Android SDK</h4>
 
 <p>If you are using the Java SDK you can connect to the emulator using the following lines of code:</p>
 
@@ -83,7 +83,7 @@ phHueSDK.connect(lastAccessPoint);
 <p>See the code examples on the Philips GitHub page for more info. </p>
 
 <h3>
-<a name="currently-implemented-features" class="anchor" href="#currently-implemented-features"><span class="octicon octicon-link"></span></a>Currently Implemented Features</h3>
+<a id="currently-implemented-features" class="anchor" href="#currently-implemented-features" aria-hidden="true"><span class="octicon octicon-link"></span></a>Currently Implemented Features</h3>
 
 <p>The Emulator currently supports the following:</p>
 
@@ -98,8 +98,10 @@ phHueSDK.connect(lastAccessPoint);
 <strong>Adding new Bulbs</strong>  Adding new bulbs is done via the File Menu Option.</li>
 <li>
 <strong>2 Graphical Views</strong> Hue bulbs are displayed in small view, or in a separate window frame showing their current colours/state.</li>
-</ul><h3>
-<a name="to-do" class="anchor" href="#to-do"><span class="octicon octicon-link"></span></a>TO DO</h3>
+</ul>
+
+<h3>
+<a id="to-do" class="anchor" href="#to-do" aria-hidden="true"><span class="octicon octicon-link"></span></a>TO DO</h3>
 
 <p>The Emulator is currently in development and will be updated as of when new features are implemented.</p>
 
@@ -112,14 +114,10 @@ phHueSDK.connect(lastAccessPoint);
 <strong>Improve JUnit tests</strong>  Currently tests are pretty basic with room for improvement.</li>
 <li>
 <strong>Recurring Schedules</strong>  Currently cannot create recurring schedules.  Will be implemented soon.</li>
-<li>
-<strong>Configurable Default Configuration</strong>   Currently a default .json with 3 bulbs is loaded in.  This will be changed to allow opening/saving external configs.</li>
-<li>
-<strong>Light Effects/Looping/Transition Times</strong>  Currently none of these features are implemented. The Bridge has a default transition time of 400 MS, emulator changes colours instantly currently.</li>
-<li>
-<strong>UPNP Server</strong>  Maybe a UPNP server so the emulator can be found during a Bridge Search.  Undecided on this one.</li>
-</ul><h3>
-<a name="support-or-contact" class="anchor" href="#support-or-contact"><span class="octicon octicon-link"></span></a>Support or Contact</h3>
+</ul>
+
+<h3>
+<a id="support-or-contact" class="anchor" href="#support-or-contact" aria-hidden="true"><span class="octicon octicon-link"></span></a>Support or Contact</h3>
 
 <p>The HueEmulator is currently in alpha.  Please report any bugs on GitHub and if you are using the Emulator and require a feature request drop me a line.</p>
         </section>

@@ -50,6 +50,7 @@ For a true test a Hue Bridge should be used.</p>
 </code></pre>
 
 <p>Enter the port you want your emulator to run on and click the Start button (this starts the Emulator/HTTP and UPnP Server).
+It is recommended to use port 80, as using port 80 allows the Emulator to be found by hue apps which use the iOS or Java SDK. However, if port 80 is blocked or inaccessible pick another port.
 To check the Emulator is running use the below URL. The full bridge config should be returned, in JSON format:</p>
 
 <pre><code>http://localhost:8000/api/newdeveloper
@@ -70,7 +71,7 @@ To check the Emulator is running use the below URL. The full bridge config shoul
 <h4>
 <a id="javaandroid-sdk" class="anchor" href="#javaandroid-sdk" aria-hidden="true"><span class="octicon octicon-link"></span></a>Java/Android SDK</h4>
 
-<p>If you are using the Java SDK you can connect to the emulator using the following lines of code:</p>
+<p>If you are running the emulator using port 80, the Java SDK should find the emulator using a bridge search.  If port 80 is blocked or inaccessible then, using the Java SDK you can connect to the emulator using the following lines of code:</p>
 
 <pre><code>PHAccessPoint lastAccessPoint = new PHAccessPoint();
 lastAccessPoint.setIpAddress("192.168.1.1:8000");   // Enter the IP Address and Port your Emulator is running on here.

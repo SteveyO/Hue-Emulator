@@ -42,7 +42,8 @@ public class PHLightState
  
  @JsonProperty("reachable")
  private Boolean   reachable;
-
+ 
+ @JsonIgnore 
  private Integer transitionTime;
  
  public PHLightState() { }

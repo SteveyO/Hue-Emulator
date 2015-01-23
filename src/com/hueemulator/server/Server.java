@@ -208,9 +208,9 @@ class MyHandler implements HttpHandler {
         int noURLEelements=urlElements.length;
         String lastURLElement = urlElements[noURLEelements-1];
 
-        // URL Ends with /lights
+        // URL Ends with /lights, 
         if (lastURLElement.equals("lights")) {
-            lightsAPIhandler.getAllLights_1_1(bridgeConfiguration, responseBody, controller);
+            lightsAPIhandler.getAllLights_1_1(mapper, bridgeConfiguration, responseBody, controller);
         }
         else if (urlElements[noURLEelements-2].equals("lights")) {
             String light=urlElements[noURLEelements-1];

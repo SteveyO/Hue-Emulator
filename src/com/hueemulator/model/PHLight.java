@@ -2,11 +2,12 @@ package com.hueemulator.model;
 
 import java.util.Map;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonProperty;
 
 public class PHLight
 {
-    
+ @JsonIgnore   
  private String identifier;
     
  @JsonProperty("state")

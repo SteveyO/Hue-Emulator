@@ -1,5 +1,14 @@
 Hue-Emulator Changelog
 ============
+v0.3 (23-January-2015)
+
+New Features:
+---
+* Retrieving the lights now retrieves the full lights resource as per 1.3 bridges.
+
+Bug Fixes:
+---
+* Retrieving lights resource doesn't retrieve a LightIdentifer: null and TransitionTime: null anymore, these have been removed.
 
 v0.2 (01-December-2014)
 

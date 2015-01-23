@@ -30,27 +30,10 @@ public class LightsAPI {
     //  1.1  GET ALL LIGHTS
     //  http://www.developers.meethue.com/documentation/lights-api#11_get_all_lights   1.1. Get all lights
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=    
-    public void getAllLights_1_1(PHBridgeConfiguration bridgeConfiguration, OutputStream responseBody, Controller controller) throws JsonParseException, IOException {    
+    public void getAllLights_1_1(ObjectMapper mapper, PHBridgeConfiguration bridgeConfiguration, OutputStream responseBody, Controller controller) throws JsonParseException, IOException {    
         Map <String, PHLight> lightsMap = bridgeConfiguration.getLights();
 
-        Iterator it = lightsMap.entrySet().iterator();
-
-        JSONObject lightsJson = new JSONObject();
-
-        while (it.hasNext()) {
-            Map.Entry <String, PHLight> entry = (Map.Entry) it.next();
-            String identifier = (String)entry.getKey();
-            PHLight light = (PHLight) entry.getValue();
-
-            JSONObject lightJson = new JSONObject();
-            lightJson.putOpt("name", light.getName());
-
-
-            lightsJson.putOpt(identifier, lightJson);
-        }
-
-        responseBody.write(lightsJson.toString().getBytes());
-        responseBody.close();
+        mapper.writeValue(responseBody, lightsMap);   // Write to the response.
     }
 
 

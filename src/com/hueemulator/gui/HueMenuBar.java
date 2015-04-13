@@ -24,7 +24,7 @@ public class HueMenuBar extends JMenuBar {
 
     private JButton startButton;
     private JButton stopButton;
-   private JMenuItem clearConsoleMenuItem, helpMenuItem, aboutMenuItem,loadConfigMenuItem, newBulbMenuItem;
+   private JMenuItem clearConsoleMenuItem, helpMenuItem, aboutMenuItem,loadConfigMenuItem, saveConfigMenuItem, newBulbMenuItem;
 
     // Debug Menus Items
     private JMenuItem showResponseJsonMenuItem, showRequestJsonMenuItem, showFullConfigMenuItem, showTimeInJson;
@@ -46,7 +46,9 @@ public class HueMenuBar extends JMenuBar {
         menuBar.add(fileMenu);
 
         loadConfigMenuItem = new JMenuItem("Load Config", KeyEvent.VK_L);               
+        saveConfigMenuItem = new JMenuItem("Save Config", KeyEvent.VK_L);               
         fileMenu.add(loadConfigMenuItem);
+        fileMenu.add(saveConfigMenuItem);
        
         newBulbMenuItem = new JMenuItem("Add New Bulb", KeyEvent.VK_B);  
         newBulbMenuItem.addActionListener(new ActionListener() {             
@@ -291,6 +293,14 @@ public class HueMenuBar extends JMenuBar {
 
  public void setLoadConfigMenuItem(JMenuItem loadConfigMenuItem) {
   this.loadConfigMenuItem = loadConfigMenuItem;
+ } 
+ 
+ public JMenuItem getSaveConfigMenuItem() {
+     return saveConfigMenuItem;
+ }
+ 
+ public void setSaveConfigMenuItem(JMenuItem saveConfigMenuItem) {
+     this.saveConfigMenuItem = saveConfigMenuItem;
  } 
  
  public void setController(Controller controller) {

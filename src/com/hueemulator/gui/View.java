@@ -12,16 +12,14 @@ import javax.swing.JScrollPane;
 import javax.swing.JToolBar;
 import javax.swing.text.html.HTMLDocument;
 
-import com.hueemulator.emulator.Controller;
-
 public class View {
 
     private JEditorPane console;  // Console where all text is displayed
     private HueMenuBar menuBar;   
     private GraphicsPanel graphicsPanel;
     private PropertiesFrame propertiesFrame;
-    private SimpleHelp    simpleHelp;
     private About         about; 
+    private Help          help; 
     private JScrollPane consoleScrollPane;
 
 
@@ -32,7 +30,7 @@ public class View {
         graphicsPanel = new GraphicsPanel("SMALL");
         graphicsPanel.setVisible(true);
 
-        simpleHelp = new SimpleHelp("Help", "Lights.html");
+        help       = new Help();
         about      = new About();
         propertiesFrame = new PropertiesFrame();
 
@@ -98,20 +96,20 @@ public class View {
         this.graphicsPanel = graphicsPanel;
     }
 
-    public SimpleHelp getSimpleHelp() {
-        return simpleHelp;
-    }
-
-    public void setSimpleHelp(SimpleHelp simpleHelp) {
-        this.simpleHelp = simpleHelp;
-    }
-
     public About getAbout() {
         return about;
     }
 
     public void setAbout(About about) {
         this.about = about;
+
+    } 
+    public Help getHelp() {
+        return help;
+    }
+    
+    public void setHelp(Help help) {
+        this.help = help;
     } 
 
     public PropertiesFrame getPropertiesFrame() {

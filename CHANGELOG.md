@@ -1,5 +1,12 @@
 Hue-Emulator Changelog
 ============
+v0.4 (13-April-2015)
+
+New Features:
+---
+* Can now load and save different bridge JSON configs (e.g. for testing with different number of bulbs).
+* Removed out-dated help web pages.  API docs should be viewed on: http://www.developers.meethue.com/philips-hue-api
+
 v0.3 (23-January-2015)
 
 New Features:

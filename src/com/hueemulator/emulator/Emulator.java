@@ -1,6 +1,8 @@
 package com.hueemulator.emulator;
 
 import java.awt.Color;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -25,10 +27,10 @@ public class Emulator {
 
     public Emulator(Controller controller)  {
         this.controller = controller;
-        String fileName = "/config-2bulbs.json";
-        controller.addTextToConsole("Loading in Configuration, Filename: " + fileName, Color.WHITE, true);
+        String fileName = "/config-3bulbs.json";
+        controller.addTextToConsole("Loading in default Configuration (config-3bulbs.json)", Color.WHITE, true);
 
-        loadConfiguration(fileName);
+        loadConfiguration(fileName, false);
         controller.addTextToConsole("Starting Emulator...", Color.GREEN, true);         
     }
 
@@ -66,19 +68,27 @@ public class Emulator {
         }
     }
 
-    public void loadConfiguration(String fileName) {
+    public boolean loadConfiguration(String fileName, boolean isExternalFile) {
         //2. Convert JSON to Java object
         ObjectMapper mapper = new ObjectMapper();
         try {
-            InputStream is = getClass().getResourceAsStream(fileName);
+           InputStream is;
+            
+            if (isExternalFile) {
+                is = new FileInputStream(new File(fileName));
+            }
+            else {
+                is = getClass().getResourceAsStream(fileName);
+            }            
+            
             controller.getModel().setBridgeConfiguration(mapper.readValue(is, PHBridgeConfiguration.class));
+            return true;
         } catch (JsonParseException e) {
-            e.printStackTrace();
+            return false;
         } catch (JsonMappingException e) {
-            e.printStackTrace();   
+            return false;   
         } catch (IOException e) {
-            e.printStackTrace();
-
+            return false;
         }
     }  
 

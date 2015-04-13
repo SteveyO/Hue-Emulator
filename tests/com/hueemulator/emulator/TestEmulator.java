@@ -37,7 +37,7 @@ public class TestEmulator {
         controller = new Controller(model, null);
         emulator = new Emulator(controller);
 
-        emulator.loadConfiguration(fileName);   
+        emulator.loadConfiguration(fileName, false);   
         setModel(model);
    
         try {        
@@ -58,7 +58,7 @@ public class TestEmulator {
      * i.e. So changing a light state in 1 test does not affect any other tests.
      */
     public void reloadInitialConfig() {
-        emulator.loadConfiguration(fileName); 
+        emulator.loadConfiguration(fileName, false); 
         emulator.getServer().removeContext();
         emulator.getServer().createContext(model.getBridgeConfiguration(), controller);
     }

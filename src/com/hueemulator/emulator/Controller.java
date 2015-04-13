@@ -3,6 +3,8 @@ package com.hueemulator.emulator;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.text.DateFormat;
@@ -10,6 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.swing.JEditorPane;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.text.BadLocationException;
@@ -20,10 +23,15 @@ import javax.swing.text.Style;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyleContext;
 
+import org.codehaus.jackson.JsonGenerationException;
+import org.codehaus.jackson.map.JsonMappingException;
+import org.codehaus.jackson.map.ObjectMapper;
+
 import com.hueemulator.gui.View;
 import com.hueemulator.model.PHBridgeConfiguration;
 import com.hueemulator.model.PHLight;
 import com.hueemulator.model.PHLightState;
+import com.hueemulator.utils.OpenFileFilter;
 
 public class Controller {
  
@@ -106,7 +114,62 @@ public class Controller {
         view.getMenuBar().getLoadConfigMenuItem().addActionListener(new ActionListener() {             
             public void actionPerformed(ActionEvent e)
             {
-             JOptionPane.showMessageDialog(view.getConsole(), "Not implemented yet!!  Ability to load in different configs coming soon... Yippeee!");
+                final JFileChooser fc = new JFileChooser();
+                fc.addChoosableFileFilter(new OpenFileFilter("json","JSON Config file") );
+                //In response to a button click:
+                int returnVal = fc.showOpenDialog(view.getMenuBar());
+  
+                if (returnVal == JFileChooser.APPROVE_OPTION) {
+                    String fileName = fc.getSelectedFile().getAbsoluteFile().getAbsolutePath();
+                    boolean loadedNewConfig = emulator.loadConfiguration( fileName, true);
+
+                    if (loadedNewConfig) {
+                        view.getGraphicsPanel().repaint();
+                        repaintBulbs();                        
+                    }
+                    else {
+                        JOptionPane.showMessageDialog(view.getConsole(), "Config file (" + fileName + ") could not be loaded.  Is it a valid config.json file?");                       
+                    }
+                } 
+            }
+        });         
+        view.getMenuBar().getSaveConfigMenuItem().addActionListener(new ActionListener() {             
+            public void actionPerformed(ActionEvent e)
+            {
+                final JFileChooser fc = new JFileChooser();
+                fc.addChoosableFileFilter(new OpenFileFilter("json","JSON Config file") );
+                //In response to a button click:
+                int returnVal = fc.showSaveDialog(view.getMenuBar());
+                
+                if (returnVal == JFileChooser.APPROVE_OPTION) {
+                     String fileName = fc.getSelectedFile().getAbsoluteFile().getAbsolutePath();
+                     
+                     String extension = "";
+
+                     int i = fileName.lastIndexOf('.');
+                     if (i > 0) {
+                         extension = fileName.substring(i);
+                     }
+                     
+                     if (!extension.equals("") && !extension.equals(".json")) {
+                         JOptionPane.showMessageDialog(view.getConsole(), "Please save the with a .json file extension, or leave blank.");  
+                     }
+                     else {
+                         if (extension.equals(""))fileName += ".json";
+                         
+                         ObjectMapper mapper = new ObjectMapper();
+                         try {
+                            mapper.writeValue(new File(fileName), model.getBridgeConfiguration());
+                        } catch (JsonGenerationException e1) {
+                            e1.printStackTrace();
+                        } catch (JsonMappingException e1) {
+                            e1.printStackTrace();
+                        } catch (IOException e1) {
+                            e1.printStackTrace();
+                        }
+                     }
+
+                } 
             }
         });         
         
@@ -114,17 +177,17 @@ public class Controller {
         view.getMenuBar().getAboutMenuItem().addActionListener(new ActionListener() {             
             public void actionPerformed(ActionEvent e)
             {
-
-       view.getAbout().setLocation(300,300);               
-       view.getAbout().setVisible(true);
+               view.getAbout().setLocation(300,300);               
+               view.getAbout().setVisible(true);
             }
-        });        
+        }); 
+        
         view.getMenuBar().getHelpMenuItem().addActionListener(new ActionListener() {             
             public void actionPerformed(ActionEvent e)
             {
 
-       view.getSimpleHelp().setLocation(300,300);               
-       view.getSimpleHelp().setVisible(true);
+              view.getHelp().setLocation(300,300);               
+              view.getHelp().setVisible(true);
             }
         });        
         
@@ -155,6 +218,11 @@ public class Controller {
              append(dateString, text, textColour, view.getConsole());
          }
          
+         repaintBulbs();
+
+     }
+     
+     public void repaintBulbs() {
          // Repaint the Light Bulbs after Every Command.
          view.getGraphicsPanel().repaint(); 
          
@@ -162,8 +230,8 @@ public class Controller {
          if (view.getMenuBar().getLightFrame() != null) {
             view.getMenuBar().getLightFrame().repaint();
          }
-
-     }    
+     }
+     
      /**
       * When the emulator starts we should update the Bridge Config with the IP Address and PORT this Emulator is running on.
       * This is needed as JSON responses are sent using the IP Address.

@@ -1,34 +1,37 @@
 <!DOCTYPE html>
 <html>
+
   <head>
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+    <meta name="description" content="Hue-emulator : A Bridge API Emulator for the Philips Hue (Personal Wireless System)">
 
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
 
-    <title>Hue-emulator by SteveyO</title>
+    <title>Hue-emulator</title>
   </head>
 
   <body>
-    <header>
-      <div class="inner">
-        <h1>Hue-emulator</h1>
-        <h2>A Bridge API Emulator for the Philips Hue (Personal Wireless System)</h2>
-        <a href="https://github.com/SteveyO/Hue-Emulator" class="button"><small>View project on</small> GitHub</a>
-      </div>
-    </header>
 
-    <div id="content-wrapper">
-      <div class="inner clearfix">
-        <section id="main-content">
-          <h3>
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/SteveyO/Hue-Emulator">View on GitHub</a>
+
+          <h1 id="project_title">Hue-emulator</h1>
+          <h2 id="project_tagline">A Bridge API Emulator for the Philips Hue (Personal Wireless System)</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/SteveyO/Hue-Emulator/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/SteveyO/Hue-Emulator/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h3>
 <a id="hue-emulator" class="anchor" href="#hue-emulator" aria-hidden="true"><span class="octicon octicon-link"></span></a>Hue Emulator.</h3>
 
 <p>The Hue Emulator is a hue Bridge API Emulator for the Philips Hue - Personal Wireless System.<br>
@@ -46,7 +49,7 @@ For a true test a Hue Bridge should be used.</p>
 
 <p>The emulator is an executable .jar file, so can either double click or from the command line:-</p>
 
-<pre><code>java -jar HueEmulator-v0.2.jar
+<pre><code>java -jar HueEmulator-v0.4.jar
 </code></pre>
 
 <p>Enter the port you want your emulator to run on and click the Start button (this starts the Emulator/HTTP and UPnP Server).
@@ -56,7 +59,7 @@ To check the Emulator is running use the below URL. The full bridge config shoul
 <pre><code>http://localhost:8000/api/newdeveloper
 </code></pre>
 
-<p>The root of the github project contains the <strong>HueEmulator-v0.2.jar</strong> executable, so building the source is not required. </p>
+<p>The root of the github project contains the <strong>HueEmulator-v0.4.jar</strong> executable, so building the source is not required. </p>
 
 <p>You can use the emulator a variety of ways:</p>
 
@@ -100,6 +103,8 @@ phHueSDK.connect(lastAccessPoint);
 <li>
 <strong>Adding new Bulbs</strong>  Adding new bulbs is done via the File Menu Option.</li>
 <li>
+<strong>Loading/saving bridge configs</strong>  As from v0.4 you can load or save full bridge config 'JSON' files.</li>
+<li>
 <strong>2 Graphical Views</strong> Hue bulbs are displayed in small view, or in a separate window frame showing their current colours/state.</li>
 </ul>
 
@@ -108,41 +113,31 @@ phHueSDK.connect(lastAccessPoint);
 
 <p>The Emulator is currently in development and will be updated as of when new features are implemented.</p>
 
-<p>The following features will be added soon (roughly in the below order).</p>
+<p>The following features may be added soon (roughly in the below order).</p>
 
 <ul>
 <li>
 <strong>GUI Improvements</strong>  Mouse over helpers for the Light Bulbs + scroll bars for when several lights are added.</li>
 <li>
-<strong>Improve JUnit tests</strong>  Currently tests are pretty basic with room for improvement.</li>
-<li>
-<strong>Recurring Schedules</strong>  Currently cannot create recurring schedules.  Will be implemented soon.</li>
+<strong>Recurring Schedules</strong>  Currently cannot create recurring schedules.</li>
 </ul>
 
 <h3>
 <a id="support-or-contact" class="anchor" href="#support-or-contact" aria-hidden="true"><span class="octicon octicon-link"></span></a>Support or Contact</h3>
 
 <p>The HueEmulator is currently in alpha.  Please report any bugs on GitHub and if you are using the Emulator and require a feature request drop me a line.</p>
-        </section>
-
-        <aside id="sidebar">
-          <a href="https://github.com/SteveyO/Hue-Emulator/zipball/master" class="button">
-            <small>Download</small>
-            .zip file
-          </a>
-          <a href="https://github.com/SteveyO/Hue-Emulator/tarball/master" class="button">
-            <small>Download</small>
-            .tar.gz file
-          </a>
-
-          <p class="repo-owner"><a href="https://github.com/SteveyO/Hue-Emulator"></a> is maintained by <a href="https://github.com/SteveyO">SteveyO</a>.</p>
-
-          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
-        </aside>
-      </div>
+      </section>
     </div>
 
-            <script type="text/javascript">
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Hue-emulator maintained by <a href="https://github.com/SteveyO">SteveyO</a></p>
+        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+              <script type="text/javascript">
             var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
             document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
           </script>
@@ -152,6 +147,7 @@ phHueSDK.connect(lastAccessPoint);
             pageTracker._trackPageview();
             } catch(err) {}
           </script>
+
 
   </body>
 </html>

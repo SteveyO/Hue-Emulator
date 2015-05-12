@@ -80,12 +80,12 @@ public class ConfigurationAPI {
                             userName = jObject.optString(name);
                             
 
-                            if (userName == null || userName.length() > 40) {
+                            if (userName == null || userName.length() > 40 || userName.length() < 10) {
                                 errorDescription = "invalid value, " + userName + ", for parameter, name";
                                 isSuccess=false;
                             }
                             // If it is the first attempt to create the username or the username exists but the bridge has not been pushlinked, then return 'link button not pressed' error.
-                            if (!users.contains(userName) || (users.contains(userName) && !controller.isHasBridgeBeenPushLinked()) ) {
+                            else if (!users.contains(userName) || (users.contains(userName) && !controller.isHasBridgeBeenPushLinked()) ) {
                                 controller.setHasBridgeBeenPushLinked(false);
                                 errorDescription = "link button not pressed";
                                 controller.addTextToConsole("Mouse click anywhere close to the bridge image (Graphical View) to simulate Push linking the bridge.", Color.RED, controller.showResponseJson());

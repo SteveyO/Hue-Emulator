@@ -53,7 +53,7 @@ For a true test a Hue Bridge should be used.</p>
 </code></pre>
 
 <p>Enter the port you want your emulator to run on and click the Start button (this starts the Emulator/HTTP and UPnP Server).
-It is recommended to use port 80, as using port 80 allows the Emulator to be found by hue apps which use the iOS or Java SDK. However, if port 80 is blocked or inaccessible pick another port.
+It is recommended to use port 80, as using port 80 allows the Emulator to be found by hue apps which use Java SDK. However, if port 80 is blocked or inaccessible pick another port.  Note, that the UPNP code is still in Beta and not 100% working (doesn't work with the iOS SDK for example).  This will be improved at some point.
 To check the Emulator is running use the below URL. The full bridge config should be returned, in JSON format:</p>
 
 <pre><code>http://localhost:8000/api/newdeveloper

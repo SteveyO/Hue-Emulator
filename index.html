@@ -52,12 +52,18 @@ For a true test a Hue Bridge should be used.</p>
 <pre><code>java -jar HueEmulator-v0.4.jar
 </code></pre>
 
+<p>Note that if you are running on OS X on Port 80 you may need admin privileges so try:
+    sudo java -jar HueEmulator-v0.4.jar</p>
+
 <p>Enter the port you want your emulator to run on and click the Start button (this starts the Emulator/HTTP and UPnP Server).
 It is recommended to use port 80, as using port 80 allows the Emulator to be found by hue apps which use Java SDK. However, if port 80 is blocked or inaccessible pick another port.  Note, that the UPNP code is still in Beta and not 100% working (doesn't work with the iOS SDK for example).  This will be improved at some point.
 To check the Emulator is running use the below URL. The full bridge config should be returned, in JSON format:</p>
 
 <pre><code>http://localhost:8000/api/newdeveloper
 </code></pre>
+
+<p>Or, if you are running on Port 80 then:
+    http://localhost/api/newdeveloper</p>
 
 <p>The root of the github project contains the <strong>HueEmulator-v0.4.jar</strong> executable, so building the source is not required. </p>
 

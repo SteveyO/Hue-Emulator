@@ -158,7 +158,7 @@ class MyHandler implements HttpHandler {
             }
 			
         }
-		else if (requestMethod.equalsIgnoreCase("OPTIONS")) {
+	else if (requestMethod.equalsIgnoreCase("OPTIONS")) {
             handleDelete(mapper, responseBody, urlElements);
             responseBody.close();
         }		

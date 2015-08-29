@@ -156,7 +156,12 @@ class MyHandler implements HttpHandler {
             if (requestMethod.equalsIgnoreCase("POST")) {
                 handlePost(mapper, url, responseBody, jSONString, urlElements);
             }
-        } 
+			
+        }
+		else if (requestMethod.equalsIgnoreCase("OPTIONS")) {
+            handleDelete(mapper, responseBody, urlElements);
+            responseBody.close();
+        }		
     }
 
     public void handlePut(ObjectMapper mapper, String url, OutputStream responseBody, String jSONString, String[] urlElements) throws JsonParseException, IOException  {

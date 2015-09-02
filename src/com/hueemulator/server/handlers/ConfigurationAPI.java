@@ -75,33 +75,22 @@ public class ConfigurationAPI {
                       
                       resourceUrl = responseBase + name;
                       
-                     
-                      if (name.equals("username")) {
-                            userName = jObject.optString(name);
-                            
-
-                            if (userName == null || userName.length() > 40 || userName.length() < 10) {
-                                errorDescription = "invalid value, " + userName + ", for parameter, name";
-                                isSuccess=false;
-                            }
-                            // If it is the first attempt to create the username or the username exists but the bridge has not been pushlinked, then return 'link button not pressed' error.
-                            else if (!users.contains(userName) || (users.contains(userName) && !controller.isHasBridgeBeenPushLinked()) ) {
-                                controller.setHasBridgeBeenPushLinked(false);
-                                errorDescription = "link button not pressed";
-                                controller.addTextToConsole("Mouse click anywhere close to the bridge image (Graphical View) to simulate Push linking the bridge.", Color.RED, controller.showResponseJson());
-                                isSuccess=false; 
-                                errorCode="101";
-                                resourceUrl="";   // Copying what the bridge returns here.
-                                users.add(userName);
-                            }
-                            else if (controller.isHasBridgeBeenPushLinked()){
-                                isSuccess=true;
-                            }
-                            
-
-                            
+                      userName = Utils.generateRandomUsername();
+                      
+                     if (!controller.isHasBridgeBeenPushLinked() ) {
+                          controller.setHasBridgeBeenPushLinked(false);
+                          errorDescription = "link button not pressed";
+                          controller.addTextToConsole("Mouse click anywhere close to the bridge image (Graphical View) to simulate Push linking the bridge.", Color.RED, controller.showResponseJson());
+                          isSuccess=false; 
+                          errorCode="101";
+                          resourceUrl="";   // Copying what the bridge returns here.
+                          users.add(userName);
                       }
-                      else if (name.equals("devicetype")) {
+                      else if (controller.isHasBridgeBeenPushLinked()){
+                          isSuccess=true;
+                      }
+                     
+                       if (name.equals("devicetype")) {
                           String devicetype = jObject.optString(name);
                           
                           if (devicetype == null || devicetype.length() > 40) {
@@ -126,7 +115,7 @@ public class ConfigurationAPI {
                   
                   if (isSuccess) { 
                       JSONObject idObject = new JSONObject();
-                      idObject.put("username",userName);
+                      idObject.put("username", userName);
                       successObject.putOpt("success",  idObject);
                       
                       whitelistEntry.setCreateDate(Utils.getCurrentDate());

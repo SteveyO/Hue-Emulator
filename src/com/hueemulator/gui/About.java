@@ -7,7 +7,7 @@ import javax.swing.JFrame;
 public class About extends JFrame{
     private JEditorPane aboutPane;
 
-    private static String VERSION = "v0.4";
+    private static String VERSION = "v0.5";
     
     public About() {
 

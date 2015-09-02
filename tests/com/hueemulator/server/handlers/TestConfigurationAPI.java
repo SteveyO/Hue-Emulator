@@ -10,6 +10,7 @@ import org.junit.Test;
 import com.hueemulator.emulator.HttpTester;
 import com.hueemulator.emulator.TestEmulator;
 import com.hueemulator.lighting.utils.TestUtils;
+import com.hueemulator.utils.Utils;
 
 public class TestConfigurationAPI extends TestCase {
     TestEmulator testEmulator;
@@ -49,11 +50,18 @@ public class TestConfigurationAPI extends TestCase {
         System.out.println("Testing Create User 4.1.   (http://www.developers.meethue.com/documentation/configuration-api#71_create_user)" );
         String url = baseURL;
         String response="";
-        String jsonToPut = "{\"devicetype\":\"test user\",\"username\":\"newdeveloper2\"}";
+        String jsonToPut = "{\"devicetype\":\"test user\"}";
         String expected  = "[{\"error\":{\"address\":\"\",\"description\":\"link button not pressed\",\"type\":\"101\"}}]";
         
         response= httpTester.doPutOrPost(url, jsonToPut, "POST");
         assertTrue(TestUtils.jsonsArrayEqual(response, expected));       
+    }
+    
+    @Test
+    public void testRandomUsernames() {
+        String userName = Utils.generateRandomUsername();        
+        assertTrue(userName.length() == 31);
+        System.out.println(userName);
     }
     
 }

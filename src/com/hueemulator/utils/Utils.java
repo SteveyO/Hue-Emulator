@@ -10,6 +10,7 @@ import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Random;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -156,6 +157,20 @@ public class Utils {
       }
       
       return sb.toString();
+ }
+ 
+ // As from December 2015/January 2016 you will no longer be able to create custom whitelist entries in a Hue Bridge, and the randomly generated one must be used instead.
+ // THis change will attempt to replicate the Bridge Logic.
+ public static String generateRandomUsername() {
+     String validChars = "1234567890abcef";
+     String username="";
+     Random rand = new Random();
+     
+     for (int i=0; i < 31; i++) {
+         username += validChars.charAt(rand.nextInt(validChars.length()));
+     }
+          
+     return username;
  }
  
 }

@@ -1,6 +1,10 @@
 Hue-Emulator Changelog
 ============
-v0.4 (13-April-2015)
+v0.5 (02-September-2015)
+
+New Features:
+---
+* Removed possibility to create Custom WhiteList Entries + Added Randomly Generated Username.   This change was done because in December 2015/January 2016 the Philips Bridge will no longer accept Custom Whitelist Entries,  so I wan't developers to get into the habit of using the Randomly Generated Username.
 
 New Features:
 ---

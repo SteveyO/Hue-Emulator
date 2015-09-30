@@ -277,8 +277,8 @@ public class GroupsAPI {
                     
                  // Clone the light state object here (using the copy constructor), so the stored scene lights do not get overwritten.
                     PHLightState newState = new PHLightState(lightInScene.getState());
-                    
-                    System.out.println("REacll scene hue is: " + newState.getHue());
+
+                    System.out.println("Recall scene hue is: " + newState.getHue());
                     JSONObject jsonLightStateObject = newState.serializeLightState(newState);
                     
                     System.out.println("    JSON STRING: "+ jsonLightStateObject.toString());

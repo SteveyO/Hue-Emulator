@@ -49,18 +49,18 @@ public class Controller {
     private StyleContext context;
     public boolean hasBridgeBeenPushLinked=false;
     
-    public Controller(Model model, View view){
+    public Controller(Model model, View view, String fileName){
         this.model = model;
         this.view = view;  
         
         this.sas = new SimpleAttributeSet();
         this.context = new StyleContext();
         this.context.addStyle("test", null);
-        
-        emulator = new Emulator(this);        
-        
-        String introText  = "Welcome to the Hue Emulator.  Choose a port and click the Start Button"; 
-        addTextToConsole(introText, Color.YELLOW, true);   
+
+        emulator = new Emulator(this, fileName);
+
+        String introText  = "Welcome to the Hue Emulator.  Choose a port and click the Start Button";
+        addTextToConsole(introText, Color.YELLOW, true);
     }
     
     public void addPropertiesListeners() {
@@ -121,7 +121,7 @@ public class Controller {
   
                 if (returnVal == JFileChooser.APPROVE_OPTION) {
                     String fileName = fc.getSelectedFile().getAbsoluteFile().getAbsolutePath();
-                    boolean loadedNewConfig = emulator.loadConfiguration( fileName, true);
+                    boolean loadedNewConfig = emulator.loadConfiguration(fileName);
 
                     if (loadedNewConfig) {
                         view.getGraphicsPanel().repaint();

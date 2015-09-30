@@ -302,13 +302,42 @@ public class GroupsAPI {
         }
         
         // Here the Response array has duplicates (i.e. commands for each bulb) so duplicates are filtered.  Also error messages are removed, as these are not caught by a group command.
-        responseArray = TestUtils.removeDuplicates(responseArray, true);
+        responseArray = removeDuplicates(responseArray, true);
 
         responseBody.write(responseArray.toString().getBytes());
         responseBody.close();
         controller.addTextToConsole(responseArray.toString(), Color.WHITE, controller.showResponseJson());     
 
     }
+
+    public static JSONArray removeDuplicates(JSONArray originalArray, boolean removeErrors) {
+
+        List currentObjs = new ArrayList();
+        JSONArray newArray = new JSONArray();
+        boolean includeLine=true;
+
+        for (int i=0; i< originalArray.length(); i++) {
+            Object obj = originalArray.get(i);
+            String jsonString =  originalArray.getJSONObject(i).toString();
+
+            includeLine=true;
+
+            if (removeErrors && jsonString.startsWith("{\"error\":{")) {
+                includeLine=false;
+            }
+
+            if (!currentObjs.contains(obj)) {
+                if (includeLine) {
+                    newArray.put(obj);
+                }
+            }
+
+            currentObjs.add(obj);
+        }
+
+        return newArray;
+    }
+
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=
     //  2.6  DELETE GROUP
     //  http://www.developers.meethue.com/documentation/groups-api#26_delete_group   3.5. Delete group

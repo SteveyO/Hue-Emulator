@@ -170,37 +170,7 @@ public class TestUtils {
     }
     return childSet;
   }
-  
-  
-  // remove duplicates
-  public static JSONArray removeDuplicates(JSONArray originalArray, boolean removeErrors) {
-      
-      List currentObjs = new ArrayList();
-      JSONArray newArray = new JSONArray();
-      boolean includeLine=true;
-      
-      for (int i=0; i< originalArray.length(); i++) {
-          Object obj = originalArray.get(i);
-          String jsonString =  originalArray.getJSONObject(i).toString();
-          
-          includeLine=true;
-          
-          if (removeErrors && jsonString.startsWith("{\"error\":{")) {
-              includeLine=false;
-          }
-          
-          if (!currentObjs.contains(obj)) {
-              if (includeLine) {
-                  newArray.put(obj);
-              }
-          }
-          
-          currentObjs.add(obj);
-      }
-      
-      return newArray;
-  }
-  
+
   public static String getDateSecondsInFuture(int noSeconds) {
       Calendar calendar = Calendar.getInstance(); // gets a calendar using the default time zone and locale.
       calendar.add(Calendar.SECOND, noSeconds);

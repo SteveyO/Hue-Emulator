@@ -25,12 +25,14 @@ public class Emulator {
     private UPNPServer upnpServer;
     private Controller controller;
 
-    public Emulator(Controller controller)  {
+    public Emulator(Controller controller, String fileName)  {
         this.controller = controller;
-        String fileName = "/config-3bulbs.json";
-        controller.addTextToConsole("Loading in default Configuration (config-3bulbs.json)", Color.WHITE, true);
+        if(fileName == null) {
+          fileName = "/config-3bulbs.json";
+        }
+        controller.addTextToConsole("Loading configuration...", Color.WHITE, true);
 
-        loadConfiguration(fileName, false);
+        loadConfiguration(fileName);
         controller.addTextToConsole("Starting Emulator...", Color.GREEN, true);         
     }
 
@@ -68,19 +70,18 @@ public class Emulator {
         }
     }
 
-    public boolean loadConfiguration(String fileName, boolean isExternalFile) {
+    public boolean loadConfiguration(String fileName) {
         //2. Convert JSON to Java object
         ObjectMapper mapper = new ObjectMapper();
         try {
-           InputStream is;
-            
-            if (isExternalFile) {
-                is = new FileInputStream(new File(fileName));
+            InputStream is;
+
+            is = getClass().getResourceAsStream(fileName);
+            if(is == null) {
+              System.out.println("Loading external config file: " + fileName);
+              is = new FileInputStream(new File(fileName));
             }
-            else {
-                is = getClass().getResourceAsStream(fileName);
-            }            
-            
+
             controller.getModel().setBridgeConfiguration(mapper.readValue(is, PHBridgeConfiguration.class));
             return true;
         } catch (JsonParseException e) {

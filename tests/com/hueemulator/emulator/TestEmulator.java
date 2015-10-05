@@ -14,7 +14,7 @@ public class TestEmulator {
     private Emulator emulator;
     private Model model;
     private Controller controller;
-    String fileName = "/config-2bulbs.json";
+    String fileName = "/config-3bulbs.json";
     
     private boolean isServerRunning=false;
     

@@ -24,7 +24,7 @@ public class HueMenuBar extends JMenuBar {
 
     private JButton startButton;
     private JButton stopButton;
-   private JMenuItem clearConsoleMenuItem, helpMenuItem, aboutMenuItem,loadConfigMenuItem, saveConfigMenuItem, newBulbMenuItem;
+   private JMenuItem clearConsoleMenuItem, helpMenuItem, aboutMenuItem,loadConfigMenuItem, saveConfigMenuItem, newColorBulbMenuItem, newLuxBulbMenuItem;
 
     // Debug Menus Items
     private JMenuItem showResponseJsonMenuItem, showRequestJsonMenuItem, showFullConfigMenuItem, showTimeInJson;
@@ -50,14 +50,23 @@ public class HueMenuBar extends JMenuBar {
         fileMenu.add(loadConfigMenuItem);
         fileMenu.add(saveConfigMenuItem);
        
-        newBulbMenuItem = new JMenuItem("Add New Bulb", KeyEvent.VK_B);  
-        newBulbMenuItem.addActionListener(new ActionListener() {             
+        newColorBulbMenuItem = new JMenuItem("Add New Color Bulb", KeyEvent.VK_B);  
+        newColorBulbMenuItem.addActionListener(new ActionListener() {             
             public void actionPerformed(ActionEvent e)
             {
-                   controller.addNewBulb();
+                   controller.addNewBulb(false);
             }
         });  
-        fileMenu.add(newBulbMenuItem);
+        fileMenu.add(newColorBulbMenuItem);
+        
+        newLuxBulbMenuItem = new JMenuItem("Add New Lux Bulb", KeyEvent.VK_L);  
+        newLuxBulbMenuItem.addActionListener(new ActionListener() {             
+            public void actionPerformed(ActionEvent e)
+            {
+                controller.addNewBulb(true);
+            }
+        });  
+        fileMenu.add(newLuxBulbMenuItem);
         
         
         clearConsoleMenuItem = new JMenuItem("Clear Console", KeyEvent.VK_L);           

@@ -9,7 +9,11 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.swing.JEditorPane;
 import javax.swing.JFileChooser;
@@ -264,30 +268,74 @@ public class Controller {
    
   }
   
-    public void addNewBulb() {
+    public void addNewBulb(boolean isLux) {
         PHBridgeConfiguration bridgeConfiguration = model.getBridgeConfiguration();
         
         int numberOfLights = bridgeConfiguration.getLights().size();
         int newIdentifer = numberOfLights+1;
         String newLightId = "" + newIdentifer;
         
-        PHLight light = new PHLight();
-        light.setName("New Light - " + newLightId);
-        light.setModelid("LCT001");
+        PHLight light = new PHLight();        
+        light.setSwversion("65003148");
+        
+        if (isLux) {
+            light.setName("New white Light - " + newLightId);
+            light.setModelid(Constants.MODEL_ID_LUX_BULB);
+            light.setType(Constants.LIGHT_TYPE_LUX_BULB);
+        }
+        else {
+            light.setName("New Light - " + newLightId);
+            light.setModelid(Constants.MODEL_ID_COLOR_BULB);
+            light.setType("Extended color light");
+        }
         
         PHLightState lightState = new PHLightState();
-        lightState.setHue(5000);
+        
+        if (!isLux) {
+           lightState.setHue(5000);
+           List<Double> xyList = new ArrayList();
+           xyList.add(0d);
+           xyList.add(0d);
+           lightState.setXy(xyList);
+        }
+        
+
+        if (!isLux) { 
+          lightState.setColormode("xy");
+          lightState.setCt(0);
+        }
+        light.setPointsymbol(getDefaultPointSymbols());
+ 
         lightState.setBri(254);
         lightState.setSat(254);
         lightState.setOn(true);
         lightState.setReachable(true);
+
         lightState.setEffect("none");
         lightState.setAlert("none");  
         light.setState(lightState);
         
         bridgeConfiguration.getLights().put(newLightId, light);
-        addTextToConsole("New Bulb Created: " + newLightId, Color.ORANGE, true); 
-      }
+        if (isLux) {
+            addTextToConsole("New Lux Bulb Created: " + newLightId, Color.ORANGE, true);            
+        }
+        else {
+            addTextToConsole("New Bulb Created: " + newLightId, Color.ORANGE, true);
+        }
+    }
+    
+    public static Map<String, String> getDefaultPointSymbols() {
+        Map<String, String> pointSymbols = new HashMap<String, String>();
+        pointSymbols.put("1", "none");
+        pointSymbols.put("2", "none");
+        pointSymbols.put("3", "none");
+        pointSymbols.put("4", "none");
+        pointSymbols.put("5", "none");
+        pointSymbols.put("6", "none");
+        pointSymbols.put("7", "none");
+        pointSymbols.put("8", "none");        
+        return pointSymbols;
+    }
 
     public String getIpAddress() {
         return ipAddress;

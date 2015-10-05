@@ -110,7 +110,6 @@ public class TestGroupsAPI extends TestCase {
         
         PHBridgeConfiguration bridgeConfiguration = testEmulator.getModel().getBridgeConfiguration();        
         int noGroups = bridgeConfiguration.getGroups().size();
-        
         assertEquals(noGroups, 1);
         String response="";
 

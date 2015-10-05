@@ -14,10 +14,12 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.hueemulator.emulator.Constants;
 import com.hueemulator.emulator.Controller;
 import com.hueemulator.model.PHBridgeConfiguration;
 import com.hueemulator.model.PHLight;
 import com.hueemulator.model.PHLightState;
+import com.hueemulator.model.PHSchedulesEntry;
 import com.hueemulator.utils.PHUtilitiesHelper;
 import com.hueemulator.utils.PointF;
 import com.hueemulator.utils.Utils;
@@ -33,7 +35,16 @@ public class LightsAPI {
     public void getAllLights_1_1(ObjectMapper mapper, PHBridgeConfiguration bridgeConfiguration, OutputStream responseBody, Controller controller) throws JsonParseException, IOException {    
         Map <String, PHLight> lightsMap = bridgeConfiguration.getLights();
 
-        mapper.writeValue(responseBody, lightsMap);   // Write to the response.
+  //      mapper.writeValue(responseBody, lightsMap);   // Write to the response.
+        
+        JSONObject lightsJson = new JSONObject();
+        for (Map.Entry<String, PHLight> entry : lightsMap.entrySet()) {
+            PHLight light = entry.getValue();
+            lightsJson.put(entry.getKey(), getLightJSON(light));
+
+        }
+        responseBody.write(lightsJson.toString().getBytes());
+        responseBody.close();
     }
 
 
@@ -47,12 +58,51 @@ public class LightsAPI {
             sendErrorResponse(lightIdentifier, "3", responseBody);
         }
         else {
-            mapper.writeValue(responseBody, bridgeConfiguration.getLights().get(lightIdentifier));   // Write to the response.
+            
+            responseBody.write(getLightJSON(bridgeConfiguration.getLights().get(lightIdentifier)).toString().getBytes());
+            responseBody.close();
+            
+//            mapper.writeValue(responseBody, bridgeConfiguration.getLights().get(lightIdentifier));   // Write to the response.
             controller.addTextToConsole(mapper.writeValueAsString(bridgeConfiguration.getLights().get(lightIdentifier)),Color.WHITE, controller.showResponseJson()); 
         }
 
     }
- 
+
+    
+    public JSONObject getLightJSON(PHLight light) {
+        JSONObject lightJson = new JSONObject();
+
+        JSONObject stateJson = new JSONObject();
+        PHLightState state = light.getState();
+        stateJson.putOpt("on", state.getOn());
+        stateJson.putOpt("bri", state.getBri());
+        
+        if (!light.getModelid().equals(Constants.MODEL_ID_LUX_BULB)) {
+          stateJson.putOpt("sat", state.getSat());
+          stateJson.putOpt("hue", state.getHue());
+          stateJson.putOpt("xy",  state.getXy());
+          stateJson.putOpt("ct",  state.getCt());
+          stateJson.putOpt("effect",     state.getEffect());
+          stateJson.putOpt("colormode",  state.getColormode());
+        }
+        
+        stateJson.putOpt("alert",      state.getAlert());
+        
+        stateJson.putOpt("reachable",  state.getReachable());
+        
+        
+        lightJson.putOpt("state", stateJson);
+        lightJson.putOpt("type", light.getType());
+        lightJson.putOpt("name", light.getName());
+        lightJson.putOpt("swversion", light.getSwversion());
+        lightJson.putOpt("modelid", light.getModelid());
+        lightJson.putOpt("pointsymbol", light.getPointsymbol());
+        
+        return lightJson;
+        
+    }
+    
+    
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=
     //  1.5  SET LIGHT ATTRIBUTES
     //  http://www.developers.meethue.com/documentation/lights-api#15_set_light_attributes_rename   1.5. Set light attributes (rename)
@@ -125,9 +175,10 @@ public class LightsAPI {
 
         PHLightState ls = bridgeConfiguration.getLights().get(lightIdentifier).getState();
 
+        String lightType = bridgeConfiguration.getLights().get(lightIdentifier).getType();
         JSONArray responseArray = new JSONArray();
 
-        setLightState(resourceUrl,ls, responseArray, jSONString);
+        setLightState(resourceUrl,lightType, ls, responseArray, jSONString);
 
         responseBody.write(responseArray.toString().getBytes());
         responseBody.close();
@@ -137,7 +188,7 @@ public class LightsAPI {
     }
 
 
-    public void setLightState(String baseUrl, PHLightState ls,  JSONArray responseArray, String jSONString) {
+    public void setLightState(String baseUrl, String lightType, PHLightState ls,   JSONArray responseArray, String jSONString) {
         JSONObject jObject = new JSONObject(jSONString);
         if (jObject != null) {
             JSONArray names = jObject.names();
@@ -161,7 +212,7 @@ public class LightsAPI {
                     successLine.putOpt(resourceUrl, jObject.optBoolean(name));
                     ls.setOn(jObject.optBoolean(name)); 
                 }
-                else if (name.equals("hue")) {
+                else if (name.equals("hue") && !lightType.equals(Constants.LIGHT_TYPE_LUX_BULB) ) {
                     int val = jObject.optInt(name);
                     if (!isOn) {
                         isSuccess=false; errorType=201;  errorDescription = "parameter, hue, is not modifiable. Device is set to off.";
@@ -191,7 +242,7 @@ public class LightsAPI {
                         errorType=7;
                     }
                 }
-                else if (name.equals("sat")) {
+                else if (name.equals("sat")  && !lightType.equals(Constants.LIGHT_TYPE_LUX_BULB)) {
                     int val = jObject.optInt(name);
                     if (!isOn) {
                         isSuccess=false; errorType=201;  errorDescription = "parameter, sat, is not modifiable. Device is set to off.";
@@ -206,9 +257,9 @@ public class LightsAPI {
                         errorType=7;
                     }
                 }
-                else if (name.equals("ct")) {
+                else if (name.equals("ct")  && !lightType.equals(Constants.LIGHT_TYPE_LUX_BULB)) {
                     if (!isOn) {
-                        isSuccess=false; errorType=201;  errorDescription = "parameter, hue, is not modifiable. Device is set to off.";
+                        isSuccess=false; errorType=201;  errorDescription = "parameter, ct, is not modifiable. Device is set to off.";
                     }
                     else {
                         successLine.putOpt(resourceUrl, jObject.optInt(name));
@@ -216,21 +267,20 @@ public class LightsAPI {
                     }
 
                 }
-                else if (name.equals("xy")) {
+                else if (name.equals("xy")  && !lightType.equals(Constants.LIGHT_TYPE_LUX_BULB)) {
                     if (!isOn) {
-                        isSuccess=false; errorType=201;  errorDescription = "parameter, hue, is not modifiable. Device is set to off.";
+                        isSuccess=false; errorType=201;  errorDescription = "parameter, xy, is not modifiable. Device is set to off.";
                     }
                     else {
                         JSONArray xyArray = jObject.optJSONArray("xy");
                         successLine.putOpt(resourceUrl, xyArray);
 
-                        String model="LCT001";
                         float point1 = Float.valueOf(xyArray.get(0).toString());
                         float point2 = Float.valueOf(xyArray.get(1).toString());
                         PointF xy = new PointF(point1,point2);
-                        xy = PHUtilitiesHelper.fixIfOutOfRange(xy, model);  // If the sent x/y values are out of range, the find the closest point.
+                        xy = PHUtilitiesHelper.fixIfOutOfRange(xy, Constants.MODEL_ID_COLOR_BULB);  // If the sent x/y values are out of range, the find the closest point.
                         float[] xyFloatArray = {xy.x, xy.y};
-                        int colour = PHUtilitiesHelper.colorFromXY(xyFloatArray, model);
+                        int colour = PHUtilitiesHelper.colorFromXY(xyFloatArray, Constants.MODEL_ID_COLOR_BULB);
 
                         Color col = new Color(colour);
                         int r = col.getRed();
@@ -252,10 +302,10 @@ public class LightsAPI {
                         ls.setXy(xyList);
                     }
                 }
-                else if (name.equals("effect")) {
+                else if (name.equals("effect") && !lightType.equals(Constants.LIGHT_TYPE_LUX_BULB)) {
                     String effect = jObject.optString(name);
                     if (!isOn) {
-                        isSuccess=false; errorType=201;  errorDescription = "parameter, hue, is not modifiable. Device is set to off.";
+                        isSuccess=false; errorType=201;  errorDescription = "parameter, effect, is not modifiable. Device is set to off.";
                     }
                     else if (effect==null || (!effect.equals("none") && !effect.equals("colorloop"))) {
                         isSuccess=false;
@@ -270,7 +320,7 @@ public class LightsAPI {
                 else if (name.equals("alert")) {
                     String alert = jObject.optString(name);
                     if (!isOn) {
-                        isSuccess=false; errorType=201;  errorDescription = "parameter, hue, is not modifiable. Device is set to off.";
+                        isSuccess=false; errorType=201;  errorDescription = "parameter, alert, is not modifiable. Device is set to off.";
                     }
                     else if (alert==null || (!alert.equals("none") && !alert.equals("select") && !alert.equals("lselect"))) {
                         isSuccess=false;

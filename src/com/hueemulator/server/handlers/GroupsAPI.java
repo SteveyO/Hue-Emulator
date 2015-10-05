@@ -296,7 +296,7 @@ public class GroupsAPI {
                 PHLight light = (PHLight) entry.getValue();            
                 PHLightState ls = light.getState();
 
-                lightsAPI.setLightState(resourceUrl, ls, responseArray, jSONString);
+                lightsAPI.setLightState(resourceUrl, light.getModelid(), ls, responseArray, jSONString);
                 light.setState(ls);
             }
         }

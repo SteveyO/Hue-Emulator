@@ -18,6 +18,7 @@ import java.util.Map;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
+import com.hueemulator.emulator.Constants;
 import com.hueemulator.emulator.Controller;
 import com.hueemulator.emulator.Model;
 import com.hueemulator.model.PHConfig;
@@ -135,12 +136,22 @@ public class GraphicsPanel extends JPanel implements MouseListener {
 
                 if (state.getOn()) {
                       // Bulb Colour
-                    float h =  (float) state.getHue()/65535;
-                    float s =  (float) state.getSat()/254;
-                    float b =  (float) state.getBri()/254;
-                    
-                    int rgb = Color.HSBtoRGB(h,s,b);
-                    Color color = new Color(rgb);
+                    Color color;
+                    if (light.getType().equals(Constants.LIGHT_TYPE_LUX_BULB)) {  // Hue Lux bulb is dimmable white.  No colors.
+                        
+                        int minBri = 170;    // As the bri is done based on alpha,  a brightness of 0 would make the bulb look black (as set against a black background).  So all Alpha Values will be in range 170-255 and the State bri will be a percentage between this range.
+                        int bri    = minBri + (85 * state.getBri()/255);
+                        
+                        color=new Color(255,255,200, bri);
+                    }
+                    else {
+                        float h =  (float) state.getHue()/65535;
+                        float s =  (float) state.getSat()/254;
+                        float b =  (float) state.getBri()/254;
+                        
+                        int rgb = Color.HSBtoRGB(h,s,b);
+                        color = new Color(rgb);                        
+                    }
                     g2.setColor(color);
                     g2.fillRect(lightXOffset + (counter*lightsGap),yPosition, bulbImage.getWidth(), bulbImage.getHeight());
 

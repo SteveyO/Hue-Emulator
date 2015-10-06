@@ -231,8 +231,11 @@ public class Controller {
          view.getGraphicsPanel().repaint(); 
          
          // Repaint the Separate Frame version (showing large bulbs), if this is being used.
-         if (view.getMenuBar().getLightFrame() != null) {
-            view.getMenuBar().getLightFrame().repaint();
+         if (view.getMenuBar().getLargeLightFrame() != null) {
+            view.getMenuBar().getLargeLightFrame().repaint();
+         }
+         if (view.getMenuBar().getSmallLightFrame() != null) {
+             view.getMenuBar().getSmallLightFrame().repaint();
          }
      }
      
@@ -322,6 +325,7 @@ public class Controller {
         else {
             addTextToConsole("New Bulb Created: " + newLightId, Color.ORANGE, true);
         }
+        
     }
     
     public static Map<String, String> getDefaultPointSymbols() {

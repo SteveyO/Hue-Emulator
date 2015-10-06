@@ -14,6 +14,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JTextField;
 
+import com.hueemulator.emulator.Constants;
 import com.hueemulator.emulator.Controller;
 
 public class HueMenuBar extends JMenuBar {
@@ -32,7 +33,8 @@ public class HueMenuBar extends JMenuBar {
     private JCheckBoxMenuItem viewGraphicsMenuItems;
 
     private Controller controller;
-    private LightsFrame lightFrame;
+    private LightsFrame lightFrameLarge;
+    private LightsFrame lightFrameSmall;
     
  public HueMenuBar() { 
                
@@ -97,15 +99,31 @@ public class HueMenuBar extends JMenuBar {
         graphicsLargeFrameMenuItems.addActionListener(new ActionListener() {             
             public void actionPerformed(ActionEvent e)
             {      
-                   if (lightFrame == null) {
-                       lightFrame = new LightsFrame(controller);
-                       lightFrame.setModel(controller.getModel());
+                   if (lightFrameLarge == null) {
+                       lightFrameLarge = new LightsFrame(controller, Constants.LIGHT_FRAME_LARGE);
+                       lightFrameLarge.setModel(controller.getModel());
                    }
-                   lightFrame.setVisible(true);
+                   lightFrameLarge.setVisible(true);
                    
             }
         });
         viewsMenu.add(graphicsLargeFrameMenuItems);
+
+        JCheckBoxMenuItem graphicsSmallFrameMenuItems;
+        graphicsSmallFrameMenuItems = new JCheckBoxMenuItem("Small Frame");
+        graphicsSmallFrameMenuItems.setSelected(false);
+        graphicsSmallFrameMenuItems.addActionListener(new ActionListener() {             
+            public void actionPerformed(ActionEvent e)
+            {      
+                if (lightFrameSmall == null) {
+                    lightFrameSmall = new LightsFrame(controller, Constants.LIGHT_FRAME_SMALL);
+                    lightFrameSmall.setModel(controller.getModel());
+                }
+                lightFrameSmall.setVisible(true);
+                
+            }
+        });
+        viewsMenu.add(graphicsSmallFrameMenuItems);
         
         //Build the Debug Menu.
         debugMenu = new JMenu("Debug");
@@ -316,12 +334,20 @@ public class HueMenuBar extends JMenuBar {
      this.controller=controller;
  }
 
-    public LightsFrame getLightFrame() {
-        return lightFrame;
+    public LightsFrame getLargeLightFrame() {
+        return lightFrameLarge;
     }
 
-    public void setLightFrame(LightsFrame lightFrame) {
-        this.lightFrame = lightFrame;
+    public void setLargeLightFrame(LightsFrame lightFrame) {
+        this.lightFrameLarge = lightFrame;
+    }
+
+    public LightsFrame getSmallLightFrame() {
+        return lightFrameSmall;
+    }
+    
+    public void setSmallLightFrame(LightsFrame lightFrame) {
+        this.lightFrameSmall = lightFrame;
     }
     
 }

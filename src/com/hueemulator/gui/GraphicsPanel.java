@@ -39,8 +39,10 @@ public class GraphicsPanel extends JPanel implements MouseListener {
     private AlphaComposite normalAlphaComposite;
 
     private static final int VIEW_TYPE_LARGE=0;
-    private static final int VIEW_TYPE_SMALL=1;
+    private static final int VIEW_TYPE_SMALL=1;   // New window with small bulbs
+    private static final int VIEW_TYPE_PANEL=2;   // Panel on main window.
     private static final int NO_BULBS_PER_ROW=5;
+    private static final int NO_BULBS_PER_ROW_SMALL=12;
     private int viewType;
     private int lightXOffset;
     private int lightsGap;
@@ -54,18 +56,24 @@ public class GraphicsPanel extends JPanel implements MouseListener {
     public GraphicsPanel(String size) {
         
         String path = "/";
-        if (size.equalsIgnoreCase("LARGE")) {
+        if (size.equalsIgnoreCase(Constants.LIGHT_FRAME_LARGE)) {
             path +="largeImages/";
             viewType=VIEW_TYPE_LARGE;
             lightsGap=240;
             lightXOffset=245;
             yPosition=-40;
         }
-        else {
+        else if (size.equalsIgnoreCase(Constants.LIGHT_FRAME_SMALL)) {
             yPosition=-6;
             lightsGap=80;
             lightXOffset=130;
             viewType=VIEW_TYPE_SMALL;
+        }
+        else {
+            yPosition=-6;
+            lightsGap=80;
+            lightXOffset=130;
+            viewType=VIEW_TYPE_PANEL;
         }
 
         setPreferredSize(new Dimension(1000,100));
@@ -109,6 +117,10 @@ public class GraphicsPanel extends JPanel implements MouseListener {
             yPosition=-40;
         }
     
+        if (viewType==VIEW_TYPE_SMALL) {
+            yPosition=0;
+        }
+        
         if (model!=null) {         
          Map <String, PHLight> lightsMap = model.getBridgeConfiguration().getLights();
          
@@ -132,6 +144,10 @@ public class GraphicsPanel extends JPanel implements MouseListener {
                 if (viewType==VIEW_TYPE_LARGE && counter > 0 && counter % NO_BULBS_PER_ROW == 0) {
                  counter=0;
                  yPosition+=300;
+                }
+                if (viewType==VIEW_TYPE_SMALL && counter > 0 && counter % NO_BULBS_PER_ROW_SMALL == 0) {
+                    counter=0;
+                    yPosition+=100;
                 }
 
                 if (state.getOn()) {

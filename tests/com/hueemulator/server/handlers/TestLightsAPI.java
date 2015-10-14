@@ -41,9 +41,10 @@ public class TestLightsAPI  extends TestCase {
         System.out.println("Testing Lights API: 1.1. Get all lights   (http://developers.meethue.com/1_lightsapi.html)" );
         String url = baseURL + "newdeveloper/lights";
         String response="";
-        String expected="{\"3\":{\"name\":\"Hue Lamp 3\",\"state\":{\"bri\":254,\"effect\":\"none\",\"sat\":254,\"reachable\":true,\"alert\":\"none\",\"hue\":65136,\"colormode\":\"hs\",\"on\":true,\"ct\":201,\"xy\":[0.346,0.3568]},\"modelid\":\"LCT001\",\"swversion\":\"65003148\",\"pointsymbol\":{\"3\":\"none\",\"2\":\"none\",\"1\":\"none\",\"7\":\"none\",\"6\":\"none\",\"5\":\"none\",\"4\":\"none\",\"8\":\"none\"},\"type\":\"Extended color light\"},\"2\":{\"name\":\"Hue Lamp 2\",\"state\":{\"bri\":254,\"effect\":\"none\",\"sat\":144,\"reachable\":true,\"alert\":\"none\",\"hue\":23536,\"colormode\":\"hs\",\"on\":true,\"ct\":201,\"xy\":[0.346,0.3568]},\"modelid\":\"LCT001\",\"swversion\":\"65003148\",\"pointsymbol\":{\"3\":\"none\",\"2\":\"none\",\"1\":\"none\",\"7\":\"none\",\"6\":\"none\",\"5\":\"none\",\"4\":\"none\",\"8\":\"none\"},\"type\":\"Extended color light\"},\"1\":{\"name\":\"Hue Lamp 1\",\"state\":{\"bri\":254,\"effect\":\"none\",\"sat\":254,\"reachable\":true,\"alert\":\"none\",\"hue\":4444,\"colormode\":\"hs\",\"on\":true,\"ct\":0,\"xy\":[0,0]},\"modelid\":\"LCT001\",\"swversion\":\"65003148\",\"pointsymbol\":{\"3\":\"none\",\"2\":\"none\",\"1\":\"none\",\"7\":\"none\",\"6\":\"none\",\"5\":\"none\",\"4\":\"none\",\"8\":\"none\"},\"type\":\"Extended color light\"}}";
+        String expected="{\"3\":{\"uniqueid\":\"00:17:88:01:00:d4:12:08-0c\",\"name\":\"Hue Lamp 3\",\"state\":{\"bri\":254,\"effect\":\"none\",\"sat\":254,\"reachable\":true,\"alert\":\"none\",\"hue\":65136,\"colormode\":\"hs\",\"on\":true,\"ct\":201,\"xy\":[0.346,0.3568]},\"modelid\":\"LCT001\",\"swversion\":\"65003148\",\"pointsymbol\":{\"3\":\"none\",\"2\":\"none\",\"1\":\"none\",\"7\":\"none\",\"6\":\"none\",\"5\":\"none\",\"4\":\"none\",\"8\":\"none\"},\"type\":\"Extended color light\"},\"2\":{\"uniqueid\":\"00:17:88:01:00:d4:12:08-0b\",\"name\":\"Hue Lamp 2\",\"state\":{\"bri\":254,\"effect\":\"none\",\"sat\":144,\"reachable\":true,\"alert\":\"none\",\"hue\":23536,\"colormode\":\"hs\",\"on\":true,\"ct\":201,\"xy\":[0.346,0.3568]},\"modelid\":\"LCT001\",\"swversion\":\"65003148\",\"pointsymbol\":{\"3\":\"none\",\"2\":\"none\",\"1\":\"none\",\"7\":\"none\",\"6\":\"none\",\"5\":\"none\",\"4\":\"none\",\"8\":\"none\"},\"type\":\"Extended color light\"},\"1\":{\"uniqueid\":\"00:17:88:01:00:d4:12:08-0a\",\"name\":\"Hue Lamp 1\",\"state\":{\"bri\":254,\"effect\":\"none\",\"sat\":254,\"reachable\":true,\"alert\":\"none\",\"hue\":4444,\"colormode\":\"hs\",\"on\":true,\"ct\":0,\"xy\":[0,0]},\"modelid\":\"LCT001\",\"swversion\":\"65003148\",\"pointsymbol\":{\"3\":\"none\",\"2\":\"none\",\"1\":\"none\",\"7\":\"none\",\"6\":\"none\",\"5\":\"none\",\"4\":\"none\",\"8\":\"none\"},\"type\":\"Extended color light\"}}";
 
         response = httpTester.doGet(url);
+
         assertTrue(TestUtils.jsonsEqual(expected, response));  
     }
 
@@ -54,7 +55,7 @@ public class TestLightsAPI  extends TestCase {
         System.out.println("Testing Lights API: 1.4. Get light attributes and state   (http://developers.meethue.com/1_lightsapi.html)" );
         String url = baseURL + "newdeveloper/lights/1";
         String response="";
-        String expected="{\"name\":\"Hue Lamp 1\",\"state\":{\"bri\":254,\"effect\":\"none\",\"sat\":254,\"reachable\":true,\"alert\":\"none\",\"hue\":4444,\"colormode\":\"hs\",\"on\":true,\"ct\":0,\"xy\":[0,0]},\"modelid\":\"LCT001\",\"swversion\":\"65003148\",\"pointsymbol\":{\"3\":\"none\",\"2\":\"none\",\"1\":\"none\",\"7\":\"none\",\"6\":\"none\",\"5\":\"none\",\"4\":\"none\",\"8\":\"none\"},\"type\":\"Extended color light\"}";
+        String expected="{\"uniqueid\":\"00:17:88:01:00:d4:12:08-0a\",\"name\":\"Hue Lamp 1\",\"state\":{\"bri\":254,\"effect\":\"none\",\"sat\":254,\"reachable\":true,\"alert\":\"none\",\"hue\":4444,\"colormode\":\"hs\",\"on\":true,\"ct\":0,\"xy\":[0,0]},\"modelid\":\"LCT001\",\"swversion\":\"65003148\",\"pointsymbol\":{\"3\":\"none\",\"2\":\"none\",\"1\":\"none\",\"7\":\"none\",\"6\":\"none\",\"5\":\"none\",\"4\":\"none\",\"8\":\"none\"},\"type\":\"Extended color light\"}";
 
         response = httpTester.doGet(url);       
         assertTrue(TestUtils.jsonsEqual(expected, response)); 
@@ -62,10 +63,9 @@ public class TestLightsAPI  extends TestCase {
         // Get Light 2
         url = baseURL + "newdeveloper/lights/2";
         response="";
-        expected="{\"state\":{\"on\":true,\"bri\":254,\"hue\":23536,\"sat\":144,\"xy\":[0.346,0.3568],\"ct\":201,\"alert\":\"none\",\"effect\":\"none\",\"colormode\":\"hs\",\"reachable\":true},\"type\":\"Extended color light\",\"name\":\"Hue Lamp 2\",\"modelid\":\"LCT001\",\"swversion\":\"65003148\",\"pointsymbol\":{\"1\":\"none\",\"2\":\"none\",\"3\":\"none\",\"4\":\"none\",\"5\":\"none\",\"6\":\"none\",\"7\":\"none\",\"8\":\"none\"}}";
+        expected="{\"uniqueid\":\"00:17:88:01:00:d4:12:08-0b\",\"name\":\"Hue Lamp 2\",\"state\":{\"bri\":254,\"effect\":\"none\",\"sat\":144,\"reachable\":true,\"alert\":\"none\",\"hue\":23536,\"colormode\":\"hs\",\"on\":true,\"ct\":201,\"xy\":[0.346,0.3568]},\"modelid\":\"LCT001\",\"swversion\":\"65003148\",\"pointsymbol\":{\"3\":\"none\",\"2\":\"none\",\"1\":\"none\",\"7\":\"none\",\"6\":\"none\",\"5\":\"none\",\"4\":\"none\",\"8\":\"none\"},\"type\":\"Extended color light\"}";
 
         response = httpTester.doGet(url);
-        System.out.println(expected);
         System.out.println(response);
         assertTrue(TestUtils.jsonsEqual(expected, response));        
     }

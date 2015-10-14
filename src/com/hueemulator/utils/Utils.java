@@ -173,4 +173,28 @@ public class Utils {
      return username;
  }
  
+ // Called when adding a new Light
+ public static String generateRandomUniqueId()
+ {
+     String[] validChars = {"0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f"};
+     Random rd = new Random();
+     rd.nextInt(15);
+     String result="";
+
+     for(int i=0;i<6;i++)
+     {
+         String a = validChars[rd.nextInt(15)];
+         String b = validChars[rd.nextInt(15)];
+         result+=a+b;
+         if(i<5)
+         {
+             result+=":";
+         }
+         
+
+     }
+         result += ":"+validChars[rd.nextInt(10)]+validChars[rd.nextInt(10)]+":"+validChars[rd.nextInt(10)]+validChars[rd.nextInt(10)]+"-"+validChars[rd.nextInt(15)]+validChars[rd.nextInt(15)];
+     return result;
+ }
+ 
 }

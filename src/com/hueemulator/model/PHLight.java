@@ -24,6 +24,9 @@ public class PHLight
  
  @JsonProperty("swversion")
  private String  swversion;
+ 
+ @JsonProperty("uniqueid")
+ private String  uniqueid;
   
  @JsonProperty("pointsymbol")
  private Map<String, String> pointsymbol;
@@ -36,6 +39,7 @@ public class PHLight
      this.state   = light.state;
      this.swversion = light.swversion;
      this.type =  light.type;
+     this.uniqueid = light.uniqueid;
  }
  
  public String getName()
@@ -104,6 +108,14 @@ public class PHLight
 
  public void setIdentifier(String identifier) {
      this.identifier = identifier;
+ }
+
+ public String getUniqueid() {
+     return uniqueid;
+ }
+
+ public void setUniqueid(String uniqueid) {
+     this.uniqueid = uniqueid;
  }
 
 }

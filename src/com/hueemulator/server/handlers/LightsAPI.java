@@ -95,6 +95,7 @@ public class LightsAPI {
         lightJson.putOpt("type", light.getType());
         lightJson.putOpt("name", light.getName());
         lightJson.putOpt("swversion", light.getSwversion());
+        lightJson.putOpt("uniqueid", light.getUniqueid());
         lightJson.putOpt("modelid", light.getModelid());
         lightJson.putOpt("pointsymbol", light.getPointsymbol());
         

@@ -36,6 +36,7 @@ import com.hueemulator.model.PHBridgeConfiguration;
 import com.hueemulator.model.PHLight;
 import com.hueemulator.model.PHLightState;
 import com.hueemulator.utils.OpenFileFilter;
+import com.hueemulator.utils.Utils;
 
 public class Controller {
  
@@ -280,6 +281,7 @@ public class Controller {
         
         PHLight light = new PHLight();        
         light.setSwversion("65003148");
+        light.setUniqueid(Utils.generateRandomUniqueId());
         
         if (isLux) {
             light.setName("New white Light - " + newLightId);

@@ -17,6 +17,7 @@
             "name": "Hue Lamp 1",
             "modelid": "LCT001",
             "swversion": "65003148",
+			"uniqueid":  "00:17:88:01:00:d4:12:08-0a",
             "pointsymbol": {
                 "1": "none",
                 "2": "none",
@@ -45,6 +46,7 @@
             "name": "Hue Lamp 2",
             "modelid": "LCT001",
             "swversion": "65003148",
+			"uniqueid":  "00:17:88:01:00:d4:12:08-0b",
             "pointsymbol": {
                 "1": "none",
                 "2": "none",
@@ -73,6 +75,7 @@
             "name": "Hue Lamp 3",
             "modelid": "LCT001",
             "swversion": "65003148",
+			"uniqueid":  "00:17:88:01:00:d4:12:08-0c",
             "pointsymbol": {
                 "1": "none",
                 "2": "none",

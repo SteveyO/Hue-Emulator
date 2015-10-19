@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 import com.hueemulator.emulator.Controller;
-import com.hueemulator.model.PHBridgeConfiguration;
 import com.hueemulator.server.handlers.ConfigurationAPI;
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
@@ -46,7 +45,7 @@ class MyRootHandler implements HttpHandler {
         exchange.sendResponseHeaders(200, 0);
         controller.addTextToConsole(url.toString(), Color.gray, true);
         if (url.equals("/description.xml")) {
-            configurationAPIhandler.getBridgeDescription(responseBody);
+            configurationAPIhandler.getBridgeDescription(responseBody, controller.getIpAddress());
             controller.addTextToConsole("sent description....", Color.gray, true);
         }
     }

@@ -12,10 +12,8 @@ import com.sun.net.httpserver.HttpServer;
 public class Server {
 
     private HttpServer httpServer;
-    private Controller controller;
 
     public Server(PHBridgeConfiguration bridgeConfiguration, Controller controller, String portNumber) throws IOException {
-        this.controller=controller;
         
         InetSocketAddress addr = new InetSocketAddress(Integer.valueOf(portNumber));
 

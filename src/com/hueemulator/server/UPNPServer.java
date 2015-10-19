@@ -30,19 +30,17 @@ public class UPNPServer extends Thread {
     
     public Controller controller;
 
-    private boolean strict;
-	
 	private boolean traceupnp;
     
     // First implementation of a UPNP server.  Am not sure if this is the correct implementation but it seems to work.  The emulator is found by SDK bridge searches.
     // It will be improved if the implementation is faulty, as it could well be as this (java network stuff) not my strong point.
+	// Improved on 10/19/15
     public UPNPServer(Controller controller) {
 		super();
         this.controller = controller;
 		upnpResponsePort = Integer.valueOf("50000");
 		httpServerPort = Integer.valueOf(controller.getPort());
 		responseAddress = controller.getIpAddress();
-		strict = true;
 		traceupnp = true;
     }
     
@@ -125,21 +123,15 @@ public class UPNPServer extends Thread {
 		if(body != null && body.contains("M-SEARCH") && body.contains("\"ssdp:discover\"")){
 			if(traceupnp)
 				log.info("Traceupnp: isSSDPDiscovery found message to be an M-SEARCH message.");
-			if(strict && body.startsWith("M-SEARCH * HTTP/1.1") && body.contains("MAN: \"ssdp:discover\"") && (body.contains("ST: urn:schemas-upnp-org:device:basic:1") || body.contains("ST: upnp:rootdevice") || body.contains("ST: ssdp:all")))
+			if(body.startsWith("M-SEARCH * HTTP/1.1") && body.contains("MAN: \"ssdp:discover\"") && (body.contains("ST: urn:schemas-upnp-org:device:basic:1") || body.contains("ST: upnp:rootdevice") || body.contains("ST: ssdp:all")))
 			{
 				if(traceupnp)
-					log.info("Traceupnp: isSSDPDiscovery found message to be valid under strict rules - strict: " + strict);
-				return true;
-			}
-			else if (!strict)
-			{
-				if(traceupnp)
-					log.info("Traceupnp: isSSDPDiscovery found message to be valid under loose rules - strict: " + strict);
+					log.info("Traceupnp: isSSDPDiscovery found message to be valid.");
 				return true;
 			}
 		}
 		if(traceupnp)
-			log.info("Traceupnp: isSSDPDiscovery found message to not be valid - strict: " + strict);
+			log.info("Traceupnp: isSSDPDiscovery found message to not be valid.");
 		return false;
 	}
 

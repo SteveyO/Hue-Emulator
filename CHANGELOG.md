@@ -1,5 +1,15 @@
 Hue-Emulator Changelog
 ============
+v0.6 (01-December-2015)
+* Cherry picked some of the UPUP Handling code (by bwssystems). In particular now have 2 web contexts so can display the bridge description.xml file at the correct URL.
+* Added another 'Small Bulbs' graphical view so you can now see many (50+) more bulbs in the emulator.
+* Added Uniqueid in lights
+* Removed all Philips logos from the bulb graphics, so am no free to choose my own license for the emulator.
+* Added 'Add Hue Lux Bulb' option.
+
+New Features:
+---
+* Removed possibility to create Custom WhiteList Entries + Added Randomly Generated Username.   This change was done because in December 2015/January 2016 the Philips Bridge will no longer accept Custom Whitelist Entries,  so I want developers to get into the habit of using the Randomly Generated Username.
 v0.5 (02-September-2015)
 
 New Features:

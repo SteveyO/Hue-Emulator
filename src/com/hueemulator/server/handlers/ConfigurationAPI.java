@@ -25,14 +25,14 @@ public class ConfigurationAPI {
     // For pushlinking you have to click anywhere on the bridge panel
     public List<String> users = new ArrayList<String>();    
 
-    public void getBridgeDescription(OutputStream responseBody) {
+    public void getBridgeDescription(OutputStream responseBody, String ipAddressAndPort) {
         String descriptionFile = "";
         try {
            descriptionFile = Utils.loadDescriptionFile("/description.xml");
         } catch (IOException e) {
             e.printStackTrace();
         }
-        // TODO: Do Port/IP Replaces here.
+        descriptionFile = descriptionFile.replace("##URLBASE##", ipAddressAndPort);
         
         try {
             responseBody.write(descriptionFile.getBytes());

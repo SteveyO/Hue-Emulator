@@ -353,13 +353,14 @@ public class GroupsAPI {
 
             String resourceURL = "/groups/" + groupIdentifier + " deleted";
 
+            JSONArray jsonArray = new JSONArray();
             JSONObject responseObject = new JSONObject();
             responseObject.putOpt("success", resourceURL);
-
-            responseBody.write(responseObject.toString().getBytes());
+            jsonArray.put(responseObject);
+            String responseText = jsonArray.toString();
+            responseBody.write(responseText.getBytes());
             responseBody.close();
-
-            controller.addTextToConsole(mapper.writeValueAsString(bridgeConfiguration.getGroups().get(groupIdentifier)), Color.WHITE, controller.showResponseJson()); 
+            controller.addTextToConsole(responseText, Color.WHITE, controller.showResponseJson()); 
         }
 
     }

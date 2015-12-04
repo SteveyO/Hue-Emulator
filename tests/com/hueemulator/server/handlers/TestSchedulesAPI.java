@@ -41,9 +41,10 @@ public class TestSchedulesAPI extends TestCase {
         System.out.println("Testing Schedules API: 3.1. Get all Schedules  (http://developers.meethue.com/3_schedulesapi.html)" );
         String url = baseURL + "newdeveloper/schedules";
         String response="";
-        String expected="{\"1\":{\"name\":\"schedule\"}}";
+        String expected="{\"1\":{\"time\":\"2012-10-29T12:00:00\",\"description\":\"\",\"name\":\"schedule\",\"command\":{\"body\":{\"on\":true},\"address\":\"/api/newdeveloper/groups/0/action\",\"method\":\"PUT\"}}}";
 
         response = httpTester.doGet(url);
+        System.out.println(response);
         assertTrue(TestUtils.jsonsEqual(response, expected));
 
     }    
@@ -99,9 +100,9 @@ public class TestSchedulesAPI extends TestCase {
         System.out.println("Testing Schedules API: 3.3. Get schedules attributes   (http://developers.meethue.com/3_schedulesapi.html)" );
         String url = baseURL + "newdeveloper/schedules/1";
         String response="";
-        String expected="{\"time\":\"2012-10-29T12:00:00\",\"description\":\"\",\"name\":\"schedule\",\"command\":{\"body\":{\"bri\":null,\"transitiontime\":null,\"on\":true,\"xy\":null},\"address\":\"/api/newdeveloper/groups/0/action\",\"method\":\"PUT\"}}";
+        String expected="{\"time\":\"2012-10-29T12:00:00\",\"description\":\"\",\"name\":\"schedule\",\"command\":{\"body\":{\"scene\":null,\"on\":true,\"xy\":null,\"bri\":null,\"transitiontime\":null},\"address\":\"/api/newdeveloper/groups/0/action\",\"method\":\"PUT\"}}";
 
-        response = httpTester.doGet(url);        
+        response = httpTester.doGet(url);
         assertTrue(TestUtils.jsonsEqual(response, expected));       
     }
 

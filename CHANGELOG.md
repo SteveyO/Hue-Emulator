@@ -1,5 +1,9 @@
 Hue-Emulator Changelog
 ============
+v0.7 (04-December-2015)
+* Fixed bug with JSON Response when deleting groups.
+* Get Groups and Get Schedules now returns full (more) JSON.  Full schedules response is still missing some fields though.  
+
 v0.6 (01-December-2015)
 * Cherry picked some of the UPUP Handling code (by bwssystems). In particular now have 2 web contexts so can display the bridge description.xml file at the correct URL.
 * Added another 'Small Bulbs' graphical view so you can now see many (50+) more bulbs in the emulator.

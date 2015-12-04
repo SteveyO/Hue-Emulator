@@ -6,6 +6,9 @@ import org.codehaus.jackson.annotate.JsonProperty;
 
 public class PHBody
 {
+    @JsonProperty("scene")
+    private Boolean scene;
+    
     @JsonProperty("on")
     private Boolean on;
     
@@ -58,6 +61,14 @@ public class PHBody
     public void setXy(List<Double> xy)
     {
         this.xy = xy;
+    }
+
+    public Boolean getScene() {
+        return scene;
+    }
+
+    public void setScene(Boolean scene) {
+        this.scene = scene;
     }
 
 }

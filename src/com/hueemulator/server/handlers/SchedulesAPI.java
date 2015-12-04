@@ -42,8 +42,25 @@ public class SchedulesAPI {
             PHSchedulesEntry schedule = (PHSchedulesEntry) entry.getValue();
 
             JSONObject lightJson = new JSONObject();
-            lightJson.putOpt("name", schedule.getName());
-
+            lightJson.putOpt("name",        schedule.getName());
+            lightJson.putOpt("description", schedule.getDescription());
+            lightJson.putOpt("time",        schedule.getTime());
+            
+            JSONObject commandObject = new JSONObject();
+            commandObject.putOpt("address", schedule.getCommand().getAddress());
+            
+            
+            JSONObject commandBody = new JSONObject();
+            PHBody body = schedule.getCommand().getBody();
+            if (body.getOn()  !=null) commandBody.put("on",  body.getOn());
+            if (body.getBri() !=null) commandBody.put("bri", body.getBri());
+            if (body.getXy()  !=null) commandBody.put("xy",  body.getXy());
+            if (body.getScene()  !=null) commandBody.put("scene",  body.getScene());
+            
+            
+            commandObject.putOpt("body",  commandBody);
+            commandObject.putOpt("method",  schedule.getCommand().getMethod());
+            lightJson.putOpt("command",   commandObject);
 
             lightsJson.putOpt(identifier, lightJson);
         }

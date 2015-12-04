@@ -42,7 +42,7 @@ public class TestGroupsAPI extends TestCase {
         System.out.println("Testing Groups API: 2.1. Get all groups  (http://developers.meethue.com/2_groupsapi.html)" );
         String url = baseURL + "newdeveloper/groups";
         String response="";
-        String expected="{\"1\":{\"name\":\"Group 1\"}}";
+        String expected="{\"1\":{\"lights\":[\"1\",\"2\"],\"name\":\"Group 1\",\"action\":{\"bri\":254,\"effect\":\"none\",\"sat\":144,\"hue\":33536,\"on\":true,\"colormode\":\"xy\",\"ct\":201,\"xy\":[0.346,0.3568]}}}";
 
         response = httpTester.doGet(url);
         assertTrue(TestUtils.jsonsEqual(response, expected));
@@ -115,7 +115,7 @@ public class TestGroupsAPI extends TestCase {
 
         response= httpTester.doDelete(url);
         
-        assertEquals(response, "{\"success\":\"/groups/1 deleted\"}");
+        assertEquals(response, "[{\"success\":\"/groups/1 deleted\"}]");
 
         noGroups = bridgeConfiguration.getGroups().size();
         assertEquals(noGroups, 0);

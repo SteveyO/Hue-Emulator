@@ -15,7 +15,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.hueemulator.emulator.Controller;
-import com.hueemulator.lighting.utils.TestUtils;
 import com.hueemulator.model.PHBridgeConfiguration;
 import com.hueemulator.model.PHGroupsEntry;
 import com.hueemulator.model.PHLight;
@@ -44,6 +43,11 @@ public class GroupsAPI {
             
             JSONObject groupsJson = new JSONObject();
             groupsJson.putOpt("name", group.getName());
+            
+            groupsJson.putOpt("lights", group.getLightIdentifiers());
+            
+            JSONObject actionJson = new JSONObject(group.getLightState());
+            groupsJson.putOpt("action", actionJson);
             
             groupsResponseJson.putOpt(identifier, groupsJson);
         }

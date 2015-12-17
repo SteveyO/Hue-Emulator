@@ -187,6 +187,22 @@ public class ConfigurationAPI {
         }
 
     }
+    
+    // The Hue Bridge returns some fields when a <IP ADDRESS>/api/config is sent (with no authenticated usernames). See 'Bridge Information without a valid user" here: http://www.developers.meethue.com/documentation/message-structure-and-response-0
+    public void returnNonAuthenticatedConfig(PHBridgeConfiguration bridgeConfiguration, OutputStream responseBody) {
+        JSONObject responseObject = new JSONObject();
+        responseObject.put("name",      bridgeConfiguration.getConfig().getName());
+        responseObject.put("mac",       bridgeConfiguration.getConfig().getMac());
+        responseObject.put("bridgeid",  bridgeConfiguration.getConfig().getBridgeid());
+        responseObject.put("modelid",   bridgeConfiguration.getConfig().getModelid());
+        
+        try {
+            responseBody.write(responseObject.toString().getBytes());
+            responseBody.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 
     public void returnErrorResponse(String errorType, String description, String address, OutputStream responseBody) {

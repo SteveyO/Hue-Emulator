@@ -14,6 +14,12 @@ public class PHConfig
  
  @JsonProperty("mac")
  private String  mac;
+
+ @JsonProperty("bridgeid")
+ private String  bridgeid;
+
+ @JsonProperty("modelid")
+ private String  modelid;
  
  @JsonProperty("swversion")
  private String  swversion;
@@ -187,4 +193,20 @@ public Boolean getPortalservices()
  public void setWhitelist(Map<String, PHWhitelistEntry> whitelist) {
 	 this.whitelist = whitelist;
  }
+
+public String getBridgeid() {
+    return bridgeid;
+}
+
+public void setBridgeid(String bridgeid) {
+    this.bridgeid = bridgeid;
+}
+
+public String getModelid() {
+    return modelid;
+}
+
+public void setModelid(String modelid) {
+    this.modelid = modelid;
+}
 }

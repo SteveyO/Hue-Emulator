@@ -107,6 +107,8 @@
     "config": {
         "name": "Philips hue",
         "mac": "00:00:88:00:bb:ee",
+	    "bridgeid": "000088FFFE00BBEE",
+		"modelid": "BSB001",
         "dhcp": true,
         "ipaddress": "192.168.2.213:8000",
         "netmask": "255.255.255.0",

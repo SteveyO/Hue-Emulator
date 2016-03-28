@@ -194,6 +194,11 @@ public class LightsAPI {
         if (jObject != null) {
             JSONArray names = jObject.names();
 
+            boolean isOn = ls.getOn(); // An attempt to modify the state of a bulb which is off results in a bridge error.
+            if (jObject.has("on")) {   // do not throw an error when 'on' is set to true.
+                isOn = jObject.getBoolean("on");
+            }
+
             for (int i=0; i<names.length(); i++) {
                 JSONObject successObject = new JSONObject();
 
@@ -206,7 +211,6 @@ public class LightsAPI {
                 responseArray.put(successObject);
 
                 boolean isSuccess=true;  // Success is returned for a valid fieldname, if a field name is invalid then an "error" is returned.
-                boolean isOn=ls.getOn();       // An attempt to modify the state of a bulb which is off results in a bridge error.
 
                 if (name.equals("on")) {
 

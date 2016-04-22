@@ -74,7 +74,8 @@ class MyApiHandler implements HttpHandler {
             configurationAPIhandler.createNewUsername(bridgeConfiguration, responseBody, requestMethod);
         }
         // Check if username is on the whitelist.  If not a JSON "Unauthorized User" response is sent back.
-        else if (!configurationAPIhandler.isValidUserName(bridgeConfiguration, responseBody, urlElements)) {            
+        else if (!configurationAPIhandler.isValidUserName(bridgeConfiguration, responseBody, urlElements)) {
+            controller.addTextToConsole("unauthorized user for api call: " + responseBody, Color.RED, controller.showResponseJson());     
             configurationAPIhandler.returnErrorResponse("1", "unauthorized user", "/", responseBody);
             return;
         }

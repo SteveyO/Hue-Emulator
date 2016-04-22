@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -19,7 +18,6 @@ import com.hueemulator.emulator.Controller;
 import com.hueemulator.model.PHBridgeConfiguration;
 import com.hueemulator.model.PHLight;
 import com.hueemulator.model.PHLightState;
-import com.hueemulator.model.PHSchedulesEntry;
 import com.hueemulator.utils.PHUtilitiesHelper;
 import com.hueemulator.utils.PointF;
 import com.hueemulator.utils.Utils;
@@ -171,6 +169,7 @@ public class LightsAPI {
         String resourceUrl = "/lights/" + lightIdentifier + "/state/";
 
         if (bridgeConfiguration.getLights() == null || bridgeConfiguration.getLights().get(lightIdentifier) == null) {
+        	controller.addTextToConsole("CAnnot find light ID: " +lightIdentifier, Color.RED, controller.showResponseJson());
             sendErrorResponse(lightIdentifier, "3", responseBody);
         }
 
@@ -185,7 +184,7 @@ public class LightsAPI {
         responseBody.close();
 
         bridgeConfiguration.getLights().get(lightIdentifier).setState(ls);
-        controller.addTextToConsole(responseArray.toString(), Color.WHITE, controller.showResponseJson());     
+        controller.addTextToConsole(responseArray.toString() + " called with request: " + jSONString, Color.WHITE, controller.showResponseJson());     
     }
 
 
@@ -294,7 +293,7 @@ public class LightsAPI {
                         ls.setHue((int) (hsv[0] * 65535));
                         ls.setSat((int) (hsv[1] * 254));
 
-                        List<Double> xyList = new ArrayList();
+                        List<Double> xyList = new ArrayList<Double>();
                         String xStr = fourDP.format(xy.x);
                         String yStr = fourDP.format(xy.y);
                         xyList.add(Double.valueOf(xStr)); 

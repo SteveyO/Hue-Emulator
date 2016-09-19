@@ -14,6 +14,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
@@ -50,6 +52,8 @@ public class GraphicsPanel extends JPanel implements MouseListener {
     private boolean drawBulbInfo=false;
     private boolean drawBridgeInfo=false;
     private Controller controller;
+    
+    private Timer linkExpireTimer;
 
     private int mouseOverBulb=-1;  // Used for Helper Message, to indicate for which bulb to display the help/info.
     
@@ -332,6 +336,19 @@ public class GraphicsPanel extends JPanel implements MouseListener {
         if (linkButtonPressed) {
             controller.setHasBridgeBeenPushLinked(true);
             controller.addTextToConsole("Link button has been pressed", Color.GREEN, true);
+            
+            if (linkExpireTimer != null) {
+            	linkExpireTimer.cancel();
+            }
+            linkExpireTimer = new Timer();
+            linkExpireTimer.schedule(new TimerTask() {
+            	@Override
+            	public void run() {
+            		controller.setHasBridgeBeenPushLinked(false);
+                    controller.addTextToConsole("Linking has expired", Color.RED, true);
+            	}
+            }, 30000);
+            
          }
 
         this.repaint(); 

@@ -217,6 +217,10 @@ class MyApiHandler implements HttpHandler {
         }           
         else if (urlElements[noURLEelements-2].equals("groups")) {
             groupsAPIhandler.deleteGroup_2_6(mapper, bridgeConfiguration, responseBody, controller, lastURLElement);
+        }         
+        else if (urlElements[noURLEelements-2].equals("whitelist")) {
+            controller.addTextToConsole("Handling delete for whitelist entry: " + lastURLElement, Color.RED, true);
+            configurationAPIhandler.deleteUser_7_4(mapper, bridgeConfiguration, responseBody, controller, lastURLElement);
         }           
 
     }

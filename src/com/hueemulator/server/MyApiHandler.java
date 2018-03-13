@@ -119,7 +119,9 @@ class MyApiHandler implements HttpHandler {
             if (requestMethod.equalsIgnoreCase("POST")) {
                 handlePost(mapper, url, responseBody, jSONString, urlElements);
             }
-        } 
+        } else { // probably OPTIONS
+            responseBody.close();        	
+        }
     }
 
     public void handlePut(ObjectMapper mapper, String url, OutputStream responseBody, String jSONString, String[] urlElements) throws JsonParseException, IOException  {

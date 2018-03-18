@@ -141,6 +141,21 @@ public class ConfigurationAPI {
         mapper.writeValue(responseBody, config);   // Write to the response.
         controller.addTextToConsole(mapper.writeValueAsString(config), Color.WHITE, controller.showResponseJson());
     }
+    
+    // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=
+    //  7.4  DELETE USER FROM WHITELIST
+    //  http://www.developers.meethue.com/documentation/configuration-api#74_delete_user_from_whitelist   7.4 Delete user from whitelist
+    // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=    
+
+    public void deleteUser_7_4(ObjectMapper mapper, PHBridgeConfiguration bridgeConfiguration, OutputStream responseBody, Controller controller, String removingUsername) throws JsonParseException, IOException {
+    	bridgeConfiguration.getConfig().getWhitelist().remove(removingUsername);
+        JSONObject responseObj = new JSONObject();
+        responseObj.put("success", "/config/whitelist/" + removingUsername + " deleted.");
+        mapper.writeValue(responseBody, responseObj);   // Write to the response.
+        controller.addTextToConsole(mapper.writeValueAsString(responseObj), Color.WHITE, controller.showResponseJson());
+    }
+    
+    
 
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=
     //  7.5  GET FULL STATE (DATASTORE)

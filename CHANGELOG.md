@@ -1,5 +1,8 @@
 Hue-Emulator Changelog
 ============
+v0.8 (18-March-2018)
+* Merged in the 4 open pull requests.
+
 v0.7 (04-December-2015)
 * Fixed bug with JSON Response when deleting groups.
 * Get Groups and Get Schedules now returns full (more) JSON.  Full schedules response is still missing some fields though.  

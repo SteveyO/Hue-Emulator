@@ -1,25 +1,21 @@
 package com.hueemulator.server.handlers;
 
-import java.awt.Color;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
-import org.codehaus.jackson.JsonParseException;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import com.hueemulator.emulator.Controller;
 import com.hueemulator.model.PHBridgeConfiguration;
 import com.hueemulator.model.PHGroupsEntry;
 import com.hueemulator.model.PHLight;
 import com.hueemulator.model.PHLightState;
 import com.hueemulator.utils.Utils;
+import org.codehaus.jackson.JsonParseException;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.awt.*;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.List;
+import java.util.*;
 
 public class GroupsAPI {
 
@@ -156,7 +152,7 @@ public class GroupsAPI {
     //  2.4  SET GROUP  ATTRIBUTES
     //  http://www.developers.meethue.com/documentation/groups-api#24_set_group_attributes   2.4. Set group attributes
     // *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= 
-    public void setGroupAttributes_2_4(ObjectMapper mapper, String jSONString, PHBridgeConfiguration bridgeConfiguration, OutputStream responseBody, Controller controller, String groupIdentifier) throws JsonParseException, IOException {          
+    public void setGroupAttributes_2_4(ObjectMapper mapper, String jSONString, PHBridgeConfiguration bridgeConfiguration, OutputStream responseBody, Controller controller, String groupIdentifier) throws JsonParseException, IOException {
 
           if (bridgeConfiguration.getGroups() == null || bridgeConfiguration.getGroups().get(groupIdentifier) == null) {
               sendErrorResponse(groupIdentifier, "3", responseBody);
@@ -246,12 +242,12 @@ public class GroupsAPI {
         }
 
         Map<String, PHLight> allLights;
-        
+
         if (groupIdentifier.equals("0")) {   // 0 is the default 'all lights' group
             allLights =  bridgeConfiguration.getLights();
         }
         else {
-            allLights = new HashMap<String, PHLight>();  
+            allLights = new HashMap<String, PHLight>();
             
             Map <String, PHLight> lightsMap = bridgeConfiguration.getLights();
             PHGroupsEntry group = bridgeConfiguration.getGroups().get(groupIdentifier);  // Get the selected group, so we can filter out the lights in this group.
@@ -272,7 +268,7 @@ public class GroupsAPI {
         JSONArray responseArray = new JSONArray();
         
         if (jSONString.indexOf("\"scene\"") != -1) {   // Scene recall here (http://www.developers.meethue.com/documentation/scenes-api#44_recall_scene)
-            JSONObject jsonObject = new JSONObject(jSONString);                
+            JSONObject jsonObject = new JSONObject(jSONString);
             String sceneId = jsonObject.optString("scene");
             System.out.println("Recalling scene: " + sceneId);
             if (ScenesAPI.emulatorScenes.containsKey(sceneId)) {  // i.e. This scene has been set
@@ -292,17 +288,21 @@ public class GroupsAPI {
                 }                   
             }
         }
-        else {
+        else { //not a scene recall
 
+            PHGroupsEntry groupObject = bridgeConfiguration.getGroups().get(groupIdentifier); // current group config
             Iterator it = allLights.entrySet().iterator();
             while (it.hasNext()) {
                 Map.Entry entry = (Map.Entry) it.next();
-                PHLight light = (PHLight) entry.getValue();            
+                PHLight light = (PHLight) entry.getValue();
                 PHLightState ls = light.getState();
 
                 lightsAPI.setLightState(resourceUrl, light.getModelid(), ls, responseArray, jSONString);
                 light.setState(ls);
+
+                groupObject.setLightState(ls); // save the light state to the group
             }
+            bridgeConfiguration.getGroups().put(groupIdentifier, groupObject);  // update de bridge config
         }
         
         // Here the Response array has duplicates (i.e. commands for each bulb) so duplicates are filtered.  Also error messages are removed, as these are not caught by a group command.

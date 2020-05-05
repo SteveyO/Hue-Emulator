@@ -28,7 +28,7 @@ public class Emulator {
     public Emulator(Controller controller, String fileName)  {
         this.controller = controller;
         if(fileName == null) {
-          fileName = "/config-3bulbs.json";
+          fileName = "/config-hue-magic.json";
         }
         controller.addTextToConsole("Loading configuration...", Color.WHITE, true);
 

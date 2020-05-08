@@ -1,0 +1,1 @@
+java -jar hue-emulator-next.jar /config-hue-magic.json

@@ -36,7 +36,7 @@ public class View {
 
         //2. Optional: What happens when the frame closes?
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setPreferredSize(new Dimension(850,550));
+        frame.setPreferredSize(new Dimension(1900,550));
 
         console = new JEditorPane();
         console.setEditable(false);

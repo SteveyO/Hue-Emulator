@@ -6,15 +6,15 @@
 				"bri": 254,
 				"hue": 4444,
 				"sat": 254,
-				"xy": [0.0000, 0.0000],
+				"xy": [0.214,0.709],
 				"ct": 0,
 				"alert": "none",
 				"effect": "none",
-				"colormode": "hs",
+				"colormode": "xy",
 				"reachable": true
 			},
 			"type": "Extended color light",
-			"name": "Hue Lamp 1",
+			"name": "4.1 Hue color links, E27 806lm",
 			"modelid": "LCT001",
 			"swversion": "65003148",
 			"uniqueid":  "00:17:88:01:00:d4:12:08-0a",
@@ -39,11 +39,11 @@
 				"ct": 201,
 				"alert": "none",
 				"effect": "none",
-				"colormode": "hs",
+				"colormode": "xy",
 				"reachable": true
 			},
 			"type": "Extended color light",
-			"name": "Hue Lamp 2",
+			"name": "4.2 Hue color rechts, E27 806lm",
 			"modelid": "LCT001",
 			"swversion": "65003148",
 			"uniqueid":  "00:17:88:01:00:d4:12:08-0b",
@@ -106,7 +106,7 @@
 		},
 		"24": {
 			"modelid": "TRADFRI bulb E14 WS 470lm",
-			"name": "1.3 Armatuur 1, E14 470lm",
+			"name": "1.3 Armatuur 2, E14 470lm",
 			"swversion": "65003148",
 			"state": {
 				"alert": "none",
@@ -129,7 +129,7 @@
 		},
 		"27": {
 			"modelid": "TRADFRI bulb E14 WS 470lm",
-			"name": "1.4 Armatuur 1, E14 470lm",
+			"name": "1.4 Armatuur 2, E14 470lm",
 			"swversion": "65003148",
 			"state": {
 				"alert": "none",
@@ -152,7 +152,7 @@
 		},
 		"22": {
 			"modelid": "TRADFRI bulb E14 WS 470lm",
-			"name": "1.5 Armatuur 1, E14 470lm",
+			"name": "1.5 Armatuur 3, E14 470lm",
 			"swversion": "65003148",
 			"state": {
 				"alert": "none",
@@ -175,7 +175,7 @@
 		},
 		"21": {
 			"modelid": "TRADFRI bulb E14 WS 470lm",
-			"name": "1.6 Armatuur 1, E14 470lm",
+			"name": "1.6 Armatuur 3, E14 470lm",
 			"swversion": "65003148",
 			"state": {
 				"alert": "none",
@@ -198,7 +198,7 @@
 		},
 		"20": {
 			"modelid": "TRADFRI bulb E14 WS 470lm",
-			"name": "1.7 Armatuur 1, E14 470lm",
+			"name": "1.7 Armatuur 4, E14 470lm",
 			"swversion": "65003148",
 			"state": {
 				"alert": "none",
@@ -221,7 +221,7 @@
 		},
 		"19": {
 			"modelid": "TRADFRI bulb E14 WS 470lm",
-			"name": "1.8 Armatuur 1, E14 470lm",
+			"name": "1.8 Armatuur 4, E14 470lm",
 			"swversion": "65003148",
 			"state": {
 				"alert": "none",
@@ -244,7 +244,7 @@
 		},
 		"18": {
 			"modelid": "TRADFRI bulb E14 WS 470lm",
-			"name": "1.9 Armatuur 1, E14 470lm",
+			"name": "1.9 Armatuur 5, E14 470lm",
 			"swversion": "65003148",
 			"state": {
 				"alert": "none",
@@ -267,7 +267,7 @@
 		},
 		"17": {
 			"modelid": "TRADFRI bulb E14 WS 470lm",
-			"name": "1.10 Armatuur 1, E14 470lm",
+			"name": "1.10 Armatuur 5, E14 470lm",
 			"swversion": "65003148",
 			"state": {
 				"alert": "none",

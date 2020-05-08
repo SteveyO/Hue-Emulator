@@ -66,6 +66,10 @@ public class Controller {
 
         String introText  = "Welcome to the Hue Emulator.  Choose a port and click the Start Button";
         addTextToConsole(introText, Color.YELLOW, true);
+        //autostart the emulator
+        emulator.startServers();
+        view.getMenuBar().getStartButton().setEnabled(false);
+        view.getMenuBar().getStopButton().setEnabled(true);
     }
     
     public void addPropertiesListeners() {

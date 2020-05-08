@@ -236,6 +236,7 @@ public class GroupsAPI {
     public void setGroupState_2_5(ObjectMapper mapper, String jSONString, PHBridgeConfiguration bridgeConfiguration, OutputStream responseBody, Controller controller, String groupIdentifier, LightsAPI lightsAPI) throws JsonParseException, IOException {
 
         String resourceUrl = "/groups/" + groupIdentifier + "/action/";
+        boolean allLightsGroup = false;
 
         if (bridgeConfiguration.getLights() == null) {
             sendErrorResponse(groupIdentifier, "3", responseBody);
@@ -243,7 +244,8 @@ public class GroupsAPI {
 
         Map<String, PHLight> allLights;
 
-        if (groupIdentifier.equals("0")) {   // 0 is the default 'all lights' group
+        allLightsGroup = groupIdentifier.equals("0");// 0 is the default 'all lights' group
+        if (allLightsGroup) {
             allLights =  bridgeConfiguration.getLights();
         }
         else {
@@ -289,8 +291,8 @@ public class GroupsAPI {
             }
         }
         else { //not a scene recall
-
             PHGroupsEntry groupObject = bridgeConfiguration.getGroups().get(groupIdentifier); // current group config
+
             Iterator it = allLights.entrySet().iterator();
             while (it.hasNext()) {
                 Map.Entry entry = (Map.Entry) it.next();
@@ -300,9 +302,13 @@ public class GroupsAPI {
                 lightsAPI.setLightState(resourceUrl, light.getModelid(), ls, responseArray, jSONString);
                 light.setState(ls);
 
-                groupObject.setLightState(ls); // save the light state to the group
+                if (!allLightsGroup) {
+                    groupObject.setLightState(ls); // save the light state to the group
+                }
             }
-            bridgeConfiguration.getGroups().put(groupIdentifier, groupObject);  // update de bridge config
+            if (!allLightsGroup) {
+                bridgeConfiguration.getGroups().put(groupIdentifier, groupObject);  // update de bridge config
+            }
         }
         
         // Here the Response array has duplicates (i.e. commands for each bulb) so duplicates are filtered.  Also error messages are removed, as these are not caught by a group command.

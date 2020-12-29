@@ -11,3 +11,5 @@ For more information visit the main project page:
 http://steveyo.github.io/Hue-Emulator
 
 <img src="screenshot.png" />
+
+Note:  As some of you may have noticed, this project is no longer maintained so bear this in mind before using!
